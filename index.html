@@ -3,156 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home | Abstract Studio</title>
+  <title>Jerry Wu | Quiet cover</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <div class="layout">
-    <aside class="sidebar">
-      <a class="brand" href="index.html">
-        <span class="brand-mark">AS</span>
-        <span class="brand-name">Abstract Studio</span>
+<body class="home">
+  <!-- Smooth elliptical vignette: blank center, gradual shadow toward corners -->
+  <svg class="pool-vignette" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <defs>
+      <!-- Soft blur for smooth edges -->
+      <filter id="soft-blur" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="1.5"/>
+      </filter>
+      
+      <!-- Main elliptical vignette: blank center, dark edges -->
+      <radialGradient id="ellipse-vignette" cx="50%" cy="48%" r="55%" fx="48%" fy="45%">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="30%" stop-color="transparent"/>
+        <stop offset="50%" stop-color="rgba(25,25,30,0.06)"/>
+        <stop offset="65%" stop-color="rgba(20,20,26,0.14)"/>
+        <stop offset="80%" stop-color="rgba(15,15,22,0.28)"/>
+        <stop offset="92%" stop-color="rgba(10,10,18,0.42)"/>
+        <stop offset="100%" stop-color="rgba(8,8,15,0.52)"/>
+      </radialGradient>
+      
+      <!-- Corner accents for asymmetry -->
+      <radialGradient id="corner-tl" cx="0%" cy="0%" r="80%">
+        <stop offset="0%" stop-color="rgba(12,12,18,0.38)"/>
+        <stop offset="35%" stop-color="rgba(18,18,24,0.22)"/>
+        <stop offset="60%" stop-color="rgba(22,22,28,0.10)"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+      <radialGradient id="corner-tr" cx="100%" cy="0%" r="75%">
+        <stop offset="0%" stop-color="rgba(14,14,20,0.32)"/>
+        <stop offset="35%" stop-color="rgba(20,20,26,0.18)"/>
+        <stop offset="60%" stop-color="rgba(24,24,30,0.08)"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+      <radialGradient id="corner-bl" cx="0%" cy="100%" r="78%">
+        <stop offset="0%" stop-color="rgba(16,16,22,0.35)"/>
+        <stop offset="35%" stop-color="rgba(22,22,28,0.20)"/>
+        <stop offset="60%" stop-color="rgba(26,26,32,0.09)"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+      <radialGradient id="corner-br" cx="100%" cy="100%" r="85%">
+        <stop offset="0%" stop-color="rgba(10,10,16,0.45)"/>
+        <stop offset="35%" stop-color="rgba(16,16,24,0.26)"/>
+        <stop offset="60%" stop-color="rgba(22,22,30,0.12)"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+    
+    <!-- Main elliptical vignette - smooth gradient from blank center to dark edges -->
+    <rect width="100" height="100" fill="url(#ellipse-vignette)"/>
+    
+    <!-- Corner shadows - smooth, no displacement -->
+    <rect width="100" height="100" fill="url(#corner-tl)" filter="url(#soft-blur)"/>
+    <rect width="100" height="100" fill="url(#corner-tr)" filter="url(#soft-blur)"/>
+    <rect width="100" height="100" fill="url(#corner-bl)" filter="url(#soft-blur)"/>
+    <rect width="100" height="100" fill="url(#corner-br)" filter="url(#soft-blur)"/>
+  </svg>
+  <div class="home-background" aria-hidden="true"></div>
+  <main class="home-frame">
+    <a href="index.html" class="home-brand">
+      <!-- Music note + ripple logo -->
+      <svg class="home-logo" viewBox="0 0 36 36" aria-hidden="true">
+        <!-- Outer ripple -->
+        <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+        <!-- Inner ripple -->
+        <circle cx="18" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+        <!-- Music note stem -->
+        <path d="M20 8 L20 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+        <!-- Music note head -->
+        <ellipse cx="17" cy="23" rx="4" ry="3" fill="currentColor" opacity="0.65" transform="rotate(-20 17 23)"/>
+        <!-- Flag/beam -->
+        <path d="M20 8 Q26 10 24 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <span class="home-name">Jerry Wu</span>
+    </a>
+    <header class="home-header">
+      <h1 class="home-title">Welcome to Jerry's Studio, hope you'll find something fun.</h1>
+      <p class="home-subtitle">Voice of Six Drowners. Builds risk-aware finance tools. Designs web that moves like music.</p>
+      <p class="home-bio">Exploring sound-led interfaces, slow product rhythms, and data stories.</p>
+      <p class="home-bio">BIPH 2026' · Duke 2030'.</p>
+    </header>
+
+    <nav class="home-links" aria-label="Primary">
+      <a class="home-link" href="about.html">
+        <span class="link-main">About Me</span>
+        <span class="link-sub">music, data, design practice</span>
       </a>
-      <div class="nav-links">
-        <a class="active" href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="blogs.html">Blogs</a>
-        <a href="projects.html">Projects</a>
-      </div>
-      <a class="button small secondary" href="mailto:hello@abstract.studio">Say hello</a>
-    </aside>
+      <a class="home-link" href="projects.html">
+        <span class="link-main">Projects</span>
+        <span class="link-sub">product, experiments, interfaces</span>
+      </a>
+      <a class="home-link" href="performance.html">
+        <span class="link-main">Performance</span>
+        <span class="link-sub">live performances with SixDrowners and recordings</span>
+      </a>
+      <a class="home-link" href="mailto:hello@abstract.studio">
+        <span class="link-main">Contact</span>
+        <span class="link-sub">hello@abstract.studio</span>
+      </a>
+    </nav>
 
-    <main class="content">
-      <div class="container">
-        <section class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow"><span class="dot"></span>Digital calm</div>
-              <h1 class="title">I shape abstract, minimal experiences with a human pulse.</h1>
-              <p class="lede">Welcome to my personal corner on the web. I design interfaces, build playful prototypes, and write about the creative edges of technology. Everything here is crafted to feel light, intentional, and quietly energetic.</p>
-              <div class="tags">
-                <span class="tag">Interface Design</span>
-                <span class="tag">Creative Coding</span>
-                <span class="tag">Systems Thinking</span>
-              </div>
-              <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
-                <a class="button" href="projects.html">View projects</a>
-                <a class="button secondary" href="blogs.html">Read the blog</a>
-              </div>
-            </div>
-            <div class="panel">
-              <h3>Current explorations</h3>
-              <div class="list">
-                <div class="list-item">
-                  <div>
-                    <strong>Ambient UX</strong>
-                    <p>Designing interfaces that breathe, dim, and respond like living spaces.</p>
-                  </div>
-                  <span>2025</span>
-                </div>
-                <div class="list-item">
-                  <div>
-                    <strong>Playable prototyping</strong>
-                    <p>Building micro-interactions that feel like small instruments.</p>
-                  </div>
-                  <span>Now</span>
-                </div>
-                <div class="list-item">
-                  <div>
-                    <strong>Writing the process</strong>
-                    <p>Documenting the edges where art direction meets code.</p>
-                  </div>
-                  <span>Weekly</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading">
-            <h2>Recent explorations</h2>
-            <a class="button small secondary" href="about.html">More about me</a>
-          </div>
-          <div class="grid">
-            <div class="card">
-              <span class="pill">Visual systems</span>
-              <h3>Designing with rhythm</h3>
-              <p>Grid systems, typography, and color that flow together like a quiet score.</p>
-            </div>
-            <div class="card">
-              <span class="pill">Interaction</span>
-              <h3>Micro-motion craft</h3>
-              <p>Subtle transitions and responsive states to guide people without noise.</p>
-            </div>
-            <div class="card">
-              <span class="pill">Prototyping</span>
-              <h3>Live concepts</h3>
-              <p>Code-driven prototypes that let ideas be felt before they are built.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading">
-            <h2>Latest writing</h2>
-            <a class="button small secondary" href="blogs.html">Browse all blogs</a>
-          </div>
-          <div class="blog-grid">
-            <a class="blog-card" href="blog/dreaming-in-sand.html">
-              <div class="title-line">
-                <span class="pill">Process</span>
-                <span class="meta">5 min read</span>
-              </div>
-              <h3>Dreaming in Sandboxes</h3>
-              <p>Sketching with code until ideas crystallize into playful interfaces.</p>
-              <span class="read-link">Read the story →</span>
-            </a>
-            <a class="blog-card" href="blog/quiet-interfaces.html">
-              <div class="title-line">
-                <span class="pill">Interface</span>
-                <span class="meta">4 min read</span>
-              </div>
-              <h3>Echoes of Quiet Interfaces</h3>
-              <p>How restraint, depth, and light can make digital products feel serene.</p>
-              <span class="read-link">Read the story →</span>
-            </a>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading">
-            <h2>Projects snapshot</h2>
-            <a class="button small secondary" href="projects.html">See full projects</a>
-          </div>
-          <div class="grid">
-            <div class="project-card">
-              <div class="pill">Experiential</div>
-              <h3>Chromatic Atlas</h3>
-              <p>A living map of moods, colors, and sound cues that shift with each visit.</p>
-              <div class="stack">
-                <span>GSAP</span><span>Canvas</span><span>Web Audio</span>
-              </div>
-              <a class="cta" href="projects.html">View details →</a>
-            </div>
-            <div class="project-card">
-              <div class="pill">Product</div>
-              <h3>Signal Journal</h3>
-              <p>An interface for slow-note taking with ambient feedback and gentle motion.</p>
-              <div class="stack">
-                <span>TypeScript</span><span>Design Systems</span><span>Animations</span>
-              </div>
-              <a class="cta" href="projects.html">View details →</a>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <footer class="footer container">
-        <div>Crafted with intention and curiosity.</div>
-        <div>© 2025 Abstract Studio</div>
-      </footer>
-    </main>
-  </div>
+    <div class="home-footnote">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      <span>New sessions drift in slowly. Selected work and writing stay quiet until you step closer.</span>
+    </div>
+  </main>
 </body>
 </html>

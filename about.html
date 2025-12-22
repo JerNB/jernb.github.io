@@ -6,100 +6,66 @@
   <title>About | Abstract Studio</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="atmo">
   <div class="layout">
     <aside class="sidebar">
       <a class="brand" href="index.html">
-        <span class="brand-mark">AS</span>
-        <span class="brand-name">Abstract Studio</span>
+        <span class="brand-mark">JW</span>
+        <span class="brand-name">Jerry Wu</span>
       </a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a class="active" href="about.html">About</a>
-        <a href="blogs.html">Blogs</a>
-        <a href="projects.html">Projects</a>
-      </div>
-      <a class="button small secondary" href="mailto:hello@abstract.studio">Say hello</a>
+      <nav class="nav-links">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link active" href="about.html">About</a>
+        <a class="nav-link" href="blogs.html">Blogs</a>
+        <a class="nav-link" href="performance.html">Performance</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link" href="mailto:hello@abstract.studio">Say hello</a>
+      </nav>
     </aside>
 
     <main class="content">
       <div class="container">
-        <section class="hero">
-          <div class="hero-grid">
-            <div>
-              <div class="eyebrow"><span class="dot"></span>About me</div>
-              <h1 class="title">Designer, prototyper, writer</h1>
-              <p class="lede">I care about interfaces that feel intentional and kind. I balance strategy and craft: framing the problem, shaping the system, and then refining the tiniest motion so everything feels alive yet quiet.</p>
-              <div class="tags">
-                <span class="tag">Product design</span>
-                <span class="tag">Art direction</span>
-                <span class="tag">Prototyping</span>
-                <span class="tag">Storytelling</span>
-              </div>
+        <section class="section" style="border-top:none;padding-top:0;">
+          <div class="cards" style="grid-template-columns: 320px 1fr; align-items:start;">
+            <div style="display:grid;gap:12px;">
+              <div class="hero-portrait" aria-label="Portrait placeholder for Jerry Wu"></div>
+              <div class="muted-note">Jerry Wu · vocalist, data and design</div>
             </div>
-            <div class="panel">
-              <h3>Quick facts</h3>
-              <div class="list">
-                <div class="list-item"><strong>Location</strong><span>Somewhere near the ocean</span></div>
-                <div class="list-item"><strong>Working on</strong><span>Calm interfaces & interactive essays</span></div>
-                <div class="list-item"><strong>Favorite tools</strong><span>Figma, VS Code, Notion, pencils</span></div>
-                <div class="list-item"><strong>Reach me</strong><span>hello@abstract.studio</span></div>
-              </div>
+            <div style="display:grid;gap:14px;">
+              <h1>Blending stage, spreadsheets, and screens.</h1>
+              <p>I sing for Six Drowners and write songs that travel between noise and stillness. Offstage, I build risk-aware finance tools and design interfaces that prefer clarity over spectacle.</p>
+              <p>I borrow structure from data, rhythm from music, and atmosphere from visual design. Whether it’s a setlist or a roadmap, I think in pacing, dynamic range, and the small gestures that keep people engaged without being loud.</p>
+              <p>When collaborating, I move from sketches to quick prototypes, then tighten the details—type, timing, and how each click feels. I like work that is calm on the surface but precise underneath.</p>
             </div>
           </div>
         </section>
 
         <section class="section">
-          <div class="section-heading">
-            <h2>How I work</h2>
-          </div>
-          <div class="grid">
-            <div class="card">
-              <span class="pill">Systems</span>
-              <h3>Shape the language</h3>
-              <p>I define patterns, spacing, and motion rules so every surface speaks the same visual dialect.</p>
-            </div>
-            <div class="card">
-              <span class="pill">Exploration</span>
-              <h3>Prototype early</h3>
-              <p>Ideas become tangible quickly with code and motion, making decisions feel intuitive.</p>
-            </div>
-            <div class="card">
-              <span class="pill">Delivery</span>
-              <h3>Ship with clarity</h3>
-              <p>Detailed specs, paired reviews, and thoughtful documentation keep teams in sync.</p>
-            </div>
-          </div>
+          <blockquote style="font-size:22px; line-height:1.4; margin:0;">“Music teaches me pacing; data teaches me consequence. Design is where both become choices people can feel.”</blockquote>
         </section>
 
         <section class="section">
-          <div class="section-heading">
-            <h2>Recent highlights</h2>
-          </div>
-          <div class="grid">
-            <div class="project-card">
-              <div class="pill">Experience</div>
-              <h3>Immersive onboarding</h3>
-              <p>A guided flow that uses gentle gradients and breathing motion to welcome new users.</p>
-              <div class="stack">
-                <span>Motion design</span><span>Copywriting</span>
-              </div>
+          <h2>Milestones</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="meta">2025 · Six Drowners</div>
+              <h3>European micro-tour</h3>
+              <p>Built a live set that alternates quiet builds with sharp peaks; recorded board mixes for later analysis.</p>
             </div>
-            <div class="project-card">
-              <div class="pill">Systems</div>
-              <h3>Interface kit refresh</h3>
-              <p>Built a modern design system with purposeful typography and expressive color ramps.</p>
-              <div class="stack">
-                <span>Design tokens</span><span>Accessibility</span>
-              </div>
+            <div class="timeline-item">
+              <div class="meta">2024 · StatsifyFinance</div>
+              <h3>Risk index launch</h3>
+              <p>Designed a web tool that treats risk like tempo, using clear timelines and repeatable motifs.</p>
             </div>
-            <div class="project-card">
-              <div class="pill">Writing</div>
-              <h3>Interactive essay</h3>
-              <p>A narrative about quiet software, told through scrollytelling and responsive type.</p>
-              <div class="stack">
-                <span>Storyboarding</span><span>Frontend</span>
-              </div>
+            <div class="timeline-item">
+              <div class="meta">2024 · Design</div>
+              <h3>Quiet interface kit</h3>
+              <p>A small library of ghost buttons, timelines, and type patterns for calm product surfaces.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="meta">Earlier</div>
+              <h3>Competitions & sessions</h3>
+              <p>Vocals for regional competitions, session work for indie projects, and a handful of web experiments.</p>
             </div>
           </div>
         </section>
@@ -107,7 +73,7 @@
 
       <footer class="footer container">
         <div>Let’s build something thoughtful together.</div>
-        <div>© 2025 Abstract Studio</div>
+        <div>© 2025 Jerry Wu</div>
       </footer>
     </main>
   </div>
