@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Jerry Wu</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Larger nav links for Contact page */
+    .atmo .nav-link {
+      font-size: 15px;
+      padding: 10px 0;
+    }
+
+    /* Brand with logo */
+    .atmo .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .atmo .brand-logo {
+      width: 28px;
+      height: 28px;
+      color: #5c5a55;
+      transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1);
+    }
+
+    .atmo .brand:hover .brand-logo {
+      color: #3d3a36;
+      transform: scale(1.05);
+    }
+
+    /* Contact page centered layout */
+    .contact-wrapper {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-card {
+      text-align: center;
+      max-width: 480px;
+      padding: 48px 40px;
+    }
+
+    .contact-card h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 4vw, 44px);
+    }
+
+    .contact-card .intro {
+      margin: 0 0 40px;
+      color: #6d6b66;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 24px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .contact-item {
+      display: grid;
+      gap: 6px;
+    }
+
+    .contact-label {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8e8c86;
+    }
+
+    .contact-value {
+      font-family: 'Cormorant Garamond', 'Space Grotesk', 'Inter', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #2c2a26;
+    }
+
+    .contact-value a {
+      color: #2c2a26;
+      text-decoration: none;
+      position: relative;
+      transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1);
+    }
+
+    .contact-value a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      opacity: 0;
+      transform: scaleX(0.4);
+      transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1);
+    }
+
+    .contact-value a:hover {
+      color: #5c5a55;
+    }
+
+    .contact-value a:hover::after {
+      opacity: 0.45;
+      transform: scaleX(1);
+    }
+  </style>
+</head>
+<body class="atmo">
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="index.html">
+        <!-- Music note + ripple logo -->
+        <svg class="brand-logo" viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+          <circle cx="18" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <path d="M20 8 L20 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <ellipse cx="17" cy="23" rx="4" ry="3" fill="currentColor" opacity="0.65" transform="rotate(-20 17 23)"/>
+          <path d="M20 8 Q26 10 24 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+        <span class="brand-name">Jerry Wu</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="blogs.html">Blogs</a>
+        <a class="nav-link" href="performance.html">Performance</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link active" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="container">
+        <div class="contact-wrapper">
+          <div class="contact-card">
+            <h1>Get in Touch</h1>
+            <p class="intro">Have a project in mind, want to collaborate, or just say hello? I'd love to hear from you.</p>
+            
+            <ul class="contact-list">
+              <li class="contact-item">
+                <span class="contact-label">Email</span>
+                <span class="contact-value">
+                  <a href="mailto:Jerry.yr.wu@gmail.com">Jerry.yr.wu@gmail.com</a>
+                </span>
+              </li>
+              <li class="contact-item">
+                <span class="contact-label">GitHub</span>
+                <span class="contact-value">
+                  <a href="https://github.com/JerNB" target="_blank" rel="noopener">github.com/JerNB</a>
+                </span>
+              </li>
+              <li class="contact-item">
+                <span class="contact-label">StatsifyFinance</span>
+                <span class="contact-value">
+                  <a href="#" target="_blank" rel="noopener">statsifyfinance.com</a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer container">
+        <div>Let's build something thoughtful together.</div>
+        <div>© 2025 Jerry Wu</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

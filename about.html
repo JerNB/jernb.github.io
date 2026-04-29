@@ -3,14 +3,208 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About | Abstract Studio</title>
+  <title>About | Jerry Wu</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Larger nav links for About page */
+    .atmo .nav-link {
+      font-size: 15px;
+      padding: 10px 0;
+    }
+
+    /* Brand with logo */
+    .atmo .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .atmo .brand-logo {
+      width: 28px;
+      height: 28px;
+      color: #5c5a55;
+      transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1);
+    }
+
+    .atmo .brand:hover .brand-logo {
+      color: #3d3a36;
+      transform: scale(1.05);
+    }
+
+    /* Simple dot list styling */
+    .dot-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      color: #5c5a55;
+      line-height: 1.8;
+    }
+
+    .dot-list span:not(:last-child)::after {
+      content: '\00B7';
+      margin-left: 20px;
+      color: #8e8c86;
+    }
+
+    /* Bullet list for longer items */
+    .bullet-list {
+      display: grid;
+      gap: 10px;
+      color: #5c5a55;
+      line-height: 1.8;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .bullet-list li {
+      list-style: none;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .bullet-list li::before {
+      content: '\00B7';
+      color: #8e8c86;
+      font-size: 18px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .bullet-list strong {
+      color: #2c2a26;
+    }
+
+    /* Two-column layout: content + gallery align to "Outside the Screen" */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      grid-template-rows: auto auto;
+      gap: 0 40px;
+      align-items: stretch;
+    }
+
+    .about-content-main {
+      display: grid;
+      gap: 0;
+    }
+
+    .about-content-footer {
+      grid-column: 1 / -1;
+    }
+
+    /* Image gallery on the right - stretches to match content height, space between images */
+    .about-gallery {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 0;
+      align-self: stretch;
+    }
+
+    .about-gallery > .gallery-item {
+      flex-shrink: 0;
+    }
+
+    .about-gallery img {
+      width: 100%;
+      display: block;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid #e8e6e2;
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1);
+    }
+
+    .gallery-item img {
+      position: relative;
+      z-index: 1;
+      filter: sepia(0.35) saturate(0.75) hue-rotate(-8deg) contrast(0.9);
+      transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1);
+    }
+
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.03),
+          rgba(0, 0, 0, 0.03) 1px,
+          rgba(255, 255, 255, 0.03) 1px,
+          rgba(255, 255, 255, 0.03) 2px
+        );
+      mix-blend-mode: soft-light;
+      opacity: 0.45;
+      pointer-events: none;
+      transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .gallery-item:hover img {
+      filter: none;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 0.2;
+    }
+
+    .gallery-caption {
+      position: relative;
+      z-index: 3;
+      font-size: 13px;
+      color: #8e8c86;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 860px) {
+      .about-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .about-gallery {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .about-gallery > .gallery-item {
+        flex: 1 1 140px;
+      }
+
+      .about-content-footer {
+        grid-column: 1;
+      }
+    }
+  </style>
 </head>
 <body class="atmo">
   <div class="layout">
     <aside class="sidebar">
       <a class="brand" href="index.html">
-        <span class="brand-mark">JW</span>
+        <!-- Music note + ripple logo -->
+        <svg class="brand-logo" viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+          <circle cx="18" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <path d="M20 8 L20 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <ellipse cx="17" cy="23" rx="4" ry="3" fill="currentColor" opacity="0.65" transform="rotate(-20 17 23)"/>
+          <path d="M20 8 Q26 10 24 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
         <span class="brand-name">Jerry Wu</span>
       </a>
       <nav class="nav-links">
@@ -19,63 +213,131 @@
         <a class="nav-link" href="blogs.html">Blogs</a>
         <a class="nav-link" href="performance.html">Performance</a>
         <a class="nav-link" href="projects.html">Projects</a>
-        <a class="nav-link" href="mailto:hello@abstract.studio">Say hello</a>
+        <a class="nav-link" href="contact.html">Contact</a>
       </nav>
     </aside>
 
     <main class="content">
       <div class="container">
-        <section class="section" style="border-top:none;padding-top:0;">
-          <div class="cards" style="grid-template-columns: 320px 1fr; align-items:start;">
-            <div style="display:grid;gap:12px;">
-              <div class="hero-portrait" aria-label="Portrait placeholder for Jerry Wu"></div>
-              <div class="muted-note">Jerry Wu · vocalist, data and design</div>
-            </div>
-            <div style="display:grid;gap:14px;">
-              <h1>Blending stage, spreadsheets, and screens.</h1>
-              <p>I sing for Six Drowners and write songs that travel between noise and stillness. Offstage, I build risk-aware finance tools and design interfaces that prefer clarity over spectacle.</p>
-              <p>I borrow structure from data, rhythm from music, and atmosphere from visual design. Whether it’s a setlist or a roadmap, I think in pacing, dynamic range, and the small gestures that keep people engaged without being loud.</p>
-              <p>When collaborating, I move from sketches to quick prototypes, then tighten the details—type, timing, and how each click feels. I like work that is calm on the surface but precise underneath.</p>
-            </div>
-          </div>
-        </section>
+        <div class="about-layout">
+          <!-- Main content on the left (through Outside the Screen) -->
+          <div class="about-content-main">
+            <!-- Hero section with intro -->
+            <section class="section" style="border-top:none;padding-top:0;">
+              <div style="display:grid;gap:14px;text-align:left;">
+                <p class="muted-note" style="font-style:italic; margin-bottom:-6px;">Quiet work, loud meaning</p>
+                <h1>Hi! I'm Jerry.</h1>
+                <p>My full Chinese Name is Yanrui Wu. I'm a senior from a high school in China and an incoming Duke class of 2030.</p>
+                <p>I build risk-aware finance tools and interfaces that move like music. I sing and write original songs with Six Drowners.</p>
+                <p>I borrow structure from data, rhythm from music, and atmosphere from visual design. Whether it's a setlist or a roadmap, I think in pacing, dynamic range, and small gestures that keep people engaged without being loud.</p>
+              </div>
+            </section>
 
-        <section class="section">
-          <blockquote style="font-size:22px; line-height:1.4; margin:0;">“Music teaches me pacing; data teaches me consequence. Design is where both become choices people can feel.”</blockquote>
-        </section>
+            <!-- What I'm working on now -->
+            <section class="section">
+              <h2>Now</h2>
+              <ul class="bullet-list">
+                <li>Building <strong>StatsifyFinance</strong>, a risk-first investing learning toolkit</li>
+                <li>Studying how algorithms shape attention, taste, and creative careers</li>
+                <li>Prototyping a Risk Communication Index for brokerage-style interfaces</li>
+              </ul>
+            </section>
 
-        <section class="section">
-          <h2>Milestones</h2>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="meta">2025 · Six Drowners</div>
-              <h3>European micro-tour</h3>
-              <p>Built a live set that alternates quiet builds with sharp peaks; recorded board mixes for later analysis.</p>
-            </div>
-            <div class="timeline-item">
-              <div class="meta">2024 · StatsifyFinance</div>
-              <h3>Risk index launch</h3>
-              <p>Designed a web tool that treats risk like tempo, using clear timelines and repeatable motifs.</p>
-            </div>
-            <div class="timeline-item">
-              <div class="meta">2024 · Design</div>
-              <h3>Quiet interface kit</h3>
-              <p>A small library of ghost buttons, timelines, and type patterns for calm product surfaces.</p>
-            </div>
-            <div class="timeline-item">
-              <div class="meta">Earlier</div>
-              <h3>Competitions & sessions</h3>
-              <p>Vocals for regional competitions, session work for indie projects, and a handful of web experiments.</p>
-            </div>
+            <!-- Things I've built -->
+            <section class="section">
+              <h2>I've Built</h2>
+              <ul class="bullet-list">
+                <li><strong>StatsifyFinance</strong> &#8212; lessons, tools, and experiments that make risk visible</li>
+                <li><strong>School Business &amp; Economics Club</strong> &#8212; sessions and frameworks that teach how to think, not what to think</li>
+                <li><strong>YouMe</strong> &#8212; a student live-house network helping bands perform in real venues</li>
+                <li><strong>Music ML research</strong> &#8212; Predicting Hit Songs, an exploratory study on audio features and model tradeoffs (published in Scholarly Review)</li>
+                <li><strong>Data work</strong> &#8212; small models and analyses that turn messy signals into decisions</li>
+              </ul>
+            </section>
+
+            <!-- Values -->
+            <section class="section">
+              <h2>I Care About</h2>
+              <div class="dot-list">
+                <span>Texture over noise</span>
+                <span>Craft over speed</span>
+                <span>Clarity without losing emotion</span>
+                <span>Systems that respect people</span>
+                <span>Risk that is explained, not hidden</span>
+              </div>
+            </section>
+
+            <!-- Interests -->
+            <section class="section">
+              <h2>I'm Drawn To</h2>
+              <ul class="bullet-list">
+                <li>Music structure: rhythm, silence, tension, release</li>
+                <li>Interfaces that feel physical, like paper and film grain</li>
+                <li>Data science that explains instead of impresses</li>
+                <li>Recommendation systems and the economics of exposure</li>
+                <li>Tools that teach judgment, not just answers</li>
+              </ul>
+            </section>
+
+            <!-- Outside the screen -->
+            <section class="section">
+              <h2>Outside the Screen</h2>
+              <div class="dot-list">
+                <span>Writing and recording</span>
+                <span>Live performance</span>
+                <span>Long walks with headphones</span>
+                <span>Small rituals, slow thinking</span>
+              </div>
+            </section>
           </div>
-        </section>
+
+          <!-- Image gallery on the right (aligns with content through Outside the Screen) -->
+          <aside class="about-gallery">
+            <div class="gallery-item">
+              <img src="Image/1.JPEG" alt="Jerry Wu">
+              <p class="gallery-caption">Jerry Wu • vocalist, data and design</p>
+            </div>
+            <div class="gallery-item">
+              <img src="Image/2.JPEG" alt="Jerry Wu">
+            </div>
+            <div class="gallery-item">
+              <img src="Image/3.JPEG" alt="Jerry Wu">
+            </div>
+            <div class="gallery-item">
+              <img src="Image/4.JPEG" alt="Jerry Wu">
+            </div>
+            <div class="gallery-item">
+              <img src="Image/5.jpg" alt="Jerry Wu">
+            </div>
+          </aside>
+
+          <!-- Get in Touch full width below -->
+          <div class="about-content-footer">
+            <section class="section">
+              <h2>Get in Touch</h2>
+              <div style="display:grid; gap:12px;">
+                <p style="margin:0;"><strong>Email:</strong> <a href="mailto:Jerry.yr.wu@gmail.com" class="ghost-link">Jerry.yr.wu@gmail.com</a></p>
+                <div class="dot-list">
+                  <span><a href="https://github.com/JerNB" class="ghost-link" target="_blank" rel="noopener">GitHub</a></span>
+                  <span><a href="https://www.instagram.com/" class="ghost-link" target="_blank" rel="noopener">Instagram</a></span>
+                  <span><a href="https://soundcloud.com/" class="ghost-link" target="_blank" rel="noopener">SoundCloud</a></span>
+                  <span><a href="https://www.linkedin.com/" class="ghost-link" target="_blank" rel="noopener">LinkedIn</a></span>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
       </div>
 
       <footer class="footer container">
-        <div>Let’s build something thoughtful together.</div>
-        <div>© 2025 Jerry Wu</div>
+        <div>Let's build something thoughtful together.</div>
+        <div>漏 2025 Jerry Wu</div>
       </footer>
     </main>
   </div>
 </body>
 </html>
+
+
+
+
