@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify: Data Science and the Economics of Listening | Jerry Wu</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="atmo">
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="../index.html">
+        <svg class="brand-logo" viewBox="0 0 36 36" aria-hidden="true" style="width: 28px; height: 28px; color: #5c5a55;">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+          <circle cx="18" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <path d="M20 8 L20 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <ellipse cx="17" cy="23" rx="4" ry="3" fill="currentColor" opacity="0.65" transform="rotate(-20 17 23)"/>
+          <path d="M20 8 Q26 10 24 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+        <span class="brand-name">Jerry Wu</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link" href="../index.html">Home</a>
+        <a class="nav-link" href="../about.html">About</a>
+        <a class="nav-link active" href="../blogs.html">Blogs</a>
+        <a class="nav-link" href="../performance.html">Performance</a>
+        <a class="nav-link" href="../projects.html">Projects</a>
+        <a class="nav-link" href="../contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="container">
+        <header class="post-header">
+          <div>
+            <h1>Spotify: Data Science and the Economics of Listening</h1>
+          </div>
+          <div class="meta">Jun 9, 2025 · Music, Data</div>
+        </header>
+        
+        <section class="post-body">
+          <p>Founded in Sweden in 2006, Spotify is the world's largest music streaming platform. Its core product offers seamless access to music, podcasts, and audiobooks, with personalized recommendations, shareable playlists, and multi-device support. The experience is free (ad-supported) or paid (subscription-based), depending on the tier.</p>
+
+          <img src="Spotify_2569/images/image1.jpg" alt="Spotify interface" style="max-width: 100%; height: auto; margin: 20px 0;">
+
+          <p>But in a fiercely competitive market, how did Spotify carve out global dominance? The answer lies in how it thinks like a data company, not just a music one.</p>
+
+          <h2>Revenue Model: Subscriptions First, Ads Second</h2>
+          <p>Spotify's business is built on two pillars: subscriptions and ads. In 2024, subscriptions generated roughly 87% of total revenue (€13.8 billion), while ads contributed about 12% (€1.85 billion). Free-tier users may not pay, but their behavioral data trains Spotify's algorithms and forms the pipeline for future conversions.</p>
+
+          <img src="Spotify_2569/images/image3.jpg" alt="Spotify revenue breakdown" style="max-width: 100%; height: auto; margin: 20px 0;">
+          <p style="font-size: 14px; color: #8e8c86; font-style: italic; text-align: center; margin-top: -10px;">Spotify Simplified Income Statement: Orange section represents advertising revenue; Yellow section represents subscription revenue.</p>
+
+          <p>However, nearly 60% of that income (€10 billion) was paid out in royalties to rights holders. That makes it clear: Spotify's success hinges not just on revenue growth, but on <strong>retaining users, maximizing listening time, and running lean infrastructure.</strong></p>
+
+          <p>They've hit a turning point. In 2024, Spotify recorded a €114 million profit. This came not from explosive revenue but from operational leverage:</p>
+
+          <ul>
+            <li><strong>Infrastructure costs dropped</strong> thanks to <em>Scio</em>, their self-built data API with elastic scheduling, which reduced wasted compute during peak loads.</li>
+            <li><strong>Ad efficiency rose</strong> after launching <em>Spotify Ad Exchange</em>, boosting ad fill rates from 78% to 92%.</li>
+            <li><strong>ARPU improved</strong> as HiFi and Duo tiers lifted average revenue per user from €4.4 to €4.7, with churn held flat.</li>
+          </ul>
+
+          <p>Data is what powers all three of these moves.</p>
+
+          <h2>The Data Pipeline: Real-Time Feedback at Scale</h2>
+          <p>Picture this: You stream <em>Bohemian Rhapsody</em> at midnight. That single action spawns an <strong>Avro event</strong> with over 60 data points — track ID, volume level, device type, and whether you're on Bluetooth or cellular. On a peak day, Spotify handles <strong>trillions of such events.</strong></p>
+
+          <p>These events go to Kafka queues, then flow into Google Pub/Sub for cloud processing. End-to-end latency: 1–3 seconds. In practical terms, by the time you hit "next track," Spotify already knows you were getting bored.</p>
+
+          <p>On the backend, a unified processing engine handles both real-time and batch data. This allows the same system to:</p>
+
+          <ul>
+            <li>Push real-time homepage updates in under 2 minutes.</li>
+            <li>Aggregate petabytes of logs for annual retrospectives.</li>
+          </ul>
+
+          <p>At the heart of this system is Spotify's <em>recommendation engine</em>, which operates like <strong>three fishing nets</strong>:</p>
+
+          <ul>
+            <li><strong>Collaborative filtering</strong> breaks down 100 million users and 100 million songs into 100-dimensional vectors, surfacing your likely favorites based on shared patterns.</li>
+            <li><strong>Content-based filtering</strong> analyzes audio features (like Mel spectrograms) with convolutional neural nets and digests lyrics with NLP. Within 15 minutes of upload, new songs get fully tagged.</li>
+            <li><strong>Social graphs</strong> pick up shared listening habits, playlist overlaps, and editorial highlights to inject serendipity and range.</li>
+          </ul>
+
+          <img src="Spotify_2569/images/image2.jpg" alt="Recommendation engine diagram" style="max-width: 100%; height: auto; margin: 20px 0;">
+
+          <p>Together, these nets generate about <strong>60,000 candidate tracks</strong>, which then get ranked by a <em>Transformer model</em> that balances <strong>completion rate, skip rate, and save rate</strong> to pick 30 songs for your Daily Mix.</p>
+
+          <p>Every tap — fast forward, like, skip — feeds back into the system. The user vector updates in real time. This feedback loop can raise long-tail song completion by 9% and boost conversion from free to paid users by 1.4%. A seemingly small change, but across hundreds of millions of users, it translates into tens of millions of euros.</p>
+
+          <h2>Why Spotify Stays Ahead</h2>
+
+          <img src="Spotify_2569/images/image4.jpg" alt="Music streaming market share" style="max-width: 100%; height: auto; margin: 20px 0;">
+          <p style="font-size: 14px; color: #8e8c86; font-style: italic; text-align: center; margin-top: -10px;">Current approximate market share distribution in the streaming music market</p>
+
+          <p>Spotify doesn't just use data — it owns the <strong>entire stack</strong>: from ingestion pipelines to model training, to experimentation platforms. That vertical control is rare in the streaming space. It lets them:</p>
+
+          <ul>
+            <li>React fast to user behavior.</li>
+            <li>Run controlled experiments at scale.</li>
+            <li>Give artists detailed insights into their audience — feeding back into the ecosystem.</li>
+          </ul>
+
+          <p>Their open creator ecosystem and precision algorithms are what differentiate Spotify from other platforms locked into content deals or recommendation black boxes.</p>
+
+          <h2>Future Trends: Where the Music is Headed</h2>
+          <p>Spotify is already betting on the next frontier of music:</p>
+
+          <ul>
+            <li><strong>Generative AI</strong>: Tools now let users describe a mood or scene to instantly generate a custom playlist. Spotify is internally testing <em>AI Playlists</em> with prompt-based recommendations.</li>
+            <li><strong>On-chain royalties</strong>: Smart contracts allow royalties to be split and distributed automatically. Future music rights could be bought in micro-shares, allowing individuals to invest in 0.01% of a song's earnings.</li>
+            <li><strong>Immersive live shows</strong>: VR/AR-powered concerts with NFT ticketing are creating new monetization channels and brand opportunities beyond physical venues.</li>
+          </ul>
+
+          <p>All of these trends challenge the boundaries of what it means to "stream" music. But Spotify's bet is clear: <strong>own the data, and you own the future of sound.</strong></p>
+        </section>
+      </div>
+
+      <footer class="footer container">
+        <div>Jerry Wu — music, data, design.</div>
+        <div>© 2025</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
