@@ -1349,7 +1349,7 @@ body.home a:focus-visible {
   gap: 12px;
   width: min(800px, 82vw);
   max-width: 800px;
-  margin-left: max(9vw, calc((100vw - 1120px) / 2));
+  margin-left: max(calc(9vw - 8px), calc((100vw - 1120px) / 2 - 8px));
   margin-right: auto;
   min-width: 0;
   position: relative;
@@ -1405,7 +1405,7 @@ body.home a:focus-visible {
   margin: 0;
   font-family: 'Cormorant Garamond', 'Space Grotesk', 'Inter', serif;
   max-width: 800px;
-  font-size: clamp(54px, 5.7vw, 80px);
+  font-size: clamp(52px, 5.4vw, 76px);
   font-weight: 400;
   line-height: 1.02;
   color: #211f1c;
@@ -1477,9 +1477,9 @@ body.home a:focus-visible {
 
 .home-links {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(22px, 4vw, 56px);
-  width: min(1120px, 84vw);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 42px);
+  width: min(1320px, 86vw);
   max-width: none;
   margin: 0 auto;
 }
@@ -1489,7 +1489,7 @@ body.home a:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-height: 140px;
+  min-height: 126px;
   padding: 0 0 18px;
   color: var(--home-ink);
   text-decoration: none;
@@ -1529,38 +1529,16 @@ body.home a:focus-visible {
 
 .link-main {
   font-family: 'Cormorant Garamond', 'Space Grotesk', 'Inter', serif;
-  font-size: clamp(26px, 3vw, 36px);
+  font-size: clamp(24px, 2.2vw, 34px);
   letter-spacing: -0.01em;
   line-height: 1.2;
   font-weight: 400;
 }
 
 .link-sub {
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--home-muted);
   opacity: 0.7;
-}
-
-.home-footnote {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  color: var(--home-soft);
-  font-size: 14px;
-  width: min(1120px, 84vw);
-  max-width: none;
-  margin: 42px auto 0;
-  line-height: 1.6;
-}
-
-.pulse-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--home-accent);
-  opacity: 0.6;
-  box-shadow: 0 0 18px rgba(124, 130, 145, 0.6);
-  animation: pulse 3.8s ease-in-out infinite;
 }
 
 @keyframes subtle-grain {
@@ -1714,10 +1692,6 @@ body.home a:focus-visible {
 
   .home-menu-section {
     padding: 40px 0 68px;
-  }
-
-  .home-footnote {
-    width: min(310px, calc(100vw - 56px));
   }
 
   .pool-vignette {
