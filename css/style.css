@@ -841,6 +841,56 @@ img {
   letter-spacing: 0.04em;
 }
 
+.blog-page .timeline {
+  border-left-color: rgba(122, 126, 132, 0.18);
+  gap: 34px;
+}
+
+.blog-page .timeline::before {
+  background: linear-gradient(180deg, rgba(122, 126, 132, 0.08), rgba(122, 126, 132, 0.22), rgba(122, 126, 132, 0.06));
+}
+
+.blog-page .timeline-item {
+  padding-left: 16px;
+  transition: color 360ms ease;
+}
+
+.blog-page .timeline-item::before {
+  display: none;
+}
+
+.blog-page .timeline-item:hover,
+.blog-page .timeline-item:focus-within {
+  color: #151410;
+}
+
+.blog-page .timeline-item h3 a {
+  display: inline;
+  color: rgba(44, 42, 38, 0.82);
+  background-image:
+    linear-gradient(90deg, rgba(29, 28, 25, 0.72), rgba(120, 126, 132, 0.18)),
+    linear-gradient(90deg, rgba(127, 132, 135, 0.14), rgba(127, 132, 135, 0.05));
+  background-position: 0 100%, 0 62%;
+  background-repeat: no-repeat;
+  background-size: 0 1px, 100% 0.46em;
+  text-shadow: 0 8px 24px rgba(74, 78, 80, 0.12);
+  transition: color 360ms ease, background-size 420ms cubic-bezier(0.28, 0.6, 0.2, 1), text-shadow 420ms ease, filter 420ms ease;
+}
+
+.blog-page .timeline-item h3 a:hover,
+.blog-page .timeline-item h3 a:focus-visible {
+  color: #151410;
+  background-size: 100% 1px, 100% 0.58em;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6),
+    0 12px 30px rgba(57, 60, 62, 0.24);
+  filter: contrast(1.06);
+}
+
+.blog-page .timeline-item h3 a:focus-visible {
+  outline: none;
+}
+
 .atmo .ghost-link,
 .atmo .blog-preview a,
 .atmo .project-card a {
@@ -1566,6 +1616,12 @@ body.home a:focus-visible {
   .pool-vignette {
     animation: none;
     transform: none;
+  }
+
+  .blog-page .timeline-item,
+  .blog-page .timeline-item::before,
+  .blog-page .timeline-item h3 a {
+    transition: none;
   }
 }
 
