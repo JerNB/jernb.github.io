@@ -962,6 +962,15 @@ body.home {
   min-height: 100vh;
 }
 
+@supports (background-image: image-set(url("") type("image/webp"))) {
+  body.home {
+    --pool-image: image-set(
+      url('../images/ink-pool-home-1600.webp') type("image/webp"),
+      url('../images/ink-pool-home.png') type("image/png")
+    );
+  }
+}
+
 .home-page {
   min-height: 100vh;
   background: #f7f7f4;
@@ -1634,6 +1643,15 @@ body.home a:focus-visible {
 }
 
 @media (max-width: 640px) {
+  @supports (background-image: image-set(url("") type("image/webp"))) {
+    body.home {
+      --pool-image: image-set(
+        url('../images/ink-pool-home-900.webp') type("image/webp"),
+        url('../images/ink-pool-home.png') type("image/png")
+      );
+    }
+  }
+
   .nav-links {
     grid-auto-flow: row;
     grid-auto-columns: unset;
