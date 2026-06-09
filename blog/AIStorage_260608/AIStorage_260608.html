@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Exactly Is Storage Doing in the AI Era? | Jerry Wu</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body class="atmo">
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark">JW</span>
+        <span class="brand-name">Jerry Wu</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link" href="../../index.html">Home</a>
+        <a class="nav-link" href="../../about.html">About</a>
+        <a class="nav-link active" href="../../blogs.html">Blogs</a>
+        <a class="nav-link" href="../../performance.html">Performance</a>
+        <a class="nav-link" href="../../projects.html">Projects</a>
+        <a class="nav-link" href="../../contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="container">
+        <header class="post-header">
+          <div>
+            <h1>What Exactly Is Storage Doing in the AI Era?</h1>
+          </div>
+          <div class="meta">Jun 8, 2026 &middot; AI, Storage, Investing</div>
+        </header>
+
+        <section class="post-body">
+          <img src="images/ai-storage-data-flow.png" alt="AI data center with data flowing between memory, SSDs, HDDs, and cloud storage" style="width: 100%; height: auto; margin: 8px 0 18px;">
+
+          <p>When we talk about AI infrastructure, the first thing that usually comes to mind is GPUs. GPUs handle computation. They are what actually make models run. But if we only look at GPUs, it is easy to overlook another increasingly important question: where does the data come from, where is it stored, how is it delivered quickly to the GPU, and how is it saved after computation is complete? AI is never an isolated computing machine. It is a continuously flowing data system. No matter how powerful a GPU is, if it cannot get the data it needs, it can only wait.</p>
+
+          <p>So AI storage is no longer simply about adding more hard drive capacity. It now performs three core functions: storing data, moving data, and managing data. Training data, model files, and user interaction records need to be stored; the data required by GPUs must be delivered quickly; and enterprises also need to know which data can be used and whether recovery is possible when problems occur. In the past, storage was mostly back-end infrastructure. In the AI era, it has begun to directly affect training efficiency, inference speed, and overall cost.</p>
+
+          <p>The best way to understand AI storage is to first understand the flow of data. The closer data is to the GPU, the higher the speed requirement and the higher the cost. The farther data is from the GPU, the greater the capacity requirement and the more important cost becomes. The hottest data sits in HBM and DRAM, warm data sits in SSDs, cold data moves into HDDs and object storage, while controllers, software, and system platforms connect these layers together.</p>
+
+          <h2>Layer One: HBM and DRAM, the Memory Layer Closest to the GPU</h2>
+          <img src="images/hbm-dram-memory-layer.png" alt="GPU package with nearby HBM stacks and DRAM modules moving data at high speed" style="width: 100%; height: auto; margin: 6px 0 14px;">
+
+          <p>Closest to computation are HBM and DRAM. They solve the same problem: allowing the GPU to access data in time.</p>
+
+          <p>During training and inference, GPUs need to constantly read model parameters, intermediate results, and context information. If data transfer speed cannot keep up, even the most expensive GPU will end up waiting. HBM can be understood as high-speed memory attached right next to the GPU. It has limited capacity but extremely high speed. DRAM is the working memory on the server side, responsible for caching, scheduling, and various system tasks. Neither is a long-term storage device. Once power is lost, the data disappears. Their purpose is simple: to keep computation from being interrupted.</p>
+
+          <p>Many people easily confuse HBM and DRAM, but their roles are different. DRAM is general-purpose memory used by almost all servers. HBM, by contrast, is high-bandwidth memory specifically designed for high-performance computing. As model sizes grow larger, the amount of data GPUs need to read every second continues to increase, making the value of HBM increasingly clear.</p>
+
+          <p>The most representative company in this layer is SK hynix. In the past, many investors saw it as a traditional memory manufacturer. But in the AI era, its most important identity is actually as a leader in HBM. Over the past two years, the market has re-evaluated SK hynix largely because of HBM. The demand brought by AI data center expansion will not be distributed evenly among all memory manufacturers. It will flow first to companies capable of mass-producing advanced HBM.</p>
+
+          <p>Of course, HBM is still part of the semiconductor industry and cannot escape cyclicality over the long term. If competitors catch up quickly in the future, or if the industry over-expands capacity, margins may also come under pressure. But at the current stage, SK hynix controls a key link in the AI data flow that sits closest to the GPU.</p>
+
+          <h2>Layer Two: NAND and Enterprise SSDs, the High-Speed Persistent Storage Layer</h2>
+          <img src="images/nand-enterprise-ssd-layer.png" alt="Enterprise SSDs and NAND storage arrays moving AI data through server racks" style="width: 100%; height: auto; margin: 6px 0 14px;">
+
+          <p>If HBM and DRAM are responsible for the hottest data, the next reality AI faces is that there is simply too much data.</p>
+
+          <p>Training data, model checkpoints, vector databases, RAG document libraries, embeddings, and inference caches cannot be kept in memory for long periods because the cost is too high. But they also cannot be read slowly like archived data. As a result, SSDs have become the most important middle layer in AI data centers.</p>
+
+          <p>An SSD can be understood as a high-speed warehouse. It is slower than memory, but it has greater capacity, lower cost, and data remains intact after power is lost. Here, we need to distinguish between NAND and SSDs. NAND is flash memory, essentially a storage material. An SSD is the complete product formed by integrating NAND, controllers, firmware, and interfaces. It is like the relationship between steel and cars: NAND is the raw material, while the SSD is the final product.</p>
+
+          <p>One of the companies most worth watching in this layer is Micron. Unlike many storage companies, Micron covers DRAM, HBM, NAND, and enterprise SSDs at the same time, spanning almost the entire storage pyramid. It participates from the hottest data layer all the way to the high-speed persistent storage layer. Therefore, when AI infrastructure expands, Micron can often benefit from multiple sources of demand at once.</p>
+
+          <p>However, Micron also retains the typical cyclicality of the storage industry. Even if long-term AI demand continues to rise, short-term earnings and stock performance will still be affected by price fluctuations in DRAM and NAND. So when studying Micron, one needs to look not only at the AI investment cycle, but also at supply and demand across the broader storage industry.</p>
+
+          <p>Another company worth watching is Sandisk. Many people know it because of consumer storage cards and portable storage products, but from the perspective of the AI storage value chain, Sandisk is more like a company focused on NAND and SSDs. As AI data centers continue to demand more enterprise SSDs, it is effectively benefiting from the expansion of the entire high-speed storage layer.</p>
+
+          <p>Compared with Micron, whose business coverage is broader, Sandisk has a more focused logic. That often gives it greater upside when the industry cycle improves. Of course, it also means Sandisk is more directly affected by NAND prices and the business cycle of the SSD market.</p>
+
+          <h2>Layer Three: HDDs and Object Storage, the Low-Cost High-Capacity Layer</h2>
+          <img src="images/hdd-object-storage-layer.png" alt="High-capacity hard drives and archive storage representing cold AI data" style="width: 100%; height: auto; margin: 6px 0 14px;">
+
+          <p>The third layer is HDDs and object storage, or the low-cost high-capacity layer. AI generates massive amounts of raw data, video, speech, logs, synthetic data, historical model versions, backup copies, and archived data. It is impossible to store all of this on SSDs because the cost would be too high. HDDs are much slower than SSDs, but the cost per TB is lower, making them suitable for long-term storage of large amounts of cold data. Object storage is a way to manage massive amounts of unstructured data, making it suitable for data lakes, backups, archiving, cloud-native applications, and cross-system access.</p>
+
+          <p>This layer does not directly determine how fast GPUs run every second, but it determines whether AI companies can accumulate data assets at an affordable cost. AI's long-term competitiveness does not come only from the model itself. It also comes from data accumulation, cleaning, reuse, and protection.</p>
+
+          <p>The most representative company in this layer is Seagate.</p>
+
+          <p>Seagate does not sell speed. It sells capacity. Its core value lies in storing more and more data at a lower cost. HDDs may sound like an old industry, but behind high-capacity hard drives are highly precise platters, heads, mechanical control systems, and magnetic recording technologies. As long as AI continues to produce more data, the low-cost capacity layer will not disappear.</p>
+
+          <p>Many investors tend to think of HDDs as an old technology being replaced by SSDs, but that is not the reality. The development of AI increases not only hot data, but also cold data at an exponential scale. Datasets after training, historical model versions, logs, and backup files all need to be stored for the long term, and in these scenarios, demand for capacity is far greater than demand for speed.</p>
+
+          <p>Therefore, Seagate's investment logic is not "the revival of hard drives," but "the explosion of data." As long as the total amount of global data continues to grow, enterprises will need the lowest-cost way to store those assets. From this perspective, Seagate is more like a seller of data warehouses than simply a seller of hard drives.</p>
+
+          <h2>Layer Four: Controllers and Firmware, the Brain of SSDs</h2>
+          <img src="images/ssd-controller-firmware.png" alt="Central SSD controller chip coordinating NAND packages through precise signal paths" style="width: 100%; height: auto; margin: 6px 0 14px;">
+
+          <p>The fourth layer consists of controllers, firmware, interface protocols, and storage software. They are not the easiest parts for ordinary readers to see, but they are extremely important. NAND chips and HDD platters do not automatically become reliable enterprise-grade products on their own. SSDs need controllers to decide where data is written, how errors are corrected, how wear is reduced, and how latency is controlled. Firmware is responsible for making these rules run reliably over time. Put simply, controllers and firmware are the brain of an SSD.</p>
+
+          <p>In this layer, the first company worth watching is Phison.</p>
+
+          <p>Phison's characteristic is that it provides a complete set of solutions, from controllers and firmware to reference designs. For many branded manufacturers, Phison effectively helps customers quickly turn NAND chips into sellable SSD products. Therefore, when the overall SSD market expands, Phison can often benefit from more customers without directly taking on the risk of NAND price fluctuations itself.</p>
+
+          <p>Another important company is Silicon Motion.</p>
+
+          <p>Silicon Motion is more like a platform-type controller supplier. Its controllers are widely used in both consumer and enterprise SSD products. Although ordinary users rarely notice controller brands, the controller actually determines an SSD's performance, stability, and lifespan.</p>
+
+          <p>As AI inference, long context, vector databases, and RAG applications develop, SSDs will need to handle more complex random reads, stricter latency requirements, and higher power-efficiency pressure. This will continue to increase the importance of controllers and firmware. Therefore, although Phison and Silicon Motion receive less attention than SK hynix or Micron, they occupy a key position in the process of turning SSDs from raw materials into system-level products.</p>
+
+          <h2>Layer Five: Storage Systems and Data Management Platforms</h2>
+          <img src="images/storage-systems-data-platform.png" alt="Integrated enterprise AI infrastructure with servers, storage arrays, networking, and management systems" style="width: 100%; height: auto; margin: 6px 0 14px;">
+
+          <p>One layer higher, we are no longer talking about individual pieces of hardware, but complete storage systems.</p>
+
+          <p>Enterprises do not want to buy thousands of SSDs, hundreds of servers, and various networking devices, then manually stitch them together. What they need is a complete platform that can be deployed, expanded, backed up, restored, and managed. File storage, object storage, storage arrays, and data management software are all important components of this layer.</p>
+
+          <p>The most typical representative of this layer is Dell.</p>
+
+          <p>When many people mention Dell, they first think of PCs or servers. But in the field of AI infrastructure, its more important role is actually as a system integrator. Dell's value does not lie in producing NAND or HBM, but in integrating servers, GPUs, networking, storage, software, and services into AI infrastructure that enterprises can use directly.</p>
+
+          <p>For many enterprises, they do not care which manufacturer supplied a particular NAND chip, nor do they care what model of controller is being used. What they care about is whether the system can operate reliably, whether it can be expanded in the future, and who will take responsibility when something goes wrong. That is precisely the complete solution capability Dell provides.</p>
+
+          <p>As AI infrastructure gradually moves from the experimental stage to large-scale deployment, the importance of this system integration capability will likely increase further. A server is one transaction, but long-term data management and enterprise service create an ongoing relationship.</p>
+
+          <h2>Conclusion: Whoever Controls the Data Flow Controls the Value</h2>
+          <img src="images/ai-storage-value-chain.png" alt="Full AI storage value chain moving data from archives through SSDs and memory into GPU compute" style="width: 100%; height: auto; margin: 6px 0 14px;">
+
+          <p>Looking at it this way, market attention over the past few years has been concentrated almost entirely on GPUs and computing power. But as models become larger and data volumes continue to rise, the importance of storage is being re-recognized.</p>
+
+          <p>That is because the development of AI does not only increase demand for computation. It also amplifies demand for data production, transmission, and management. Training requires massive amounts of data. Inference requires fast data access. Enterprises also need to store increasingly large data assets over the long term. The opportunities created by expanding computing power are visible to everyone, while changes in data infrastructure are often repriced by the market only after demand truly breaks out.</p>
+
+          <p>From an investment perspective, the biggest characteristic of the storage industry is that it has both the long-term growth logic brought by AI and the cyclicality of the traditional hardware industry. Different parts of the value chain are affected differently by supply and demand, technological iteration, and capital expenditure, so it is difficult to summarize the entire sector with one unified framework.</p>
+
+          <p>But one thing is relatively clear: if AI continues to move toward larger models, longer context, and broader enterprise applications, then data will only become more important. The infrastructure formed around data storage, access, and management is also likely to become a continuously benefiting part of the AI value chain.</p>
+        </section>
+      </div>
+
+      <footer class="footer container">
+        <div>Jerry Wu &middot; music, data, design.</div>
+        <div>&copy; 2026</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
