@@ -6,7 +6,7 @@
   <title>Projects | Abstract Studio</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="atmo">
+<body class="atmo projects-pool">
   <div class="layout">
     <aside class="sidebar">
       <a class="brand" href="index.html">
@@ -24,16 +24,34 @@
     </aside>
 
     <main class="content">
+      <svg class="pool-defs" width="0" height="0" aria-hidden="true" focusable="false">
+        <filter id="pool-distort" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="7" result="noise">
+            <animate attributeName="baseFrequency" dur="1.8s" values="0.04 0.09;0.012 0.03" keyTimes="0;1" fill="freeze" calcMode="spline" keySplines="0.2 0.6 0.2 1"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G">
+            <animate attributeName="scale" dur="1.8s" values="22;0" keyTimes="0;1" fill="freeze" calcMode="spline" keySplines="0.2 0.6 0.2 1"/>
+          </feDisplacementMap>
+        </filter>
+        <clipPath id="pool-clip" clipPathUnits="objectBoundingBox">
+          <path d="M0.02,0.52 C0.02,0.35 0.10,0.21 0.22,0.17 C0.31,0.14 0.35,0.05 0.46,0.05 C0.56,0.05 0.61,0.13 0.71,0.12 C0.83,0.11 0.93,0.16 0.965,0.31 C0.99,0.41 0.965,0.47 0.975,0.55 C0.99,0.67 0.95,0.83 0.82,0.87 C0.72,0.90 0.66,0.97 0.55,0.955 C0.45,0.945 0.40,0.88 0.30,0.885 C0.18,0.89 0.06,0.81 0.03,0.67 C0.015,0.61 0.02,0.58 0.02,0.52 Z"/>
+        </clipPath>
+      </svg>
       <div class="container">
         <section class="section" style="border-top:none;padding-top:0;">
-          <h1>Projects</h1>
-          <p>Selected repositories and collaborations where finance, data, music, and practical interfaces meet.</p>
+          <h1 class="pool-title">Projects</h1>
+          <p>A moonlit pool of finance tools, music experiments, and data-driven interfaces.</p>
         </section>
 
         <section class="section">
-          <div class="project-grid">
-            <a class="project-card" href="https://github.com/LQ458/StatsifyFinance" target="_blank" rel="noopener">
-              <div class="corner"></div>
+          <div class="pool-stage" aria-label="Project gallery inspired by a moonlit pool">
+            <div class="pool-surface-wrap" aria-hidden="true"><div class="pool-surface"></div></div>
+            <canvas class="pool-canvas" aria-hidden="true"></canvas>
+            <div class="pool-caustics" aria-hidden="true"></div>
+            <div class="pool-moon" aria-hidden="true"></div>
+            <div class="project-field">
+            <a class="project-card featured" href="https://github.com/LQ458/StatsifyFinance" target="_blank" rel="noopener">
+              <span class="proj-flag">Featured</span>
               <div class="category">Collaborative project / finance platform</div>
               <h3>StatsifyFinance</h3>
               <p>A full-stack financial analysis platform with AI chat, screenshot and text analysis, market education resources, and bilingual content support.</p>
@@ -44,14 +62,9 @@
                 <span class="tag">AI analysis</span>
               </div>
               <p class="muted-note">Role: collaborator on a finance education and analysis product.</p>
-              <div class="project-meta">
-                <span>LQ458/StatsifyFinance</span>
-                <span>2 stars</span>
-              </div>
             </a>
 
             <a class="project-card" href="https://github.com/JerNB/sectorlens" target="_blank" rel="noopener">
-              <div class="corner"></div>
               <div class="category">Finance learning tool</div>
               <h3>SectorLens</h3>
               <p>A local Streamlit app for learning industries and tracking company-level investment theses, starting with U.S. electricity generation and power infrastructure.</p>
@@ -62,14 +75,9 @@
                 <span class="tag">Industry research</span>
               </div>
               <p class="muted-note">Built for beginner-friendly sector research and thesis tracking.</p>
-              <div class="project-meta">
-                <span>JerNB/sectorlens</span>
-                <span>1 star</span>
-              </div>
             </a>
 
             <a class="project-card" href="https://github.com/JerNB/SongHitChallange" target="_blank" rel="noopener">
-              <div class="corner"></div>
               <div class="category">Music data / machine learning</div>
               <h3>Hit Song Prediction</h3>
               <p>A Spotify audio-feature project that predicts whether a track may become a hit, using popularity thresholds and multiple classification models.</p>
@@ -80,14 +88,9 @@
                 <span class="tag">EDA</span>
               </div>
               <p class="muted-note">Models include logistic regression, SVM, random forest, and a neural network baseline.</p>
-              <div class="project-meta">
-                <span>JerNB/SongHitChallange</span>
-                <span>1 star</span>
-              </div>
             </a>
 
             <a class="project-card" href="https://github.com/JerNB/SongRecDemo" target="_blank" rel="noopener">
-              <div class="corner"></div>
               <div class="category">Music recognition demo</div>
               <h3>SongRec Demo</h3>
               <p>A music-recognition demo exploring how audio can be matched to known songs through fingerprinting-style recognition workflows.</p>
@@ -98,14 +101,9 @@
                 <span class="tag">Song matching</span>
               </div>
               <p class="muted-note">Built as a practical showcase for song identification and audio-based discovery.</p>
-              <div class="project-meta">
-                <span>JerNB/SongRecDemo</span>
-                <span>GitHub</span>
-              </div>
             </a>
 
             <a class="project-card" href="https://github.com/JerNB/myClawdbot" target="_blank" rel="noopener">
-              <div class="corner"></div>
               <div class="category">Bot experiment</div>
               <h3>myClawdbot</h3>
               <p>A lightweight repository for a personal bot experiment. It is intentionally spare, useful as a marker of small automation and tooling exploration.</p>
@@ -115,11 +113,9 @@
                 <span class="tag">Prototype</span>
               </div>
               <p class="muted-note">Early-stage project with a minimal public README.</p>
-              <div class="project-meta">
-                <span>JerNB/myClawdbot</span>
-                <span>1 star</span>
-              </div>
             </a>
+            </div>
+            <canvas class="pool-canvas pool-canvas--top" aria-hidden="true"></canvas>
           </div>
         </section>
       </div>
@@ -130,5 +126,395 @@
       </footer>
     </main>
   </div>
+  <script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    var stage = document.querySelector('.pool-stage');
+    var canvasEls = document.querySelectorAll('.pool-canvas');
+    if (!stage || !canvasEls.length) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var ripples = [];
+    var w = 0, h = 0;
+
+    // Background layer plus a faint top ripple that never competes with text.
+    var layers = [];
+    canvasEls.forEach(function (cv) {
+      layers.push({
+        cv: cv,
+        ctx: cv.getContext('2d'),
+        mul: cv.classList.contains('pool-canvas--top') ? 0.28 : 0.82
+      });
+    });
+
+    function resize() {
+      var r = stage.getBoundingClientRect();
+      w = r.width; h = r.height;
+      layers.forEach(function (l) {
+        l.cv.width = Math.round(w * dpr);
+        l.cv.height = Math.round(h * dpr);
+        l.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      });
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function addRipple(x, y, strength) {
+      if (ripples.length > 20) ripples.shift();
+      ripples.push({ x: x, y: y, r: 2, max: 96 + (strength || 0) * 72, life: 1 });
+    }
+
+    var lastX = 0, lastY = 0, lastT = 0;
+    stage.addEventListener('pointermove', function (e) {
+      var now = performance.now();
+      if (now - lastT < 38) return;
+      var r = stage.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      var dx = x - lastX, dy = y - lastY;
+      var speed = Math.min(Math.sqrt(dx * dx + dy * dy) / 30, 1);
+      lastX = x; lastY = y; lastT = now;
+      addRipple(x, y, speed);
+    });
+    stage.addEventListener('pointerdown', function (e) {
+      var r = stage.getBoundingClientRect();
+      addRipple(e.clientX - r.left, e.clientY - r.top, 1.4);
+    });
+
+    var raf;
+    function draw() {
+      // advance physics once
+      for (var i = ripples.length - 1; i >= 0; i--) {
+        var p = ripples[i];
+        p.r += (p.max - p.r) * 0.045 + 0.6;
+        p.life -= 0.012;
+        if (p.life <= 0) { ripples.splice(i, 1); }
+      }
+      // paint every layer
+      layers.forEach(function (l) {
+        l.ctx.clearRect(0, 0, w, h);
+        for (var j = 0; j < ripples.length; j++) {
+          var q = ripples[j];
+          var alpha = q.life * 0.24 * l.mul;
+          l.ctx.beginPath();
+          l.ctx.arc(q.x, q.y, q.r, 0, Math.PI * 2);
+          l.ctx.strokeStyle = 'rgba(110,122,138,' + alpha + ')';
+          l.ctx.lineWidth = 1;
+          l.ctx.stroke();
+          l.ctx.beginPath();
+          l.ctx.arc(q.x, q.y, q.r * 0.62, 0, Math.PI * 2);
+          l.ctx.strokeStyle = 'rgba(255,255,255,' + (alpha * 0.7) + ')';
+          l.ctx.lineWidth = 1;
+          l.ctx.stroke();
+        }
+      });
+      raf = requestAnimationFrame(draw);
+    }
+    draw();
+
+    // Per-card droplet ripple from the cursor point
+    var cards = document.querySelectorAll('.project-card');
+    function dropOnCard(card, e) {
+      var r = card.getBoundingClientRect();
+      var drop = document.createElement('span');
+      drop.className = 'card-droplet';
+      drop.style.left = (e.clientX - r.left) + 'px';
+      drop.style.top = (e.clientY - r.top) + 'px';
+      card.appendChild(drop);
+      drop.addEventListener('animationend', function () { drop.remove(); });
+    }
+    cards.forEach(function (card) {
+      card.addEventListener('pointerenter', function (e) { dropOnCard(card, e); });
+      card.addEventListener('pointerdown', function (e) { dropOnCard(card, e); });
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { cancelAnimationFrame(raf); }
+      else { draw(); }
+    });
+  })();
+
+  // Soft-body pond physics: reflections drift, collide like jelly, and are
+  // draggable anywhere inside the pool but can never cross the shoreline.
+  //
+  // Model (spring-damper, Hooke's law): F = -k*x - b*v
+  // Collision response along the contact normal (Gaffer On Games):
+  //   F = n*k*d - b*n*(n . v)   where d = penetration depth
+  // The wobble is a damped scale oscillator kicked by impact speed.
+  (function () {
+    var stage = document.querySelector('.pool-stage');
+    var clipPathEl = document.querySelector('#pool-clip path');
+    if (!stage || !clipPathEl) return;
+
+    var poolPath = new Path2D(clipPathEl.getAttribute('d'));
+    var hitCtx = document.createElement('canvas').getContext('2d');
+    var mobile = window.matchMedia('(max-width: 700px)');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var stW = 0, stH = 0;
+
+    // tuning constants
+    var K_DRAG = 0.22;      // drag spring stiffness
+    var B_DRAG = 0.30;      // drag spring damping
+    var K_HIT = 0.05;       // collision spring stiffness
+    var B_HIT = 0.10;       // collision damping along the normal
+    var FRICTION = 0.94;    // water drag on free-floating cards
+    var BOUNCE = -0.35;     // restitution against the shoreline
+    var K_SQ = 0.14;        // jelly scale spring
+    var B_SQ = 0.88;        // jelly scale damping
+    var MAX_V = 38;         // velocity clamp, px/frame
+
+    // The clip path lives in 0..1 units; scale the test to stage pixels.
+    function insidePool(x, y) {
+      hitCtx.setTransform(stW, 0, 0, stH, 0, 0);
+      return hitCtx.isPointInPath(poolPath, x, y);
+    }
+
+    // A center is valid if sample points around the card's ellipse
+    // all stay within the shoreline.
+    function fits(cx, cy, rx, ry) {
+      if (!insidePool(cx, cy)) return false;
+      for (var i = 0; i < 14; i++) {
+        var a = (Math.PI * 2 * i) / 14;
+        if (!insidePool(cx + Math.cos(a) * rx, cy + Math.sin(a) * ry)) return false;
+      }
+      return true;
+    }
+
+    var cards = [];
+    document.querySelectorAll('.project-field .project-card').forEach(function (el) {
+      cards.push({
+        el: el,
+        x: 0, y: 0, vx: 0, vy: 0,   // position + velocity (px, px/frame)
+        rx: 0, ry: 0,               // ellipse radii
+        sq: 1, sqv: 0,              // jelly scale + scale velocity
+        drag: false, moved: false,
+        cancelClickUntil: 0,
+        tx: 0, ty: 0,               // drag spring target
+        grabDX: 0, grabDY: 0, startPX: 0, startPY: 0
+      });
+    });
+    if (!cards.length) return;
+
+    function measure() {
+      var st = stage.getBoundingClientRect();
+      stW = st.width; stH = st.height;
+      cards.forEach(function (c) {
+        var r = c.el.getBoundingClientRect();
+        c.rx = (r.width / 2) * 0.92;
+        c.ry = (r.height / 2) * 0.92;
+        c.x = r.left + r.width / 2 - st.left;
+        c.y = r.top + r.height / 2 - st.top;
+      });
+    }
+
+    // pull a card to the nearest valid spot, walking toward the pool center
+    function settleInside(c) {
+      if (fits(c.x, c.y, c.rx, c.ry)) return;
+      var gx = stW * 0.5, gy = stH * 0.52;
+      for (var t = 0.02; t <= 1; t += 0.02) {
+        var x = c.x + (gx - c.x) * t, y = c.y + (gy - c.y) * t;
+        if (fits(x, y, c.rx, c.ry)) { c.x = x; c.y = y; return; }
+      }
+      c.x = gx; c.y = gy;
+    }
+
+    function squashKick(c, amt) {
+      if (reduce) return;
+      c.sqv -= Math.min(amt, 0.085);
+    }
+
+    function applyStyles(c) {
+      c.el.style.setProperty('--cx', (c.x / stW * 100) + '%');
+      c.el.style.setProperty('--cy', (c.y / stH * 100) + '%');
+      if (!reduce) c.el.style.setProperty('--jelly-scale', c.sq.toFixed(4));
+    }
+
+    function step() {
+      var i, j, c;
+
+      // drag spring toward the pointer: F = -k*x - b*v
+      for (i = 0; i < cards.length; i++) {
+        c = cards[i];
+        if (c.drag && c.moved) {
+          c.vx += (c.tx - c.x) * K_DRAG - c.vx * B_DRAG;
+          c.vy += (c.ty - c.y) * K_DRAG - c.vy * B_DRAG;
+        } else {
+          c.vx *= FRICTION;
+          c.vy *= FRICTION;
+        }
+      }
+
+      // pairwise soft collisions between elliptical reflections
+      for (i = 0; i < cards.length; i++) {
+        for (j = i + 1; j < cards.length; j++) {
+          var a = cards[i], b = cards[j];
+          var dx = b.x - a.x, dy = b.y - a.y;
+          // distance in ellipse-normalized space: < 1 means overlap
+          var ux = dx / (a.rx + b.rx), uy = dy / (a.ry + b.ry);
+          var d = Math.hypot(ux, uy) || 0.0001;
+          if (d >= 1) continue;
+
+          var len = Math.hypot(dx, dy) || 0.0001;
+          var nx = dx / len, ny = dy / len;
+          // approximate penetration depth in pixels
+          var depth = (1 - d) * Math.hypot((a.rx + b.rx) * ux / d, (a.ry + b.ry) * uy / d);
+          // relative velocity along the contact normal
+          var rv = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+          // spring-damper contact force, never attractive
+          var f = Math.max(0, depth * K_HIT - rv * B_HIT);
+          f = Math.min(f, 6);
+
+          a.vx -= nx * f * 0.5; a.vy -= ny * f * 0.5;
+          b.vx += nx * f * 0.5; b.vy += ny * f * 0.5;
+
+          // approaching fast enough -> both blobs shiver
+          if (rv < -0.6) {
+            var kick = Math.abs(rv) * 0.006;
+            squashKick(a, kick);
+            squashKick(b, kick);
+          }
+        }
+      }
+
+      // integrate + shoreline containment (slide along the axis that fits)
+      for (i = 0; i < cards.length; i++) {
+        c = cards[i];
+        c.vx = Math.max(-MAX_V, Math.min(MAX_V, c.vx));
+        c.vy = Math.max(-MAX_V, Math.min(MAX_V, c.vy));
+        var nxp = c.x + c.vx, nyp = c.y + c.vy;
+
+        if (fits(nxp, nyp, c.rx, c.ry)) {
+          c.x = nxp; c.y = nyp;
+        } else if (fits(nxp, c.y, c.rx, c.ry)) {
+          c.x = nxp;
+          squashKick(c, Math.abs(c.vy) * 0.012);
+          c.vy *= BOUNCE;
+        } else if (fits(c.x, nyp, c.rx, c.ry)) {
+          c.y = nyp;
+          squashKick(c, Math.abs(c.vx) * 0.012);
+          c.vx *= BOUNCE;
+        } else {
+          squashKick(c, Math.hypot(c.vx, c.vy) * 0.012);
+          c.vx *= BOUNCE; c.vy *= BOUNCE;
+        }
+
+        // jelly wobble: damped oscillation of scale back to 1
+        c.sqv += (1 - c.sq) * K_SQ;
+        c.sqv *= B_SQ;
+        c.sq = Math.max(0.86, Math.min(1.1, c.sq + c.sqv));
+
+        applyStyles(c);
+      }
+    }
+
+    var raf = null;
+    function shouldKeepRunning() {
+      for (var i = 0; i < cards.length; i++) {
+        var c = cards[i];
+        if (c.drag || Math.abs(c.vx) > 0.03 || Math.abs(c.vy) > 0.03 || Math.abs(c.sq - 1) > 0.002 || Math.abs(c.sqv) > 0.002) {
+          return true;
+        }
+      }
+      return false;
+    }
+    function loop() {
+      step();
+      if (shouldKeepRunning()) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        raf = null;
+      }
+    }
+    function wakePhysics() {
+      if (!mobile.matches && !raf) loop();
+    }
+
+    // pointer interaction
+    cards.forEach(function (c) {
+      var el = c.el;
+      el.addEventListener('dragstart', function (e) { e.preventDefault(); });
+      el.addEventListener('click', function (e) {
+        if (c.moved || performance.now() < c.cancelClickUntil) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+
+      el.addEventListener('pointerdown', function (e) {
+        if (mobile.matches || e.button !== 0) return;
+        var st = stage.getBoundingClientRect();
+        c.drag = true; c.moved = false;
+        c.grabDX = c.x - (e.clientX - st.left);
+        c.grabDY = c.y - (e.clientY - st.top);
+        c.tx = c.x; c.ty = c.y;
+        c.startPX = e.clientX; c.startPY = e.clientY;
+        el.setPointerCapture(e.pointerId);
+        wakePhysics();
+      });
+
+      el.addEventListener('pointermove', function (e) {
+        if (!c.drag) return;
+        if (!c.moved && Math.hypot(e.clientX - c.startPX, e.clientY - c.startPY) > 6) {
+          c.moved = true;
+          el.classList.add('dragging');
+          wakePhysics();
+        }
+        if (!c.moved) return;
+        var st = stage.getBoundingClientRect();
+        c.tx = e.clientX - st.left + c.grabDX;
+        c.ty = e.clientY - st.top + c.grabDY;
+      });
+
+      function endDrag() {
+        if (!c.drag) return;
+        if (c.moved) c.cancelClickUntil = performance.now() + 260;
+        c.drag = false;
+        el.classList.remove('dragging');
+        // velocity carries over, so released cards glide and settle
+        setTimeout(function () { c.moved = false; }, 0);
+      }
+      el.addEventListener('pointerup', endDrag);
+      el.addEventListener('pointercancel', endDrag);
+    });
+
+    function setMobile(isMobile) {
+      if (isMobile) {
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        cards.forEach(function (c) {
+          c.el.style.removeProperty('--cx');
+          c.el.style.removeProperty('--cy');
+          c.el.style.removeProperty('--jelly-scale');
+          c.vx = c.vy = 0; c.sq = 1; c.sqv = 0;
+          c.drag = false; c.el.classList.remove('dragging');
+        });
+      } else {
+        measure();
+        cards.forEach(settleInside);
+        cards.forEach(applyStyles);
+        wakePhysics();
+      }
+    }
+
+    var resizeT;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(function () { setMobile(mobile.matches); }, 120);
+    });
+    if (mobile.addEventListener) {
+      mobile.addEventListener('change', function (e) { setMobile(e.matches); });
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+      } else {
+        wakePhysics();
+      }
+    });
+
+    setMobile(mobile.matches);
+  })();
+  </script>
 </body>
 </html>
