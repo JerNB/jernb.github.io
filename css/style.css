@@ -1276,6 +1276,46 @@ img {
   outline: none;
 }
 
+.blog-page .tags {
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.blog-page .tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 9px;
+  border: 1px solid rgba(86, 91, 91, 0.14);
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(238, 239, 236, 0.18), rgba(216, 218, 215, 0.12)),
+    rgba(226, 228, 225, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 1px 4px rgba(53, 58, 60, 0.018);
+  color: rgba(72, 75, 74, 0.62);
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color 260ms ease, background 260ms ease, color 260ms ease, box-shadow 260ms ease;
+}
+
+.blog-page .timeline-item:hover .tag,
+.blog-page .timeline-item:focus-within .tag {
+  border-color: rgba(74, 80, 80, 0.2);
+  background:
+    linear-gradient(180deg, rgba(235, 237, 234, 0.26), rgba(211, 214, 211, 0.16)),
+    rgba(224, 226, 223, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 2px 7px rgba(53, 58, 60, 0.025);
+  color: rgba(48, 51, 50, 0.68);
+}
+
 .atmo .ghost-link,
 .atmo .blog-preview a,
 .atmo .project-card a {
@@ -2005,7 +2045,8 @@ body.home a:focus-visible {
 
   .blog-page .timeline-item,
   .blog-page .timeline-item::before,
-  .blog-page .timeline-item h3 a {
+  .blog-page .timeline-item h3 a,
+  .blog-page .tag {
     transition: none;
   }
 }

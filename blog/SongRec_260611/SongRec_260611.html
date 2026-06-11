@@ -41,6 +41,11 @@
 
           <p>"Users enter the songs, artists, styles, and moods they like, and the system returns some new song recommendations."</p>
 
+          <figure style="margin: 6px 0 14px;">
+            <img src="images/songrec-input-flow.png" alt="SongRec interface showing taste builder, taste signals, and output control" style="width: 100%; height: auto;">
+            <figcaption style="margin-top: 8px; color: #7a7770; font-size: 14px; line-height: 1.6;">The core product flow: start with songs, add taste signals, then control how safe or exploratory the recommendation list should be.</figcaption>
+          </figure>
+
           <p>This idea does not sound complicated. After all, we use products like Spotify and NetEase Cloud Music every day, and recommendations already feel like a natural part of the experience. But once I actually started building it, I realized that a recommendation system is not as simple as "write a model and let it output answers." It is more like a complete product pipeline: first understand the user, then find candidate songs, then judge which ones are more relevant, then control diversity and novelty, then explain why each song is being recommended, and finally record whether the user actually likes it.</p>
 
           <p>This project did not start directly with writing a website. I first ran research-layer experiments using the KGRec dataset and built several basic recommendation models, including a popularity baseline, ALS collaborative filtering, and a tag-based content recommender. The purpose of this stage was to understand the basic problems of recommendation systems first: what personalization means, what cold start means, why recommending only popular songs is safe but boring, why collaborative filtering can discover hidden similarities between users, and why content-based recommendation is easier to explain but can also be limited by tags. In a way, it was also an extension of the machine learning project I did during the summer after sophomore year, where I tried to predict song popularity.</p>
