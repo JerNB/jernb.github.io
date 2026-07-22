@@ -1009,6 +1009,61 @@ img {
   font-size: 14px;
 }
 
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 18px 0 8px;
+  padding: 3px;
+  border: 1px solid rgba(86, 91, 91, 0.16);
+  border-radius: 999px;
+  background: rgba(226, 228, 225, 0.14);
+}
+
+.language-switch button {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(72, 75, 74, 0.68);
+  cursor: pointer;
+  font: 500 12px/1 'Space Grotesk', 'Inter', sans-serif;
+  letter-spacing: 0.06em;
+  padding: 8px 12px;
+  transition: background 220ms ease, color 220ms ease;
+}
+
+.language-switch button[aria-pressed="true"] {
+  background: rgba(45, 47, 45, 0.08);
+  color: rgba(30, 31, 30, 0.84);
+}
+
+.language-switch button:focus-visible {
+  outline: 1px solid rgba(45, 47, 45, 0.32);
+  outline-offset: 2px;
+}
+
+.bilingual-post [data-lang-panel][hidden] {
+  display: none;
+}
+
+.bilingual-post > article {
+  display: grid;
+  gap: 18px;
+}
+
+.bilingual-post > article > * {
+  margin: 0;
+}
+
+.bilingual-post h2 {
+  margin-top: 22px;
+}
+
+.bilingual-post h2:first-child {
+  margin-top: 0;
+}
+
 .post-body {
   padding: 20px 0 32px;
   max-width: 760px;
@@ -1787,11 +1842,11 @@ body.home a:focus-visible {
 
 .home-hero {
   position: relative;
-  min-height: 82vh;
+  min-height: 100vh;
   overflow: hidden;
   display: grid;
   align-items: center;
-  padding: 13vh 0 12vh;
+  padding: 14vh 0 10vh;
   background: #eff0ed;
 }
 
@@ -1801,10 +1856,10 @@ body.home a:focus-visible {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 16vh;
+  height: 12vh;
   pointer-events: none;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(247, 247, 244, 0), #f7f7f4 86%);
+  background: linear-gradient(180deg, rgba(247, 247, 244, 0), rgba(247, 247, 244, 0.7) 88%);
 }
 
 .home-frame {
@@ -1822,8 +1877,8 @@ body.home a:focus-visible {
 .home-header {
   display: grid;
   gap: 12px;
-  width: min(800px, 82vw);
-  max-width: 800px;
+  width: min(1180px, 86vw);
+  max-width: none;
   margin-left: max(calc(9vw - 8px), calc((100vw - 1120px) / 2 - 8px));
   margin-right: auto;
   min-width: 0;
@@ -1909,74 +1964,55 @@ body.home a:focus-visible {
   overflow-wrap: break-word;
 }
 
-.home-scroll {
-  position: absolute;
-  left: 50%;
-  bottom: 34px;
-  z-index: 5;
-  width: 28px;
-  height: 42px;
-  transform: translateX(-50%);
-  color: rgba(35, 35, 32, 0.42);
-}
-
-.home-scroll span {
-  position: absolute;
-  left: 50%;
-  top: 4px;
-  width: 1px;
-  height: 28px;
-  background: currentColor;
-  transform: translateX(-50%);
-}
-
-.home-scroll span::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -1px;
-  width: 9px;
-  height: 9px;
-  border-right: 1px solid currentColor;
-  border-bottom: 1px solid currentColor;
-  transform: translateX(-50%) rotate(45deg);
-}
-
-.home-menu-section {
-  position: relative;
-  z-index: 6;
-  background: #f7f7f4;
-  padding: 44px 0 76px;
-  border-top: 1px solid rgba(28, 28, 24, 0.06);
-}
-
 .home-links {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(18px, 3vw, 42px);
-  width: min(1320px, 86vw);
+  gap: clamp(16px, 2.4vw, 36px);
+  width: min(1080px, 100%);
   max-width: none;
-  margin: 0 auto;
+  margin: clamp(22px, 4vh, 34px) 0 0;
 }
 
 .home-link {
+  --link-veil-opacity: 0.52;
+  --link-veil-blur: 2px;
   position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-height: 126px;
-  padding: 0 0 18px;
+  min-height: 92px;
+  padding: 10px 10px 14px;
   color: var(--home-ink);
   text-decoration: none;
   transition: var(--transition);
 }
 
+.home-link::before {
+  content: '';
+  position: absolute;
+  inset: -8px -10px 4px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--link-veil-opacity);
+  border-radius: 2px;
+  background:
+    radial-gradient(130% 120% at 16% 12%, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.24) 44%, rgba(236, 238, 234, 0.08) 78%),
+    linear-gradient(105deg, rgba(247, 247, 244, 0.54), rgba(247, 247, 244, 0.16));
+  box-shadow:
+    0 12px 42px rgba(40, 42, 42, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.26);
+  -webkit-backdrop-filter: blur(var(--link-veil-blur));
+  backdrop-filter: blur(var(--link-veil-blur));
+  transition: opacity 420ms cubic-bezier(0.28, 0.6, 0.2, 1), backdrop-filter 420ms ease, box-shadow 420ms ease;
+}
+
 .home-link::after {
   content: '';
   position: absolute;
-  left: 0;
+  left: 10px;
   bottom: 0;
-  width: 100%;
+  width: calc(100% - 20px);
   min-width: 0;
   height: 1px;
   background: currentColor;
@@ -1988,7 +2024,16 @@ body.home a:focus-visible {
 
 .home-link:hover,
 .home-link:focus-visible {
+  --link-veil-opacity: 0.7;
+  --link-veil-blur: 3px;
   color: #2c2a26;
+}
+
+.home-link:hover::before,
+.home-link:focus-visible::before {
+  box-shadow:
+    0 16px 54px rgba(40, 42, 42, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.34);
 }
 
 .home-link:hover::after,
@@ -2003,6 +2048,8 @@ body.home a:focus-visible {
 }
 
 .link-main {
+  position: relative;
+  z-index: 1;
   font-family: 'Cormorant Garamond', 'Space Grotesk', 'Inter', serif;
   font-size: clamp(24px, 2.2vw, 34px);
   letter-spacing: -0.01em;
@@ -2011,6 +2058,8 @@ body.home a:focus-visible {
 }
 
 .link-sub {
+  position: relative;
+  z-index: 1;
   font-size: 13.5px;
   color: var(--home-muted);
   opacity: 0.7;
@@ -2130,9 +2179,9 @@ body.home a:focus-visible {
   }
 
   .home-hero {
-    min-height: 78vh;
-    padding: 16vh 0 10vh;
-    align-items: start;
+    min-height: 100svh;
+    padding: 14vh 0 8vh;
+    align-items: center;
   }
 
   .home-brand {
@@ -2141,7 +2190,7 @@ body.home a:focus-visible {
   }
 
   .home-header {
-    width: min(310px, calc(100vw - 56px));
+    width: min(360px, calc(100vw - 44px));
   }
 
   .home-title {
@@ -2164,16 +2213,14 @@ body.home a:focus-visible {
   .home-link {
     align-items: flex-start;
     min-height: auto;
+    padding-bottom: 10px;
   }
 
   .home-links {
     grid-template-columns: 1fr;
-    gap: 30px;
-    width: min(310px, calc(100vw - 56px));
-  }
-
-  .home-menu-section {
-    padding: 40px 0 68px;
+    gap: 16px;
+    width: 100%;
+    margin-top: 24px;
   }
 
   .pool-vignette {

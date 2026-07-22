@@ -31,6 +31,50 @@
       transform: scale(1.05);
     }
 
+    .about-page .section {
+      padding: 24px 0;
+    }
+
+    .about-page .about-content-main .section:first-child {
+      padding-top: 0;
+      padding-bottom: 18px;
+    }
+
+    .about-intro {
+      display: grid;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .about-intro h1 {
+      margin: 0 0 2px;
+      font-size: clamp(42px, 6vw, 66px);
+      font-weight: 500;
+      line-height: 0.98;
+    }
+
+    .about-intro p:not(.muted-note) {
+      margin: 0;
+      max-width: 64ch;
+      font-size: 17px;
+      line-height: 1.72;
+      color: #3a3832;
+    }
+
+    .about-intro .muted-note {
+      margin: 0 0 2px;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    .about-page h2 {
+      font-size: clamp(25px, 3vw, 34px);
+      margin-bottom: 12px;
+    }
+
     /* Simple dot list styling */
     .dot-list {
       display: flex;
@@ -49,9 +93,9 @@
     /* Bullet list for longer items */
     .bullet-list {
       display: grid;
-      gap: 10px;
+      gap: 8px;
       color: #5c5a55;
-      line-height: 1.8;
+      line-height: 1.72;
       padding-left: 0;
       margin: 0;
     }
@@ -199,7 +243,7 @@
     }
   </style>
 </head>
-<body class="atmo">
+<body class="atmo about-page">
   <div class="layout">
     <aside class="sidebar">
       <a class="brand" href="index.html">
@@ -226,16 +270,16 @@
     <main class="content">
       <div class="container">
         <div class="about-layout">
-          <!-- Main content on the left (through Outside the Screen) -->
+          <!-- Main content on the left -->
           <div class="about-content-main">
             <!-- Hero section with intro -->
             <section class="section" style="border-top:none;padding-top:0;">
-              <div style="display:grid;gap:14px;text-align:left;">
-                <p class="muted-note" style="font-style:italic; margin-bottom:-6px;">Quiet work, loud meaning</p>
+              <div class="about-intro">
+                <p class="muted-note">Quiet work, loud meaning</p>
                 <h1>Hi! I'm Jerry.</h1>
-                <p>My full Chinese Name is Yanrui Wu. I'm a senior from a high school in China and an incoming Duke class of 2030.</p>
-                <p>I build risk-aware finance tools and interfaces that move like music. I sing and write original songs with Six Drowners.</p>
-                <p>I borrow structure from data, rhythm from music, and atmosphere from visual design. Whether it's a setlist or a roadmap, I think in pacing, dynamic range, and small gestures that keep people engaged without being loud.</p>
+                <p>My Chinese name is Yanrui Wu. I grew up in China, and I'm heading to Duke with the class of 2030.</p>
+                <p>I spend most of my time moving between music, data, and interfaces. I sing for Six Drowners, write songs, build small tools, and keep notes on whatever refuses to leave my head.</p>
+                <p>I like things that have structure but still breathe: a good setlist, a course map, a recommendation system, a page that feels quiet until you get closer.</p>
               </div>
             </section>
 
@@ -243,9 +287,9 @@
             <section class="section">
               <h2>Now</h2>
               <ul class="bullet-list">
-                <li>Building <strong>StatsifyFinance</strong>, a risk-first investing learning toolkit</li>
-                <li>Studying how algorithms shape attention, taste, and creative careers</li>
-                <li>Prototyping a Risk Communication Index for brokerage-style interfaces</li>
+                <li>Building <strong>Duke Stats Major Atlas</strong>, a student-facing map for courses, tracks, prerequisites, and the weird little decisions that shape a statistics major.</li>
+                <li>Working on a <strong>song recommendation project</strong>: part taste diary, part recommender experiment, part attempt to explain why certain songs find you at the right time.</li>
+                <li>Still updating my public writing / WeChat notes, usually about music, data, school, and the strange ways people make decisions.</li>
               </ul>
             </section>
 
@@ -253,11 +297,12 @@
             <section class="section">
               <h2>I've Built</h2>
               <ul class="bullet-list">
-                <li><strong>StatsifyFinance</strong> &#8212; lessons, tools, and experiments that make risk visible</li>
+                <li><strong>Duke Stats Major Atlas</strong> &#8212; a practical guide for navigating the statistics major before the choices become stressful.</li>
+                <li><strong>Song rec project</strong> &#8212; a recommendation experiment built around taste, context, and the language people use when they talk about music.</li>
+                <li><strong>StatsifyFinance</strong> &#8212; an earlier finance-learning site about making risk visible. Archived in spirit, even if the lessons still matter.</li>
                 <li><strong>School Business &amp; Economics Club</strong> &#8212; sessions and frameworks that teach how to think, not what to think</li>
                 <li><strong>YouMe</strong> &#8212; a student live-house network helping bands perform in real venues</li>
                 <li><strong>Music ML research</strong> &#8212; Predicting Hit Songs, an exploratory study on audio features and model tradeoffs (published in Scholarly Review)</li>
-                <li><strong>Data work</strong> &#8212; small models and analyses that turn messy signals into decisions</li>
               </ul>
             </section>
 
@@ -277,27 +322,19 @@
             <section class="section">
               <h2>I'm Drawn To</h2>
               <ul class="bullet-list">
-                <li>Music structure: rhythm, silence, tension, release</li>
-                <li>Interfaces that feel physical, like paper and film grain</li>
-                <li>Data science that explains instead of impresses</li>
-                <li>Recommendation systems and the economics of exposure</li>
-                <li>Tools that teach judgment, not just answers</li>
+                <li>Six Drowners rehearsals, half-finished voice memos, and the moment a song finally stops pretending to be another song.</li>
+                <li>Radiohead, Muse, King Crimson, Jeff Buckley, and 万能青年旅店.</li>
+                <li>Barça, especially when the midfield actually feels like an argument with a rhythm.</li>
+                <li>Interfaces that feel physical, like paper, film grain, soft shadows, and things with a little resistance.</li>
+                <li>Data science that explains instead of impresses.</li>
+                <li>Recommendation systems, taste, attention, and the economics of exposure.</li>
+                <li>Tools that teach judgment, not just answers.</li>
               </ul>
             </section>
 
-            <!-- Outside the screen -->
-            <section class="section">
-              <h2>Outside the Screen</h2>
-              <div class="dot-list">
-                <span>Writing and recording</span>
-                <span>Live performance</span>
-                <span>Long walks with headphones</span>
-                <span>Small rituals, slow thinking</span>
-              </div>
-            </section>
           </div>
 
-          <!-- Image gallery on the right (aligns with content through Outside the Screen) -->
+          <!-- Image gallery on the right -->
           <aside class="about-gallery">
             <div class="gallery-item">
               <picture>
