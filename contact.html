@@ -5,13 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact | Jerry Wu</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/page-title-ripple.js" defer></script>
   <style>
-    /* Larger nav links for Contact page */
-    .atmo .nav-link {
-      font-size: 15px;
-      padding: 10px 0;
-    }
-
     /* Brand with logo */
     .atmo .brand {
       display: flex;
@@ -74,7 +69,7 @@
       font-size: 12px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #8e8c86;
+      color: #706d67;
     }
 
     .contact-value {
@@ -115,6 +110,7 @@
   </style>
 </head>
 <body class="atmo">
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="layout">
     <aside class="sidebar">
       <a class="brand" href="index.html">
@@ -132,13 +128,13 @@
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link" href="about.html">About</a>
         <a class="nav-link" href="blogs.html">Blogs</a>
-        <a class="nav-link" href="performance.html">Performance</a>
         <a class="nav-link" href="projects.html">Projects</a>
-        <a class="nav-link active" href="contact.html">Contact</a>
+        <a class="nav-link" href="performance.html">Performance</a>
+        <a class="nav-link active" href="contact.html" aria-current="page">Contact</a>
       </nav>
     </aside>
 
-    <main class="content">
+    <main class="content" id="main-content">
       <div class="container">
         <div class="contact-wrapper">
           <div class="contact-card">
@@ -171,7 +167,7 @@
 
       <footer class="footer container">
         <div>Let's build something thoughtful together.</div>
-        <div>© 2025 Jerry Wu</div>
+        <div>&copy; 2026 Jerry Wu</div>
       </footer>
     </main>
   </div>

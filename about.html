@@ -5,13 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About | Jerry Wu</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/page-title-ripple.js" defer></script>
   <style>
-    /* Larger nav links for About page */
-    .atmo .nav-link {
-      font-size: 15px;
-      padding: 10px 0;
-    }
-
     /* Brand with logo */
     .atmo .brand {
       display: flex;
@@ -87,7 +82,7 @@
     .dot-list span:not(:last-child)::after {
       content: '\00B7';
       margin-left: 20px;
-      color: #8e8c86;
+      color: #706d67;
     }
 
     /* Bullet list for longer items */
@@ -108,7 +103,7 @@
 
     .bullet-list li::before {
       content: '\00B7';
-      color: #8e8c86;
+      color: #706d67;
       font-size: 18px;
       position: absolute;
       left: 0;
@@ -214,7 +209,7 @@
       position: relative;
       z-index: 3;
       font-size: 13px;
-      color: #8e8c86;
+      color: #706d67;
       text-align: center;
       margin-top: 8px;
     }
@@ -244,6 +239,7 @@
   </style>
 </head>
 <body class="atmo about-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="layout">
     <aside class="sidebar">
       <a class="brand" href="index.html">
@@ -259,15 +255,15 @@
       </a>
       <nav class="nav-links">
         <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link active" href="about.html">About</a>
+        <a class="nav-link active" href="about.html" aria-current="page">About</a>
         <a class="nav-link" href="blogs.html">Blogs</a>
-        <a class="nav-link" href="performance.html">Performance</a>
         <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link" href="performance.html">Performance</a>
         <a class="nav-link" href="contact.html">Contact</a>
       </nav>
     </aside>
 
-    <main class="content">
+    <main class="content" id="main-content">
       <div class="container">
         <div class="about-layout">
           <!-- Main content on the left -->
@@ -389,7 +385,7 @@
 
       <footer class="footer container">
         <div>Let's build something thoughtful together.</div>
-        <div>漏 2025 Jerry Wu</div>
+        <div>&copy; 2026 Jerry Wu</div>
       </footer>
     </main>
   </div>
