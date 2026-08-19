@@ -549,10 +549,11 @@ img {
     radial-gradient(130% 115% at 28% 18%, rgba(255, 255, 255, 0.97) 0%, rgba(245, 248, 250, 0.8) 44%, rgba(223, 230, 238, 0.74) 100%);
 }
 
-.project-field .project-card:nth-of-type(2) { --cx: 54%; --cy: 32%; --cw: 23%; --tilt: 2deg;    border-radius: 58% 42% 50% 50% / 62% 44% 56% 38%; }
-.project-field .project-card:nth-of-type(3) { --cx: 79%; --cy: 38%; --cw: 21%; --tilt: -3deg;   border-radius: 44% 56% 40% 60% / 52% 60% 40% 48%; }
-.project-field .project-card:nth-of-type(4) { --cx: 50%; --cy: 68%; --cw: 22%; --tilt: 1.5deg;  border-radius: 52% 48% 60% 40% / 46% 40% 60% 54%; }
-.project-field .project-card:nth-of-type(5) { --cx: 73%; --cy: 68%; --cw: 18%; --tilt: 3.5deg;  border-radius: 40% 60% 52% 48% / 58% 46% 54% 42%; }
+.project-field .project-card:nth-of-type(2) { --cx: 53%; --cy: 30%; --cw: 22%; --tilt: 2deg;    border-radius: 58% 42% 50% 50% / 62% 44% 56% 38%; }
+.project-field .project-card:nth-of-type(3) { --cx: 78%; --cy: 36%; --cw: 20%; --tilt: -3deg;   border-radius: 44% 56% 40% 60% / 52% 60% 40% 48%; }
+.project-field .project-card:nth-of-type(4) { --cx: 43%; --cy: 69%; --cw: 21%; --tilt: 1.5deg;  border-radius: 52% 48% 60% 40% / 46% 40% 60% 54%; }
+.project-field .project-card:nth-of-type(5) { --cx: 66%; --cy: 70%; --cw: 18%; --tilt: 3.5deg;  border-radius: 40% 60% 52% 48% / 58% 46% 54% 42%; }
+.project-field .project-card:nth-of-type(6) { --cx: 83%; --cy: 63%; --cw: 17%; --tilt: -1.5deg; border-radius: 55% 45% 48% 52% / 44% 58% 42% 56%; }
 
 .project-field .project-card:hover {
   --hover-scale: 1.02;
@@ -645,7 +646,8 @@ img {
 .project-field .project-card:nth-of-type(2) .tag:nth-child(n+3),
 .project-field .project-card:nth-of-type(3) .tag:nth-child(n+3),
 .project-field .project-card:nth-of-type(4) .tag:nth-child(n+3),
-.project-field .project-card:nth-of-type(5) .tag:nth-child(n+3) {
+.project-field .project-card:nth-of-type(5) .tag:nth-child(n+3),
+.project-field .project-card:nth-of-type(6) .tag:nth-child(n+3) {
   display: none;
 }
 
@@ -665,6 +667,7 @@ img {
   .project-field .project-card:nth-of-type(3) { --cw: 25%; }
   .project-field .project-card:nth-of-type(4) { --cw: 26%; }
   .project-field .project-card:nth-of-type(5) { --cw: 22%; }
+  .project-field .project-card:nth-of-type(6) { --cw: 20%; }
 }
 
 /* phones: the pool empties into a single descending stream of droplets */
@@ -1891,6 +1894,19 @@ img {
 
 .field-note-prose > * {
   margin: 0;
+}
+
+.field-note-prose strong {
+  color: rgba(39, 42, 38, 0.9);
+  font-weight: 600;
+}
+
+.field-note-divider {
+  width: min(96px, 22%);
+  height: 1px;
+  margin: 36px 0;
+  border: 0;
+  background: rgba(91, 107, 97, 0.28);
 }
 
 .field-note-prose p {

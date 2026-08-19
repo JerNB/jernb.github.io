@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="从音乐推荐系统的一次求助，重新理解开源、知识分享与延伸。">
+  <title>开源的魅力 | Jerry Wu</title>
+  <link rel="stylesheet" href="../../css/style.css?v=20260819">
+  <script src="../../js/page-title-ripple.js" defer></script>
+</head>
+<body class="atmo journal-entry-page">
+  <a class="skip-link" href="#article-content">跳到正文</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="../../index.html">
+        <svg class="brand-logo" viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+          <circle cx="18" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <path d="M20 8 L20 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <ellipse cx="17" cy="23" rx="4" ry="3" fill="currentColor" opacity="0.65" transform="rotate(-20 17 23)"/>
+          <path d="M20 8 Q26 10 24 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+        <span class="brand-name">Jerry Wu</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link" href="../../index.html">Home</a>
+        <a class="nav-link" href="../../about.html">About</a>
+        <a class="nav-link active" href="../../blogs.html" aria-current="page">Blogs</a>
+        <a class="nav-link" href="../../projects.html">Projects</a>
+        <a class="nav-link" href="../../performance.html">Performance</a>
+        <a class="nav-link" href="../../contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="article-content">
+      <article class="field-note">
+        <header class="field-note-header">
+          <div class="field-note-utility">
+            <a href="../../journal.html">&larr; 返回杂记</a>
+            <span>杂记 · 03</span>
+          </div>
+
+          <div class="field-note-heading">
+            <div class="field-note-index" aria-hidden="true">03</div>
+            <div>
+              <div class="journal-kicker">开源 · 知识 · 连接</div>
+              <h1>开源的魅力</h1>
+              <p class="field-note-deck">开源不只是公开一个项目，也是一种愿意把知识留下来、交给另一个人继续延伸的信念。</p>
+            </div>
+          </div>
+
+          <div class="field-note-meta">
+            <time datetime="2026-08-19">2026.08.19</time>
+            <span>约 6 分钟阅读</span>
+            <span>Jerry Wu</span>
+          </div>
+        </header>
+
+        <div class="field-note-body">
+          <aside class="field-note-margin" aria-label="文章旁注">
+            <span>一段关于</span>
+            <strong>打开知识</strong>
+            <span>与继续延伸的思考</span>
+          </aside>
+
+          <div class="field-note-prose">
+            <p>我一直很喜欢 <strong lang="en">open source</strong> 这个词。最开始的理解很直接：GitHub 上公开的代码、可以被任何人阅读和使用的库。那时候的“开源”对我来说更像一种资源获取方式——我通过很多项目里找到过解决问题的灵感。但最近，这个词引起了我一些其他的思考。</p>
+
+            <p>故事要从我之前和CMU的Dr. Mani 一起做的一项音乐研究说起。我们当时在做 hit-song prediction，用数据和机器学习去理解一首歌为什么可能成为“爆款”。后来因为这个项目，我被他邀请去新加坡参加一个金融峰会，也是在那里认识了 Dr. Viki——一位在 Google 工作了十八年的工程师。</p>
+
+            <p>我们在峰会上聊了很多，他很在意我感兴趣的方向，并且跟我分享了许多他当年的经验。于是我提出想跟他以后保持联系，他也很爽快的把个人邮箱给了我。</p>
+
+            <p>后来到了暑假，我开始尝试在之前做的音乐推荐系统中升级背后的算法逻辑，我想把这个系统升级，尝试把这个”可运行的 demo“做成一个”用户能用的demo“。</p>
+
+            <p>一开始我以为难点在模型，但很快发现真正的问题是数据。</p>
+
+            <p>推荐系统和我之前做的完全不同。后者可以用相对结构化的数据：一首歌的 features 对应一个结果。但 recommendation system 的核心是 <strong lang="en">user-item interaction</strong>——谁听了什么、听了多少次、哪些歌被同一个人反复喜欢，这些行为数据才是基础。</p>
+
+            <p>问题在于，这类数据几乎都被平台（Spotify）掌握，公开数据集要么规模太小，要么缺少关键行为信息。于是我开始用学术数据集做模型对比，但始终有一个问题卡在那里：</p>
+
+            <p><strong>如果没有工业级的用户行为数据，我们到底能在多大程度上研究一个“真实”的 recommendation system？</strong></p>
+
+            <hr class="field-note-divider" aria-hidden="true">
+
+            <p>就在这个时候，我想起了 Viki。我们只见过一次，而且已经过去一年。我犹豫了很久，但最后还是给他发了邮件。</p>
+
+            <p>我完全没想到，他很快回复了，而且比我预期认真得多。</p>
+
+            <p>他告诉我，这其实不是一个“数据不够”的小问题，而是推荐系统领域本身就存在的结构性限制：工业界的数据无法公开，而学术界只能依赖于规模有限的数据集。</p>
+
+            <p>更重要的是，他提出了一个我之前完全没有接触过的方向：<strong lang="en">Federated Data Gathering</strong>。</p>
+
+            <p>如果中心化的大规模用户数据不可得，那是否可以从分散的 local interaction 中，逐步推断整体的喜好框架？换句话说，<strong>在数据天然无法集中公开的前提下，我们还能如何研究推荐系统？</strong></p>
+
+            <p>他甚至把这个问题延伸到了音乐之外：新闻推荐、零售系统，甚至是一些去中心化的社交媒体。</p>
+
+            <hr class="field-note-divider" aria-hidden="true">
+
+            <p>读完邮件后，我有一种很奇怪的感觉。</p>
+
+            <p>因为我原本只是想问一个项目卡住了怎么办，但他给我的不是一个“换 dataset”或“用这个 API”的答案，而是把问题重新打开成了一个 research question。</p>
+
+            <p>后来我把这个想法也写给了 Dr. Mani。他的回复同样很认真，并且表示愿意再和一位做 recommendation system 的同事讨论，看看这个方向是否值得进一步研究。</p>
+
+            <hr class="field-note-divider" aria-hidden="true">
+
+            <p>但其实真正让我印象深的，其实是<strong>他们为什么愿意回复我。</strong></p>
+
+            <p>一个在 Google 工作多年的工程师，本可以完全忽略一封来自大一新生的邮件；一个教授，也完全可以用一句话结束这个问题。但他们都没有。</p>
+
+            <p>他们选择把自己的理解多说一点，把问题往前推一点，甚至愿意再去问别人。这种行为本身很小，但它改变了我对“知识”的理解。</p>
+
+            <hr class="field-note-divider" aria-hidden="true">
+
+            <p>我开始意识到，我过去学到的大部分东西，其实都是通过类似的方式获得的：GitHub 上的代码、免费的课程、blog 里的失败记录、论坛里的回答，甚至是一封认真回复的 cold email。它们的共同点是：<strong>知识被留下来，然后被另一个人继续使用和延伸。</strong></p>
+
+            <p>也正是在这个意义上，我开始重新理解开源。</p>
+
+            <p class="field-note-pause">知识不会因为被分享而减少，反而会在流动中不断被放大。</p>
+
+            <p>一封认真回复的邮件可以是开源，一次毫无保留的讨论可以是开源，甚至一个人愿意解释“自己当时是怎么想的”，本身也是开源。</p>
+
+            <hr class="field-note-divider" aria-hidden="true">
+
+            <p>我当然还是很喜欢 GitHub，也仍然希望未来自己做的项目可以让别人能够在此基础上做得更好。不过经历过这件小事后，现在，我想，因为我曾经从别人“打开知识”的行为中受益很多，所以当我自己开始理解一些东西的时候，我希望未来我也能做同样的事。</p>
+          </div>
+        </div>
+
+        <footer class="field-note-footer">
+          <div>
+            <span>杂记 03</span>
+            <p>写于一次关于推荐系统与知识分享的往来之后。</p>
+          </div>
+          <a href="../../journal.html">回到所有杂记 &rarr;</a>
+        </footer>
+      </article>
+
+      <footer class="footer field-note-site-footer">
+        <div>记下平常日子里的片刻。</div>
+        <div>&copy; 2026 Jerry Wu</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
