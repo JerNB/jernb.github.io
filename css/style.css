@@ -465,6 +465,10 @@ img {
 
 /* Projects float like reflections on the pool: small irregular blobs,
    scattered at uneven spots, draggable but always held inside the shoreline */
+.projects-pool .content .container {
+  width: min(1180px, calc(100% - 64px));
+}
+
 .project-field {
   position: absolute;
   inset: 0;
@@ -485,7 +489,7 @@ img {
   justify-items: center;
   margin: 0;
   /* generous padding so text never reaches the curved edge */
-  padding: clamp(20px, 2.2vw, 32px) clamp(24px, 2.6vw, 38px);
+  padding: 26px 28px;
   border: none;
   /* soft pebble-droplet: rounded but not an extreme blob, keeps text inside */
   border-radius: 46% 54% 48% 52% / 44% 46% 54% 56%;
@@ -535,25 +539,13 @@ img {
   z-index: 0;
 }
 
-/* scattered reflections: each one has its own resting spot, size and tilt */
-.project-field .project-card.featured {
-  --cx: 26%;
-  --cy: 46%;
-  --cw: 30%;
-  --tilt: -2.5deg;
-  padding: clamp(24px, 2.6vw, 40px) clamp(28px, 3vw, 44px);
-  border-radius: 48% 52% 45% 55% / 40% 42% 58% 60%;
-  clip-path: none;
-  background:
-    radial-gradient(90% 120% at 76% 10%, rgba(232, 237, 242, 0.7) 0%, transparent 58%),
-    radial-gradient(130% 115% at 28% 18%, rgba(255, 255, 255, 0.97) 0%, rgba(245, 248, 250, 0.8) 44%, rgba(223, 230, 238, 0.74) 100%);
-}
-
-.project-field .project-card:nth-of-type(2) { --cx: 53%; --cy: 30%; --cw: 22%; --tilt: 2deg;    border-radius: 58% 42% 50% 50% / 62% 44% 56% 38%; }
-.project-field .project-card:nth-of-type(3) { --cx: 78%; --cy: 36%; --cw: 20%; --tilt: -3deg;   border-radius: 44% 56% 40% 60% / 52% 60% 40% 48%; }
-.project-field .project-card:nth-of-type(4) { --cx: 43%; --cy: 69%; --cw: 21%; --tilt: 1.5deg;  border-radius: 52% 48% 60% 40% / 46% 40% 60% 54%; }
-.project-field .project-card:nth-of-type(5) { --cx: 66%; --cy: 70%; --cw: 18%; --tilt: 3.5deg;  border-radius: 40% 60% 52% 48% / 58% 46% 54% 42%; }
-.project-field .project-card:nth-of-type(6) { --cx: 83%; --cy: 63%; --cw: 17%; --tilt: -1.5deg; border-radius: 55% 45% 48% 52% / 44% 58% 42% 56%; }
+/* Project names keep the composition stable when the collection changes. */
+.project-field .project-songrec { --cx: 24%; --cy: 43%; --cw: 24%; --tilt: -2deg; }
+.project-field .project-cooked { --cx: 52%; --cy: 28%; --cw: 24%; --tilt: 2deg; border-radius: 58% 42% 50% 50% / 56% 44% 56% 44%; }
+.project-field .project-slow { --cx: 78%; --cy: 63%; --cw: 23%; --tilt: -2deg; border-radius: 44% 56% 46% 54% / 52% 54% 46% 48%; }
+.project-field .project-career { --cx: 29%; --cy: 72%; --cw: 20%; --tilt: 1.5deg; }
+.project-field .project-hit { --cx: 51%; --cy: 69%; --cw: 20%; --tilt: -1.5deg; }
+.project-field .project-statsify { --cx: 80%; --cy: 33%; --cw: 18%; --tilt: 2deg; padding: 24px; }
 
 .project-field .project-card:hover {
   --hover-scale: 1.02;
@@ -577,20 +569,6 @@ img {
   transform: translate(-50%, -50%) rotate(var(--tilt, 0deg)) scale(var(--jelly-scale)) scale(var(--hover-scale));
 }
 
-/* "Featured" flag on the hero droplet */
-.proj-flag {
-  justify-self: center;
-  width: max-content;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  padding: 3px 9px;
-  border-radius: 40px;
-  margin-bottom: 2px;
-}
-
 /* centered, contained typography so nothing pokes past the curve */
 .project-field .project-card .category,
 .project-field .project-card h3,
@@ -608,19 +586,16 @@ img {
 }
 
 .project-field .project-card h3 {
-  font-size: clamp(17px, 1.7vw, 23px);
-  line-height: 1.08;
+  font-size: clamp(21px, 1.8vw, 26px);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
   color: #242a31;
 }
 
 .project-field .project-card p {
   color: #454b52;
   line-height: 1.5;
-  font-size: 12.5px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
+  font-size: 14px;
 }
 
 /* reflections are abbreviated: secondary notes sink below the surface */
@@ -642,47 +617,33 @@ img {
   padding: 2px 8px;
 }
 
-/* hide the long tag rows on the smallest reflections */
-.project-field .project-card:nth-of-type(2) .tag:nth-child(n+3),
-.project-field .project-card:nth-of-type(3) .tag:nth-child(n+3),
-.project-field .project-card:nth-of-type(4) .tag:nth-child(n+3),
-.project-field .project-card:nth-of-type(5) .tag:nth-child(n+3),
-.project-field .project-card:nth-of-type(6) .tag:nth-child(n+3) {
-  display: none;
+.project-field .project-statsify h3 {
+  font-size: 20px;
 }
 
-.project-field .project-card.featured h3 {
-  font-size: clamp(20px, 2.2vw, 28px);
-  line-height: 1.08;
-}
-
-.project-field .project-card.featured p {
-  -webkit-line-clamp: 4;
-}
-
-/* tablets: keep the scatter but let reflections take up more of the water */
-@media (max-width: 1100px) {
-  .project-field .project-card.featured { --cw: 34%; }
-  .project-field .project-card:nth-of-type(2) { --cw: 27%; }
-  .project-field .project-card:nth-of-type(3) { --cw: 25%; }
-  .project-field .project-card:nth-of-type(4) { --cw: 26%; }
-  .project-field .project-card:nth-of-type(5) { --cw: 22%; }
-  .project-field .project-card:nth-of-type(6) { --cw: 20%; }
+/* Two columns give narrower windows room for the full descriptions. */
+@media (min-width: 701px) and (max-width: 1280px) {
+  .project-field .project-songrec { --cx: 32%; --cy: 27%; --cw: 32%; }
+  .project-field .project-cooked { --cx: 68%; --cy: 29%; --cw: 32%; }
+  .project-field .project-slow { --cx: 32%; --cy: 51%; --cw: 32%; }
+  .project-field .project-career { --cx: 68%; --cy: 52%; --cw: 30%; }
+  .project-field .project-hit { --cx: 35%; --cy: 75%; --cw: 30%; }
+  .project-field .project-statsify { --cx: 68%; --cy: 74%; --cw: 28%; }
+  .project-field .project-card { padding: 24px; }
 }
 
 /* phones: the pool empties into a single descending stream of droplets */
 @media (max-width: 700px) {
+  .projects-pool .content .container { width: calc(100% - 32px); }
   .project-field {
     position: relative;
     inset: auto;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 2px;
+    gap: 24px;
   }
   .project-field .project-card,
-  .project-field .project-card.featured,
-  .project-field .project-card:nth-of-type(n) {
+  .project-field .project-card.project-statsify {
     position: relative;
     left: auto;
     top: auto;
@@ -690,11 +651,15 @@ img {
     transform: none;
     --hover-scale: 1;
     --jelly-scale: 1;
-    padding: 30px 28px;
+    padding: 28px 26px;
     cursor: pointer;
     touch-action: manipulation;
   }
-  .project-field .project-card:hover { transform: translateY(-4px); }
+  .project-field .project-card:hover { transform: none; }
+  .project-field .project-card p { font-size: 15px; }
+  .project-field .project-card .category { font-size: 11px; }
+  .project-field .project-card h3 { font-size: 25px; }
+  .project-field .project-statsify h3 { font-size: 21px; }
 }
 
 /* ===== A Moon Shaped Pool — projects page water theme ===== */
@@ -707,15 +672,19 @@ img {
 .pool-stage {
   position: relative;
   /* the reflections float absolutely, so the lake declares its own size */
-  height: clamp(520px, 58vw, 720px);
+  height: max(780px, 50em);
   padding: 0;
   isolation: isolate;
+}
+
+@media (min-width: 701px) and (max-width: 1280px) {
+  .pool-stage { height: max(1000px, 64em); }
 }
 
 @media (max-width: 700px) {
   .pool-stage {
     height: auto;
-    padding: clamp(40px, 9vw, 64px) clamp(24px, 6vw, 40px);
+    padding: 80px 10%;
   }
 }
 
