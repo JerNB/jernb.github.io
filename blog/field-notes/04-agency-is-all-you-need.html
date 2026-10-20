@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 赋能了所有人，但它放大的，始终是使用它的那个人。关于 agency、实践与制作自己的调音器。">
+  <title>Agency，是你最需要的东西 | Jerry Wu</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <script src="../../js/page-title-ripple.js" defer></script>
+</head>
+<body class="atmo journal-entry-page">
+  <a class="skip-link" href="#article-content">跳到正文</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="../../index.html">
+        <svg class="brand-logo" viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+          <circle cx="18" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <path d="M20 8 L20 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <ellipse cx="17" cy="23" rx="4" ry="3" fill="currentColor" opacity="0.65" transform="rotate(-20 17 23)"/>
+          <path d="M20 8 Q26 10 24 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+        <span class="brand-name">Jerry Wu</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link" href="../../index.html">Home</a>
+        <a class="nav-link" href="../../about.html">About</a>
+        <a class="nav-link active" href="../../blogs.html" aria-current="page">Blogs</a>
+        <a class="nav-link" href="../../projects.html">Projects</a>
+        <a class="nav-link" href="../../performance.html">Performance</a>
+        <a class="nav-link" href="../../contact.html">Contact</a>
+      </nav>
+    </aside>
+    <main class="content" id="article-content">
+      <article class="field-note">
+        <header class="field-note-header">
+          <div class="field-note-utility">
+            <a href="../../journal.html">&larr; 返回杂记</a>
+            <a href="../agency-is-all-you-need.html" lang="en" hreflang="en">Read in English &rarr;</a>
+          </div>
+          <div class="field-note-heading">
+            <div class="field-note-index" aria-hidden="true">04</div>
+            <div>
+              <div class="journal-kicker">AI · 主动性 · 实践</div>
+              <h1>Agency，是你最需要的东西</h1>
+              <p class="field-note-deck">AI 赋能了所有人，但它放大的，始终是使用它的那个人。</p>
+            </div>
+          </div>
+          <div class="field-note-meta">
+            <span>杂记 · 04</span>
+            <time datetime="2026-10-20">2026.10.20</time>
+            <span>约 3 分钟阅读</span>
+            <span>Jerry Wu</span>
+          </div>
+        </header>
+        <div class="field-note-body">
+          <aside class="field-note-margin" aria-label="文章旁注">
+            <span>一段关于</span>
+            <strong>在行动中学习</strong>
+            <span>与 AI 的思考</span>
+          </aside>
+          <div class="field-note-prose">
+            <p>我想聊聊我对 AI 的看法。</p>
+            <p>我觉得 AI 是一种非常强大的工具，它赋能了所有人。但本质上，它只是在赋能和增幅，最后的效果取决于使用它的人。这是我和一位教授在 <strong>Flunch</strong> 吃饭聊天时讨论到的。</p>
+            <p>有能力、有方向的人用 AI，能力会被正向放大很多倍；反过来，如果一个人本身没有实力，也不懂背后的逻辑和概念，用 AI 只会造成依赖。</p>
+            <p>所以我想，在 AI 时代，更重要的是 <strong lang="en">agency</strong>——一个人怎样去使用这个工具，最好还带着强烈的目标感。</p>
+            <hr class="field-note-divider" aria-hidden="true">
+            <p>拿我自己举例。我并不觉得自己是很聪明的人，也没有完全学明白 AI。但我的 agency 体现在：我愿意花时间去研究、去做项目，把想法变成行动。</p>
+            <p>AI 已经让我们有能力完成过去做不到的事，比如做一个网站、一个 app、一个小工具。但更重要的，是你怎么学习、怎么使用它。</p>
+            <p>既然已经有了这样的能力，我觉得现在就是 <strong lang="en">learn by experience</strong> 最好的时代：只要你肯付出时间，什么都能做出来，并且在做的过程中，学到背后的原理。</p>
+            <hr class="field-note-divider" aria-hidden="true">
+            <p>说到这里，我想提一下最近很火的一个 skill：<a href="https://github.com/morluto/rea">REA（Reverse Engineer Anything）</a>。它让 AI 具备了逆向工程各种东西的能力，这一周我一直在用它。</p>
+            <p>我一直对音乐很感兴趣，之前研究过模型如何预测一首歌的热度，也做过音乐推荐系统。这一次，我用 REA 拆解了 GuitarTuna，学习它背后的算法：声音是怎么被转换成频率的，频率又是怎么换算成音分（cents）的，还有 AudioWorklet 这些我以前没碰过的东西。</p>
+            <p>后来，我也照着学到的东西，做了一个自己的调音器 <a href="https://github.com/JerNB/six-string-tuner">six-string-tuner</a>。</p>
+            <hr class="field-note-divider" aria-hidden="true">
+            <p>整个过程很有趣，也很有成就感。因为你真的做出了一个东西，同时还学到了知识。</p>
+            <p class="field-note-pause">AI 放大的是你本来的样子，而 agency 决定了你想把自己放大成什么样子。</p>
+            <p>现在是最好的Learn by experience的时代，</p>
+            <p lang="en">Agency Is All u Need。</p>
+          </div>
+        </div>
+        <footer class="field-note-footer">
+          <div>
+            <span>杂记 04</span>
+            <p>关于 AI、目标感，以及把想法变成行动。</p>
+          </div>
+          <a href="../../journal.html">回到所有杂记 &rarr;</a>
+        </footer>
+      </article>
+      <footer class="footer field-note-site-footer">
+        <div>记下平常日子里的片刻。</div>
+        <div>&copy; 2026 Jerry Wu</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
