@@ -74,6 +74,11 @@ test('read = finishReading or curation read:true', () => {
   assert.ok(!r.study.some(s => s.key === 'naval'));
 });
 
+test('notebook markedStatus 1 also counts as finished', () => {
+  const r = build(f => { f.raw.notebooks.books.push({ bookId: 'b4', reviewCount: 0, noteCount: 0, bookmarkCount: 0, markedStatus: 1 }); });
+  assert.ok(place(r, 'naval'));
+});
+
 test('multi-volume match merges', () => {
   const p = place(build(), 'twins');
   assert.equal(p.hours, 3);

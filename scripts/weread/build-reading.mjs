@@ -14,6 +14,8 @@ export function buildReading(raw, curation, { now = new Date().toISOString().sli
   const seconds = new Map((raw.overall?.readLongest ?? []).filter(x => x.book?.bookId).map(x => [x.book.bookId, x.readTime]));
   const regionOrder = new Map(curation.regions.map(r => [r.id, r.order]));
 
+  const marked = new Set((raw.notebooks?.books ?? []).filter(b => b.markedStatus === 1).map(b => b.bookId));
+  const finished = b => b.finishReading === 1 || marked.has(b.bookId);
   const matchedIds = new Set();
   const places = [];
   for (const entry of curation.books) {
@@ -30,7 +32,7 @@ export function buildReading(raw, curation, { now = new Date().toISOString().sli
     }
     books.forEach(b => matchedIds.add(b.bookId));
     if (books.some(b => b.secret)) continue;                       // private, never shown
-    const read = entry.read ?? books.some(b => b.finishReading === 1);
+    const read = entry.read ?? books.some(finished);
     if (!read) continue;
     if (!regionOrder.has(entry.region)) { warnings.push(`${entry.key}: unknown region ${entry.region} — skipped`); continue; }
 
@@ -51,7 +53,7 @@ export function buildReading(raw, curation, { now = new Date().toISOString().sli
 
   const study = places.map(p => ({ key: p.key, label: p.label, author: p.author, wordCount: p.wordCount }));
   for (const b of shelfBooks) {
-    if (b.finishReading === 1 && !b.secret && !matchedIds.has(b.bookId)) {
+    if (finished(b) && !b.secret && !matchedIds.has(b.bookId)) {
       warnings.push(`finished but not curated (study only): ${b.title}`);
       study.push({ key: `shelf-${b.bookId}`, label: b.title, author: b.author ?? null, wordCount: raw.info?.[b.bookId]?.wordCount ?? null });
     }

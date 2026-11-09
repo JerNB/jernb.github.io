@@ -1,0 +1,576 @@
+{
+  "_readme": "Edit freely. read:true marks books WeRead doesn't show as finished. tibaReviewIds lists thoughts you allow on the page (private otherwise); tiba is a line you write; highlights:false hides highlights. Run: node scripts/sync-weread.mjs",
+  "regions": [
+    {
+      "id": "xingnang",
+      "name": "行囊",
+      "order": 0,
+      "painter": "xingnang",
+      "minWidth": 700
+    },
+    {
+      "id": "jianghu-shanhe",
+      "name": "江湖 · 山河",
+      "order": 1,
+      "painter": "shanhe",
+      "minWidth": 1500
+    },
+    {
+      "id": "jianghu-shijing",
+      "name": "江湖 · 市井",
+      "order": 2,
+      "painter": "shijing",
+      "minWidth": 1200
+    },
+    {
+      "id": "jianghu-night",
+      "name": "江湖 · 夜",
+      "order": 3,
+      "painter": "night",
+      "minWidth": 1100
+    },
+    {
+      "id": "loess",
+      "name": "黄土与田野",
+      "order": 4,
+      "painter": "loess",
+      "minWidth": 1500
+    },
+    {
+      "id": "snow",
+      "name": "雪国",
+      "order": 5,
+      "painter": "snow",
+      "minWidth": 1100
+    },
+    {
+      "id": "sea",
+      "name": "海边与深井",
+      "order": 6,
+      "painter": "sea",
+      "minWidth": 1000
+    },
+    {
+      "id": "whitenight",
+      "name": "白夜之城",
+      "order": 7,
+      "painter": "whitenight",
+      "minWidth": 700
+    },
+    {
+      "id": "depths",
+      "name": "深处",
+      "order": 8,
+      "painter": "depths",
+      "minWidth": 800
+    },
+    {
+      "id": "stage",
+      "name": "舞台",
+      "order": 9,
+      "painter": "stage",
+      "minWidth": 700
+    },
+    {
+      "id": "desert",
+      "name": "荒漠与大海",
+      "order": 10,
+      "painter": "desert",
+      "minWidth": 1100
+    },
+    {
+      "id": "macondo",
+      "name": "马孔多",
+      "order": 11,
+      "painter": "macondo",
+      "minWidth": 900
+    }
+  ],
+  "objects": [
+    {
+      "id": "compass",
+      "label": "罗盘",
+      "books": [
+        "cai-xiang-yu-fan-bo"
+      ]
+    },
+    {
+      "id": "lamp",
+      "label": "灯",
+      "books": [
+        "si-kao-kuai-yu-man",
+        "zhu-tui"
+      ]
+    },
+    {
+      "id": "scale",
+      "label": "秤",
+      "books": [
+        "mang-ge-zhi-dao",
+        "na-wa-er-bao-dian"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": "bu-ke-zhan-sheng-de-xia-tian",
+      "to": "sa-ha-la-de-gu-shi",
+      "note": "想到了三毛"
+    }
+  ],
+  "books": [
+    {
+      "key": "cai-xiang-yu-fan-bo",
+      "label": "猜想与反驳",
+      "region": "xingnang",
+      "place": "罗盘",
+      "match": [
+        "猜想与反驳"
+      ],
+      "read": true
+    },
+    {
+      "key": "si-kao-kuai-yu-man",
+      "label": "思考，快与慢",
+      "region": "xingnang",
+      "place": "灯",
+      "match": [
+        "思考，快与慢"
+      ],
+      "read": true
+    },
+    {
+      "key": "zhu-tui",
+      "label": "助推",
+      "region": "xingnang",
+      "place": "灯",
+      "match": [
+        "助推（终极版）"
+      ],
+      "read": true
+    },
+    {
+      "key": "mang-ge-zhi-dao",
+      "label": "芒格之道",
+      "region": "xingnang",
+      "place": "秤",
+      "match": [
+        "芒格之道——查理·芒格股东会讲话1987-2022"
+      ]
+    },
+    {
+      "key": "na-wa-er-bao-dian",
+      "label": "纳瓦尔宝典",
+      "region": "xingnang",
+      "place": "秤",
+      "match": [
+        "纳瓦尔宝典"
+      ],
+      "read": true
+    },
+    {
+      "key": "fei-hu-wai-zhuan",
+      "label": "飞狐外传",
+      "region": "jianghu-shanhe",
+      "place": "商家堡",
+      "search": "飞狐外传 金庸",
+      "read": true
+    },
+    {
+      "key": "xue-shan-fei-hu",
+      "label": "雪山飞狐",
+      "region": "jianghu-shanhe",
+      "place": "玉笔峰",
+      "search": "雪山飞狐 金庸",
+      "read": true
+    },
+    {
+      "key": "lian-cheng-jue",
+      "label": "连城诀",
+      "region": "jianghu-shanhe",
+      "place": "荆州城",
+      "search": "连城诀 金庸",
+      "read": true
+    },
+    {
+      "key": "tian-long-ba-bu",
+      "label": "天龙八部",
+      "region": "jianghu-shanhe",
+      "place": "雁门关",
+      "search": "天龙八部 金庸",
+      "read": true
+    },
+    {
+      "key": "she-diao",
+      "label": "射雕英雄传",
+      "region": "jianghu-shanhe",
+      "place": "桃花岛",
+      "search": "射雕英雄传 金庸",
+      "read": true
+    },
+    {
+      "key": "bai-ma-xiao-xi-feng",
+      "label": "白马啸西风",
+      "region": "jianghu-shanhe",
+      "place": "大漠",
+      "search": "白马啸西风 金庸",
+      "read": true
+    },
+    {
+      "key": "lu-ding-ji",
+      "label": "鹿鼎记",
+      "region": "jianghu-shanhe",
+      "place": "扬州",
+      "search": "鹿鼎记 金庸",
+      "read": true
+    },
+    {
+      "key": "xiao-ao-jiang-hu",
+      "label": "笑傲江湖",
+      "region": "jianghu-shanhe",
+      "place": "华山",
+      "search": "笑傲江湖 金庸",
+      "read": true
+    },
+    {
+      "key": "shu-jian-en-chou-lu",
+      "label": "书剑恩仇录",
+      "region": "jianghu-shanhe",
+      "place": "天山",
+      "search": "书剑恩仇录 金庸",
+      "read": true
+    },
+    {
+      "key": "shen-diao",
+      "label": "神雕侠侣",
+      "region": "jianghu-shanhe",
+      "place": "襄阳城",
+      "search": "神雕侠侣 金庸",
+      "read": true
+    },
+    {
+      "key": "xia-ke-xing",
+      "label": "侠客行",
+      "region": "jianghu-shanhe",
+      "place": "侠客岛",
+      "search": "侠客行 金庸",
+      "read": true
+    },
+    {
+      "key": "yi-tian-tu-long-ji",
+      "label": "倚天屠龙记",
+      "region": "jianghu-shanhe",
+      "place": "光明顶",
+      "search": "倚天屠龙记 金庸",
+      "read": true
+    },
+    {
+      "key": "bi-xue-jian",
+      "label": "碧血剑",
+      "region": "jianghu-shanhe",
+      "place": "金蛇洞",
+      "search": "碧血剑 金庸",
+      "read": true
+    },
+    {
+      "key": "yuan-yang-dao",
+      "label": "鸳鸯刀",
+      "region": "jianghu-shanhe",
+      "place": "镖路",
+      "search": "鸳鸯刀 金庸",
+      "read": true
+    },
+    {
+      "key": "yue-nv-jian",
+      "label": "越女剑",
+      "region": "jianghu-shanhe",
+      "place": "若耶溪",
+      "search": "越女剑 金庸",
+      "read": true
+    },
+    {
+      "key": "xiao-li-fei-dao",
+      "label": "小李飞刀",
+      "region": "jianghu-night",
+      "place": "小楼",
+      "match": [
+        "古龙经典小李飞刀（共9册）"
+      ]
+    },
+    {
+      "key": "jue-dai-shuang-jiao",
+      "label": "绝代双骄",
+      "region": "jianghu-night",
+      "place": "恶人谷",
+      "match": [
+        "古龙文集：绝代双骄1",
+        "古龙文集：绝代双骄2",
+        "古龙文集：绝代双骄3",
+        "古龙文集：绝代双骄4"
+      ]
+    },
+    {
+      "key": "lu-xiao-feng",
+      "label": "陆小凤传奇",
+      "region": "jianghu-night",
+      "place": "万梅山庄",
+      "match": [
+        "古龙：陆小凤传奇（全7册）"
+      ],
+      "read": false
+    },
+    {
+      "key": "chu-liu-xiang",
+      "label": "楚留香",
+      "region": "jianghu-night",
+      "place": "香帅的船",
+      "match": [
+        "楚留香传奇",
+        "古龙：楚留香新传（全4册）"
+      ],
+      "read": false
+    },
+    {
+      "key": "huang-jin-shi-dai",
+      "label": "黄金时代",
+      "region": "loess",
+      "place": "黄金时代",
+      "match": [
+        "黄金时代"
+      ]
+    },
+    {
+      "key": "di-jiu-tian-chang",
+      "label": "地久天长",
+      "region": "loess",
+      "place": "胡同",
+      "match": [
+        "地久天长（轻经典）"
+      ]
+    },
+    {
+      "key": "chen-mo-de-da-duo-shu",
+      "label": "沉默的大多数",
+      "region": "loess",
+      "place": "广场",
+      "match": [
+        "沉默的大多数（轻经典）"
+      ]
+    },
+    {
+      "key": "te-li-du-xing-de-zhu",
+      "label": "一只特立独行的猪",
+      "region": "loess",
+      "place": "猪栏",
+      "match": [
+        "一只特立独行的猪"
+      ],
+      "read": true
+    },
+    {
+      "key": "ge-ming-shi-qi-de-ai-qing",
+      "label": "革命时期的爱情",
+      "region": "loess",
+      "place": "豆腐厂",
+      "match": [
+        "革命时期的爱情"
+      ],
+      "read": true
+    },
+    {
+      "key": "qing-ping-wan",
+      "label": "我的遥远的清平湾",
+      "region": "loess",
+      "place": "清平湾",
+      "match": [
+        "我的遥远的清平湾（轻经典）"
+      ]
+    },
+    {
+      "key": "ping-fan-de-shi-jie",
+      "label": "平凡的世界",
+      "region": "loess",
+      "place": "双水村",
+      "search": "平凡的世界 路遥",
+      "read": true
+    },
+    {
+      "key": "huo-zhe",
+      "label": "活着",
+      "region": "loess",
+      "place": "福贵的田",
+      "search": "活着 余华",
+      "read": true
+    },
+    {
+      "key": "xiang-tu-zhong-guo",
+      "label": "乡土中国",
+      "region": "loess",
+      "place": "乡土",
+      "match": [
+        "乡土中国"
+      ],
+      "read": true
+    },
+    {
+      "key": "xue-guo",
+      "label": "雪国",
+      "region": "snow",
+      "place": "隧道",
+      "match": [
+        "雪国"
+      ]
+    },
+    {
+      "key": "yi-dou-de-wu-nv",
+      "label": "伊豆的舞女",
+      "region": "snow",
+      "place": "天城山道",
+      "match": [
+        "伊豆舞女"
+      ],
+      "read": true
+    },
+    {
+      "key": "chun-xue",
+      "label": "春雪",
+      "region": "snow",
+      "place": "松枝家",
+      "match": [
+        "丰饶之海（第一卷）：春雪"
+      ]
+    },
+    {
+      "key": "jin-ge-si",
+      "label": "金阁寺",
+      "region": "snow",
+      "place": "金阁",
+      "match": [
+        "金阁寺"
+      ],
+      "read": true
+    },
+    {
+      "key": "nuo-wei-de-sen-lin",
+      "label": "挪威的森林",
+      "region": "sea",
+      "place": "森林",
+      "match": [
+        "挪威的森林（2023修订版）"
+      ]
+    },
+    {
+      "key": "qie-ting-feng-yin",
+      "label": "且听风吟",
+      "region": "sea",
+      "place": "海边",
+      "match": [
+        "且听风吟（2023修订版）"
+      ]
+    },
+    {
+      "key": "guo-jing-yi-nan",
+      "label": "国境以南 太阳以西",
+      "region": "sea",
+      "place": "太阳以西",
+      "match": [
+        "国境以南 太阳以西"
+      ]
+    },
+    {
+      "key": "hai-bian-de-ka-fu-ka",
+      "label": "海边的卡夫卡",
+      "region": "sea",
+      "place": "甲村图书馆",
+      "match": [
+        "海边的卡夫卡"
+      ],
+      "read": true
+    },
+    {
+      "key": "bai-ye",
+      "label": "白夜",
+      "region": "whitenight",
+      "place": "涅瓦河畔",
+      "match": [
+        "白夜（陀思妥耶夫斯基文集2015）"
+      ],
+      "read": true
+    },
+    {
+      "key": "zi-shen-shen-chu",
+      "label": "自深深处",
+      "region": "depths",
+      "place": "高窗",
+      "match": [
+        "自深深处：王尔德的深情与幻想"
+      ],
+      "read": true
+    },
+    {
+      "key": "yue-liang-yu-liu-bian-shi",
+      "label": "月亮与六便士",
+      "region": "depths",
+      "place": "塔希提",
+      "match": [
+        "月亮与六便士（读客三个圈经典文库）"
+      ],
+      "read": true
+    },
+    {
+      "key": "yang-guang-xia-de-pu-tao-gan",
+      "label": "阳光下的葡萄干",
+      "region": "stage",
+      "place": "南区公寓",
+      "match": [
+        "阳光下的葡萄干"
+      ]
+    },
+    {
+      "key": "biao-xiang-yu-xian-shi",
+      "label": "表象与现实",
+      "region": "stage",
+      "place": "幕后",
+      "match": [
+        "表象与现实（轻经典）"
+      ]
+    },
+    {
+      "key": "bu-ke-zhan-sheng-de-xia-tian",
+      "label": "我身上有个不可战胜的夏天",
+      "region": "desert",
+      "place": "提帕萨",
+      "match": [
+        "我身上有个不可战胜的夏天（果麦经典）"
+      ]
+    },
+    {
+      "key": "ju-wai-ren",
+      "label": "局外人",
+      "region": "desert",
+      "place": "阿尔及尔海滩",
+      "search": "局外人 加缪",
+      "read": true
+    },
+    {
+      "key": "sa-ha-la-de-gu-shi",
+      "label": "撒哈拉的故事",
+      "region": "desert",
+      "place": "撒哈拉",
+      "match": [
+        "撒哈拉的故事"
+      ],
+      "read": true
+    },
+    {
+      "key": "bai-nian-gu-du",
+      "label": "百年孤独",
+      "region": "macondo",
+      "place": "马孔多",
+      "match": [
+        "百年孤独"
+      ],
+      "read": true
+    }
+  ]
+}
