@@ -222,14 +222,16 @@ export function makeInk(ctx, seed = 20261108, props = new Map()) {
     house(x + w / 2 - 24, y - h - 4, 48, 14, 18);
   }
   /** Water band: tinted wash plus brushed ripples between y0 and y1. */
-  function water(x, y0, w, y1, { density = 1, dark = false, fadeIn = 0 } = {}) {
+  function water(x, y0, w, y1, { density = 1, dark = false, fadeIn = 0, fadeOut = 0 } = {}) {
     const rgb = dark ? '10,9,8' : '150,142,125', a = dark ? .25 : .22;
-    const g = ctx.createLinearGradient(x, 0, x + Math.max(1, fadeIn), 0);
-    g.addColorStop(0, `rgba(${rgb},${fadeIn ? 0 : a})`); g.addColorStop(1, `rgba(${rgb},${a})`);
+    const g = ctx.createLinearGradient(x, 0, x + w, 0);
+    g.addColorStop(0, `rgba(${rgb},${fadeIn ? 0 : a})`); g.addColorStop(Math.min(.49, fadeIn / w), `rgba(${rgb},${a})`);
+    g.addColorStop(Math.max(.51, 1 - fadeOut / w), `rgba(${rgb},${a})`); g.addColorStop(1, `rgba(${rgb},${fadeOut ? 0 : a})`);
     ctx.fillStyle = g; ctx.fillRect(x, y0, w, y1 - y0);
     for (let i = 0; i < w * (y1 - y0) / 140 * density; i++) {
       const px = x + rr(0, w), py = rr(y0 + 4, y1 - 4), l = rr(8, 26);
       if (fadeIn && px - x < fadeIn && rng() > (px - x) / fadeIn) continue;
+      if (fadeOut && x + w - px < fadeOut && rng() > (x + w - px) / fadeOut) continue;
       ctx.strokeStyle = dark ? `rgba(236,228,208,${rr(.04, .14)})` : ink(rr(.08, .22)); ctx.lineWidth = rr(.4, .8);
       ctx.beginPath(); ctx.moveTo(px, py); ctx.quadraticCurveTo(px + l / 2, py - 1.5, px + l, py); ctx.stroke();
     }
@@ -286,4 +288,15 @@ export function spread(roadPts, keys, orient, lift = 120) {
     out[k] = orient === 'portrait' ? [p[0] + (i % 2 ? 90 : -120), p[1]] : [p[0], p[1] - lift - (i % 2) * 70];
   });
   return out;
+}
+
+/** Landmark positions for both orientations: landscape uses [fx, groundY]; portrait stacks them. */
+export function marksAt(w, h, orient, marks) {
+  const names = Object.keys(marks);
+  return names.map((name, i) => {
+    const [kind, fx, gy] = marks[name];
+    return orient === 'portrait'
+      ? { name, kind, x: i % 2 ? 270 : 130, y: h / (names.length + 1) * (i + 1) + 70, i }
+      : { name, kind, x: fx * w, y: gy, i };
+  });
 }
