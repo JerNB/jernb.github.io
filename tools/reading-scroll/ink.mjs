@@ -222,10 +222,14 @@ export function makeInk(ctx, seed = 20261108, props = new Map()) {
     house(x + w / 2 - 24, y - h - 4, 48, 14, 18);
   }
   /** Water band: tinted wash plus brushed ripples between y0 and y1. */
-  function water(x, y0, w, y1, { density = 1, dark = false } = {}) {
-    ctx.fillStyle = dark ? 'rgba(10,9,8,.25)' : 'rgba(150,142,125,.22)'; ctx.fillRect(x, y0, w, y1 - y0);
+  function water(x, y0, w, y1, { density = 1, dark = false, fadeIn = 0 } = {}) {
+    const rgb = dark ? '10,9,8' : '150,142,125', a = dark ? .25 : .22;
+    const g = ctx.createLinearGradient(x, 0, x + Math.max(1, fadeIn), 0);
+    g.addColorStop(0, `rgba(${rgb},${fadeIn ? 0 : a})`); g.addColorStop(1, `rgba(${rgb},${a})`);
+    ctx.fillStyle = g; ctx.fillRect(x, y0, w, y1 - y0);
     for (let i = 0; i < w * (y1 - y0) / 140 * density; i++) {
       const px = x + rr(0, w), py = rr(y0 + 4, y1 - 4), l = rr(8, 26);
+      if (fadeIn && px - x < fadeIn && rng() > (px - x) / fadeIn) continue;
       ctx.strokeStyle = dark ? `rgba(236,228,208,${rr(.04, .14)})` : ink(rr(.08, .22)); ctx.lineWidth = rr(.4, .8);
       ctx.beginPath(); ctx.moveTo(px, py); ctx.quadraticCurveTo(px + l / 2, py - 1.5, px + l, py); ctx.stroke();
     }
