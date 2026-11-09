@@ -141,3 +141,10 @@ test('objects and links keep only placed books', () => {
   assert.equal(place(r, 'naval').objectId, 'scale');
   assert.deepEqual(build().links.map(l => l.to), ['huozhe']); // sahara not placed
 });
+
+test('search-sourced books that are secret on the shelf stay private', () => {
+  const r = build(f => {
+    f.raw.search.huozhe = { bookId: 'b2', title: '活着', author: '余华', cover: 'c' };   // b2 is secret on the shelf
+  });
+  assert.equal(r.places.find(p => p.key === 'huozhe'), undefined);
+});

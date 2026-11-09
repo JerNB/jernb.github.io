@@ -1,6 +1,6 @@
 // Boots reading.html: lays the pre-rendered tiles, the places and their 题跋, the walking
 // traveler, the 书房 spine wall and the 卷尾跋 colophon onto the scroll.
-import { pointOnAxis, inRanges } from './path.mjs';
+import { pointOnAxis, inRanges, orderAlong } from './path.mjs';
 import { createScrollController } from './scroll.mjs';
 import { toChineseNumeral } from './numerals.mjs';
 
@@ -20,6 +20,7 @@ const spineW = s => s.wordCount ? Math.min(46, Math.max(17, s.wordCount / 12000)
 const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
 
 let update = () => {};
+let currentOrient = null;
 const controllers = {};
 
 function build() {
@@ -54,6 +55,7 @@ function build() {
     b.type = 'button';
     b.style.left = `${pt[0] * k}px`; b.style.top = `${pt[1] * k}px`;
     if (pt[1] * k < 120) b.classList.add('below');
+    else if (!P && pt[1] > 300) b.classList.add('low');          // keep long 题跋 inside the strip
     if (isDark(pt)) b.classList.add('light');
     if (!P && pt[0] < 300) b.classList.add('flip');
     if (P && pt[0] < S.width / 2) b.classList.add('flip');
@@ -73,18 +75,24 @@ function build() {
     return box;
   };
   const byKey = Object.fromEntries(reading.places.map(p => [p.key, p]));
+  const renderers = {}, anchorsAll = {};
   for (const p of reading.places) {
     if (p.objectId) continue;
     const pt = S.places[p.key]; if (!pt) continue;
     const t = p.tiba ? [p.tiba.quote, p.tiba.mine].filter(Boolean).join('。') : '';
-    placeBtn(pt, p.place, p.place === p.label ? '' : `《${p.label}》`, tibaFor(p.tiba), `${p.place}，《${p.label}》${p.author ? '，' + p.author : ''}${t ? '。' + t : ''}`);
+    anchorsAll[p.key] = pt;
+    renderers[p.key] = () => placeBtn(pt, p.place, p.place === p.label ? '' : `《${p.label}》`, tibaFor(p.tiba), `${p.place}，《${p.label}》${p.author ? '，' + p.author : ''}${t ? '。' + t : ''}`);
   }
   for (const o of reading.objects) {
     const pt = S.objects[o.id]; if (!pt || !o.books.length) continue;
-    const box = el('span', 'tiba');
-    for (const key of o.books) box.append(el('span', 'quote', `《${byKey[key].label}》${byKey[key].tiba?.mine ? '　' + byKey[key].tiba.mine : ''}`));
-    placeBtn(pt, o.label, '', box, `${o.label}：${o.books.map(kk => `《${byKey[kk].label}》`).join('、')}`);
+    anchorsAll[`object:${o.id}`] = pt;
+    renderers[`object:${o.id}`] = () => {
+      const box = el('span', 'tiba');
+      for (const key of o.books) box.append(el('span', 'quote', `《${byKey[key].label}》${byKey[key].tiba?.mine ? '　' + byKey[key].tiba.mine : ''}`));
+      placeBtn(pt, o.label, '', box, `${o.label}：${o.books.map(kk => `《${byKey[kk].label}》`).join('、')}`);
+    };
   }
+  for (const key of orderAlong(anchorsAll, ax)) renderers[key]();   // Tab order follows the road
 
   /* threads Jerry drew between books (e.g. 加缪 → 三毛) */
   for (const l of reading.links) {
@@ -156,7 +164,9 @@ function build() {
     tr.classList.toggle('light', isDark([x, y]));
   };
 
-  controllers[orient] ??= createScrollController(section, { orient, reducedMotion: mqReduced.matches, onFrame: p => update(p) });
+  currentOrient = orient;
+  controllers[orient] ??= createScrollController(section, { orient, reducedMotion: mqReduced.matches,
+    onFrame: p => { if (currentOrient === orient) update(p); } });   // a stale orientation's listener stays silent
   section.dataset.state = 'ready';
   update(controllers[orient].position);
 }

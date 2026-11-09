@@ -128,6 +128,7 @@
 .tiba .quote { max-height: 260px; }
 .tiba .mine { color: var(--mine); }
 .place.flip .tiba { right: auto; left: calc(100% + 12px); }
+.place.low .tiba { top: auto; bottom: 4px; }
 .place:hover .tiba, .place:focus-visible .tiba { opacity: 1; }
 .place.light .tiba { color: var(--scroll-glow); }
 .place.light .tiba .mine { color: #b9c7b1; }

@@ -25,3 +25,9 @@ test('pointOnAxis interpolates the road at a given x (or y) and clamps to its en
   assert.deepEqual(pointOnAxis(line, 0, 999), [200, 30]);
   assert.deepEqual(pointOnAxis([[5, 0], [15, 100]], 1, 50), [10, 50]);
 });
+
+import { orderAlong } from '../../js/reading/path.mjs';
+test('orderAlong sorts keyed anchors by the scroll axis', () => {
+  assert.deepEqual(orderAlong({ a: [300, 0], b: [10, 50], c: [120, 9] }, 0), ['b', 'c', 'a']);
+  assert.deepEqual(orderAlong({ a: [0, 30], b: [0, 10] }, 1), ['b', 'a']);
+});

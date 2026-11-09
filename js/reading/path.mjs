@@ -37,3 +37,6 @@ export function pointOnAxis(line, axis, v) {
   }
   return [...line[line.length - 1]];
 }
+
+/** Keys of an {key: [x, y]} anchor map ordered along the scroll axis (0 = x, 1 = y). */
+export const orderAlong = (anchors, axis) => Object.keys(anchors).sort((a, b) => anchors[a][axis] - anchors[b][axis] || a.localeCompare(b));

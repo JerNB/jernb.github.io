@@ -33,8 +33,9 @@ export async function syncWeRead({
     const page = await call('/user/notebooks', { count: 100, ...(lastSort ? { lastSort } : {}) });
     notebooks.totalNoteCount ??= page.totalNoteCount;
     notebooks.books.push(...(page.books ?? []));
-    if (!page.hasMore || !page.books?.length) break;
-    lastSort = page.books.at(-1).sort;
+    const next = page.books?.at(-1)?.sort;
+    if (!page.hasMore || !page.books?.length || !next || next === lastSort) break;   // no progress → stop
+    lastSort = next;
   }
 
   const byTitle = new Map((shelf.books ?? []).map(b => [b.title, b]));

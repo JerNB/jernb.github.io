@@ -4,16 +4,19 @@
 
 /** Exponential approach toward `target` with the given half-life; snaps within half a pixel. */
 export function stepToward(cur, target, dtMs, halfLifeMs = 120) {
-  const next = target + (cur - target) * Math.pow(0.5, dtMs / halfLifeMs);
-  return Math.abs(target - next) < 0.5 ? target : next;
+  if (dtMs <= 0) return cur;
+  let next = target + (cur - target) * Math.pow(0.5, dtMs / halfLifeMs);
+  // browsers round scroll positions to device pixels: always move at least 1px, or stall short of target
+  if (Math.abs(next - cur) < 1) next = cur + Math.sign(target - cur) * Math.min(1, Math.abs(target - cur));
+  return Math.abs(target - next) < 1 ? target : next;
 }
 
 /** Decide whether a wheel event drives the scroll, and where the pending target moves. */
-export function wheelIntent({ deltaX, deltaY, deltaMode }, pos, target, max, orient) {
-  if (orient === 'portrait') return { capture: false, target };
+export function wheelIntent({ deltaX, deltaY, deltaMode, ctrlKey }, pos, target, max, orient) {
+  if (orient === 'portrait' || ctrlKey) return { capture: false, target };   // ctrl+wheel = page zoom / pinch
   if (Math.abs(deltaX) > Math.abs(deltaY)) return { capture: false, target };
   const d = deltaY * (deltaMode === 1 ? 16 : deltaMode === 2 ? 400 : 1);
-  if ((d > 0 && pos >= max - 0.5) || (d < 0 && pos <= 0.5)) return { capture: false, target };
+  if ((d > 0 && pos >= max - 1) || (d < 0 && pos <= 1)) return { capture: false, target };
   return { capture: true, target: Math.min(max, Math.max(0, target + d)) };
 }
 
@@ -32,7 +35,8 @@ export function createScrollController(viewport, { orient, reducedMotion, onFram
     const dt = last ? Math.min(64, now - last) : 16; last = now;
     const cur = viewport[axis], next = stepToward(cur, target, dt);
     driving = true; viewport[axis] = next; driving = false;
-    if (next !== target) raf = requestAnimationFrame(frame); else { raf = 0; last = 0; }
+    const stuck = viewport[axis] === cur && next !== cur;          // clamped by the browser: give up
+    if (next !== target && !stuck) raf = requestAnimationFrame(frame); else { raf = 0; last = 0; target = viewport[axis]; }
   };
   const onWheel = e => {
     const it = wheelIntent(e, viewport[axis], raf ? target : viewport[axis], max(), orient);

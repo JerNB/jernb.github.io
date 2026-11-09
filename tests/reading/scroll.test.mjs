@@ -36,3 +36,21 @@ test('portrait never captures', () => {
 test('deltaMode 1 (lines) scales by 16', () => {
   assert.deepEqual(wheelIntent({ deltaX: 0, deltaY: 3, deltaMode: 1 }, 500, 500, 2000, 'landscape'), { capture: true, target: 548 });
 });
+
+test('loop settles when the browser rounds scroll positions to device pixels', () => {
+  for (const dpr of [1, 1.25, 1.5, 2]) {
+    const round = v => Math.round(v * dpr) / dpr;
+    let pos = 0; const target = 1000.4;
+    for (let i = 0; i < 400 && pos !== target; i++) { const next = stepToward(pos, target, 16); pos = next === target ? target : round(next); }
+    assert.equal(pos, target, `dpr ${dpr}`);
+  }
+});
+
+test('wheel released within a pixel of the end', () => {
+  assert.equal(wheelIntent({ deltaX: 0, deltaY: 100, deltaMode: 0 }, 1999.2, 1999.2, 2000, 'landscape').capture, false);
+  assert.equal(wheelIntent({ deltaX: 0, deltaY: -100, deltaMode: 0 }, 0.8, 0.8, 2000, 'landscape').capture, false);
+});
+
+test('ctrl+wheel (zoom, pinch) is never captured', () => {
+  assert.equal(wheelIntent({ deltaX: 0, deltaY: 100, deltaMode: 0, ctrlKey: true }, 500, 500, 2000, 'landscape').capture, false);
+});

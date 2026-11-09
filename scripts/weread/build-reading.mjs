@@ -23,6 +23,7 @@ export function buildReading(raw, curation, { now = new Date().toISOString().sli
     if (entry.search !== undefined) {
       const hit = raw.search?.[entry.key];
       if (!hit) { warnings.push(`${entry.key}: search "${entry.search}" found nothing — skipped`); continue; }
+      if (secretIds.has(hit.bookId)) { matchedIds.add(hit.bookId); continue; }      // private on the shelf
       books = [{ ...hit, finishReading: 0, secret: 0, fromSearch: true }];
     } else {
       books = (entry.match ?? []).map(t => byTitle.get(t)).filter(Boolean);
