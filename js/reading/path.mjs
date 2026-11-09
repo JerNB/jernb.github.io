@@ -23,3 +23,17 @@ export function pointAt(line, t) {
 
 /** True when v lies inside any [a, b] range (inclusive). */
 export const inRanges = (ranges, v) => ranges.some(([a, b]) => v >= a && v <= b);
+
+/** Point on a polyline that is monotonic along `axis` (0 = x, 1 = y) at coordinate v, clamped. */
+export function pointOnAxis(line, axis, v) {
+  if (!line.length) return [0, 0];
+  if (v <= line[0][axis]) return [...line[0]];
+  for (let i = 1; i < line.length; i++) {
+    const a = line[i - 1], b = line[i];
+    if (v <= b[axis]) {
+      const f = b[axis] === a[axis] ? 0 : (v - a[axis]) / (b[axis] - a[axis]);
+      return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+    }
+  }
+  return [...line[line.length - 1]];
+}

@@ -1,0 +1,212 @@
+/* 书卷 — the reading scroll. Kraft strip, ink, one seal-red accent. */
+.reading-page {
+  --kraft: #b3a994;
+  --scroll-ink: #1e1b17;
+  --scroll-ink-soft: #3b362f;
+  --scroll-glow: #e6dcc4;
+  --seal: #9b3a2a;
+  --mine: #4d5c48;
+  --ease: cubic-bezier(0.28, 0.6, 0.2, 1);
+}
+
+.reading-page .content { padding-bottom: 40px; min-width: 0; }
+
+.reading-head {
+  width: min(var(--max-width), 82%);
+  margin: 0 auto 26px;
+  position: relative;
+  z-index: 2;
+}
+.reading-head h1 {
+  font-family: 'Noto Serif SC', 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(40px, 5.4vw, 60px);
+  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+}
+.reading-intro {
+  margin: 0;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: #5c5a55;
+}
+
+/* ---------- the strip ---------- */
+.scroll {
+  position: relative;
+  z-index: 2;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--kraft);
+  border-top: 1px solid rgba(30, 27, 23, .35);
+  border-bottom: 1px solid rgba(30, 27, 23, .35);
+  box-shadow: inset 0 10px 18px -14px rgba(30, 27, 23, .6), inset 0 -10px 18px -14px rgba(30, 27, 23, .6);
+  scrollbar-width: thin;
+  scrollbar-color: #5a5348 transparent;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
+.scroll:active { cursor: grabbing; }
+.scroll:focus-visible { outline: 2px solid var(--scroll-ink-soft); outline-offset: 3px; }
+.scroll-track { position: relative; background-repeat: no-repeat; }
+.strip-end { position: absolute; z-index: 1; pointer-events: none; background: linear-gradient(to right, rgba(179,169,148,0), var(--kraft)); }
+.strip-end[data-axis="y"] { background: linear-gradient(to bottom, rgba(179,169,148,0), var(--kraft)); }
+
+.tile {
+  position: absolute;
+  display: block;
+  opacity: 0;
+  transition: opacity 400ms var(--ease);
+  pointer-events: none;
+  user-select: none;
+}
+.tile.is-loaded { opacity: 1; }
+
+.scroll-hint {
+  width: min(var(--max-width), 82%);
+  margin: 12px auto 0;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  color: #706d67;
+  letter-spacing: 0.06em;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- places ---------- */
+.place {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 4px 2px;
+  border: 0;
+  background: none;
+  color: var(--scroll-ink);
+  font-family: 'Noto Serif SC', serif;
+  cursor: default;
+  transform: translate(-50%, -100%);
+  text-shadow: 0 0 6px rgba(196, 187, 167, .95), 0 0 2px rgba(196, 187, 167, .95);
+  transition: transform 380ms var(--ease);
+}
+.place.below { transform: translate(-50%, 0); }
+.place:hover, .place:focus-visible { transform: translate(-50%, calc(-100% - 3px)); }
+.place.below:hover, .place.below:focus-visible { transform: translate(-50%, 3px); }
+.place:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+.place .name { writing-mode: vertical-rl; font-size: 15px; letter-spacing: .2em; line-height: 1; }
+.place .book { writing-mode: vertical-rl; font-size: 11px; letter-spacing: .12em; line-height: 1; color: var(--scroll-ink-soft); }
+.place .seal {
+  position: absolute; right: -10px; bottom: -6px;
+  width: 12px; height: 12px;
+  background: var(--seal); color: var(--scroll-glow);
+  font-size: 8.5px; line-height: 12px; text-align: center; border-radius: 1px; text-shadow: none;
+}
+.place.light { color: var(--scroll-glow); text-shadow: 0 0 6px rgba(12, 10, 9, .95); }
+.place.light .book { color: rgba(230, 220, 196, .78); }
+
+.tiba {
+  position: absolute;
+  top: 4px;
+  right: calc(100% + 12px);
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 8px;
+  max-height: 260px;
+  writing-mode: vertical-rl;
+  font-size: 12.5px;
+  line-height: 1.85;
+  letter-spacing: .12em;
+  color: var(--scroll-ink-soft);
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms var(--ease);
+}
+.tiba .quote { max-height: 260px; }
+.tiba .mine { color: var(--mine); }
+.place.flip .tiba { right: auto; left: calc(100% + 12px); }
+.place:hover .tiba, .place:focus-visible .tiba { opacity: 1; }
+.place.light .tiba { color: var(--scroll-glow); }
+.place.light .tiba .mine { color: #b9c7b1; }
+
+/* the traveler and the 加缪 → 三毛 thread */
+.traveler { position: absolute; z-index: 4; width: 12px; height: 18px; left: 0; top: 0; pointer-events: none; will-change: transform; }
+.traveler path, .traveler circle, .traveler ellipse { fill: var(--scroll-ink); transition: fill 600ms var(--ease); }
+.traveler.light path, .traveler.light circle, .traveler.light ellipse { fill: var(--scroll-glow); }
+.thread { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; overflow: visible; }
+.thread path { fill: none; stroke: rgba(30, 27, 23, .45); stroke-width: 1; stroke-dasharray: 2 5; }
+.thread-note {
+  position: absolute; z-index: 3; writing-mode: vertical-rl;
+  font-family: 'Noto Serif SC', serif; font-size: 12px; letter-spacing: .14em; color: var(--mine);
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 6px rgba(196, 187, 167, .95);
+}
+
+/* ---------- 书房: the spine wall ---------- */
+.study { position: absolute; display: flex; flex-direction: column; justify-content: flex-end; }
+.study-title { position: absolute; top: 34px; writing-mode: vertical-rl; font-family: 'Noto Serif SC', serif; font-size: 15px; letter-spacing: .3em; color: var(--scroll-ink); }
+.shelf {
+  list-style: none; margin: 0; padding: 0 0 0 4px;
+  display: flex; flex-wrap: nowrap; align-items: flex-end; gap: 3px;
+  border-bottom: 8px solid rgba(30, 27, 23, .82);
+  box-shadow: 0 10px 14px -8px rgba(30, 27, 23, .5);
+}
+.spine {
+  position: relative;
+  display: flex; justify-content: center;
+  padding-top: 10px;
+  color: var(--scroll-glow);
+  border-radius: 1px 1px 0 0;
+  box-shadow: inset -2px 0 0 rgba(0, 0, 0, .18), inset 1px 0 0 rgba(255, 255, 255, .08);
+  transition: transform 380ms var(--ease);
+}
+.spine span { writing-mode: vertical-rl; font-family: 'Noto Serif SC', serif; font-size: 11px; letter-spacing: .08em; line-height: 1; overflow: hidden; max-height: calc(100% - 16px); white-space: nowrap; }
+.spine:hover { transform: translateY(-4px); }
+.spine .who {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  writing-mode: vertical-rl; font-size: 11px; color: var(--scroll-ink-soft); white-space: nowrap;
+  opacity: 0; transition: opacity 300ms var(--ease); pointer-events: none;
+}
+.spine:hover .who { opacity: 1; }
+
+/* ---------- 卷尾跋: colophon ---------- */
+.colophon {
+  position: absolute;
+  display: flex; flex-direction: row-reverse; gap: 14px; align-items: flex-start;
+  font-family: 'Noto Serif SC', serif; color: var(--scroll-ink);
+}
+.colophon p { margin: 0; writing-mode: vertical-rl; font-size: 15px; line-height: 2; letter-spacing: .24em; }
+.colophon .date { font-size: 12px; color: var(--scroll-ink-soft); }
+.colophon .seal-big {
+  align-self: flex-end;
+  writing-mode: vertical-rl;
+  width: 34px; padding: 6px 0;
+  background: var(--seal); color: var(--scroll-glow);
+  font-size: 14px; letter-spacing: .3em; text-align: center; border-radius: 2px;
+}
+
+/* ---------- phone: a hanging scroll ---------- */
+.scroll[data-orient="portrait"] {
+  overflow: hidden;
+  margin: 0 16px;
+  border: 0;
+  border-left: 1px solid rgba(30, 27, 23, .35);
+  border-right: 1px solid rgba(30, 27, 23, .35);
+  box-shadow: inset 10px 0 18px -14px rgba(30, 27, 23, .6), inset -10px 0 18px -14px rgba(30, 27, 23, .6);
+  cursor: auto;
+}
+.scroll[data-orient="portrait"] .shelf { flex-wrap: wrap; row-gap: 22px; border-bottom: 0; box-shadow: none; }
+.scroll[data-orient="portrait"] .spine { border-bottom: 6px solid rgba(30, 27, 23, .82); }
+
+@media (max-width: 767px) {
+  .reading-head, .scroll-hint { width: auto; margin-left: 16px; margin-right: 16px; }
+  .reading-head h1 { font-size: 40px; }
+  .tiba { max-height: 200px; font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile, .place, .tiba, .spine, .spine .who, .traveler path { transition: none; }
+}

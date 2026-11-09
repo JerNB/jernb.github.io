@@ -16,3 +16,12 @@ test('inRanges is inclusive', () => {
   assert.equal(inRanges([[5, 9]], 10), false);
   assert.equal(inRanges([], 1), false);
 });
+
+import { pointOnAxis } from '../../js/reading/path.mjs';
+test('pointOnAxis interpolates the road at a given x (or y) and clamps to its ends', () => {
+  const line = [[0, 10], [100, 30], [200, 30]];
+  assert.deepEqual(pointOnAxis(line, 0, 50), [50, 20]);
+  assert.deepEqual(pointOnAxis(line, 0, -5), [0, 10]);
+  assert.deepEqual(pointOnAxis(line, 0, 999), [200, 30]);
+  assert.deepEqual(pointOnAxis([[5, 0], [15, 100]], 1, 50), [10, 50]);
+});

@@ -10,7 +10,7 @@ export const desert = {
   paint(a, { w, h }, region, places, orient) {
     const P = orient === 'portrait', key = keyOf(places), anchors = {};
     // strong Mediterranean light: the paper warms slightly, no new hue
-    const g = a.ctx.createRadialGradient(w * .3, 60, 10, w * .3, 60, Math.max(w, h) * .8);
+    const g = a.ctx.createRadialGradient(w * .5, h * .25, 10, w * .5, h * .25, Math.min(w, h) * .5 + 120);
     g.addColorStop(0, 'rgba(236,214,170,.35)'); g.addColorStop(1, 'rgba(236,214,170,0)'); a.ctx.fillStyle = g; a.ctx.fillRect(0, 0, w, h);
     if (!P) {
       a.ctx.strokeStyle = a.ink(.4); a.ctx.lineWidth = 1; a.ctx.beginPath(); a.ctx.moveTo(0, 360); a.ctx.lineTo(w * .55, 360); a.ctx.stroke();

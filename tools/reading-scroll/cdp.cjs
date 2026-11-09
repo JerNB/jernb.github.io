@@ -64,3 +64,21 @@ if (require.main === module && process.argv[2] === 'snap') {
     console.log(out);
   }).catch(e => { console.error(e.message); process.exit(1); });
 }
+
+// CLI: node tools/reading-scroll/cdp.cjs page <url> <out.png> <width> <height> [scrollX] [js]
+// Screenshot of a real page at a given viewport (for verifying reading.html).
+if (require.main === module && process.argv[2] === 'page') {
+  const [, , , url, out, w = '1440', h = '900', sx = '0', js = ''] = process.argv;
+  withPage(async ({ send, goto, evaluate, pause }) => {
+    const mobile = Number(w) < 768;
+    await send('Emulation.setDeviceMetricsOverride', { width: Number(w), height: Number(h), deviceScaleFactor: 1, mobile });
+    await goto(url);
+    await evaluate("new Promise(r => { const t = setInterval(() => document.querySelector('.scroll')?.dataset.state === 'ready' && (clearInterval(t), r()), 100); })");
+    await evaluate(`document.querySelector('.scroll').scrollLeft = ${Number(sx)}; document.querySelector('.scroll').dispatchEvent(new Event('scroll'))`);
+    if (js) await evaluate(js);
+    await pause(1500);
+    const shot = await send('Page.captureScreenshot', { format: 'png' });
+    fs.writeFileSync(out, Buffer.from(shot.data, 'base64'));
+    console.log(out);
+  }, { width: Number(w), height: Number(h) }).catch(e => { console.error(e.message); process.exit(1); });
+}
