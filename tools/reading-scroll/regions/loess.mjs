@@ -22,6 +22,7 @@ export const loess = {
       const [kind, fx, gy] = MARKS[name];
       let x = fx * w, y = gy;
       if (P) { y = h / (names.length + 1) * (i + 1) + 60; x = i % 2 ? 280 : 120;
+        if (i % 3 === 0 && kind !== 'caves') { a.mountain({ x0: -30, x1: w + 30, base: y - 40, amp: 70, freq: .012, seed: 80 + i, tone: t * .45, depth: 90, cun: .4, edge: .5 }); a.mist(0, y - 70, w, 50, .6); }
         if (kind === 'caves' || kind === 'village') terraces(a, -20, w + 20, y - 10, t * .8, 3); }
       const pt = DRAW[kind](a, x, y, t, name);
       if (key[name]) anchors[key[name]] = pt;
