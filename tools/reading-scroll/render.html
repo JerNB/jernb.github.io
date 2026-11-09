@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading scroll generator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap">
+<style>
+  body{margin:0;background:#8f8673;font:13px system-ui,sans-serif;color:#1e1b17}
+  #bar{padding:8px 12px;background:#d8d0bd;position:sticky;top:0;z-index:2}
+  #wrap{position:relative;overflow:auto;height:calc(100vh - 36px)}
+  #stage{position:relative}
+  .mk{position:absolute;transform:translate(-50%,-50%);width:7px;height:7px;border-radius:50%;background:#9b3a2a;outline:1px solid #fff}
+  .mk span{position:absolute;left:9px;top:-6px;white-space:nowrap;font:12px 'Noto Serif SC',serif;background:rgba(236,228,208,.8);padding:0 3px}
+  svg{position:absolute;left:0;top:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="bar">generator · <span id="info">painting…</span></div>
+<div id="wrap"><div id="stage"></div></div>
+<script type="module">
+import { paintScene, loadProps } from './render.mjs';
+import './regions/all.mjs';
+
+const q = new URLSearchParams(location.search);
+const reading = await (await fetch('../../data/reading.json', { cache: 'no-store' })).json();
+const props = await loadProps();
+
+// Export hook for scripts/render-reading-scroll.cjs
+window.exportScene = async (orient, tile = 1200) => {
+  const { canvas, scene } = await paintScene(reading, orient, { scale: 2, props });
+  const out = { scene, tiles: [] };
+  const along = orient === 'portrait' ? scene.height : scene.width;
+  for (let s = 0, i = 0; s < along; s += tile, i++) {
+    const len = Math.min(tile, along - s);
+    const [sx, sy, w, h] = orient === 'portrait' ? [0, s, scene.width, len] : [s, 0, len, scene.height];
+    const enc = (k) => { const c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+      c.getContext('2d').drawImage(canvas, sx * 2, sy * 2, w * 2, h * 2, 0, 0, c.width, c.height); return c.toDataURL('image/webp', .86); };
+    out.tiles.push({ name: String(i), x: sx, y: sy, w, h, dataUrl2x: enc(2), dataUrl1x: enc(1) });
+  }
+  const l = document.createElement('canvas'); l.width = Math.ceil(scene.width / 16); l.height = Math.ceil(scene.height / 16);
+  const lc = l.getContext('2d'); lc.imageSmoothingQuality = 'high'; lc.drawImage(canvas, 0, 0, l.width, l.height);
+  out.lqipDataUrl = l.toDataURL('image/webp', .7);
+  return out;
+};
+window.exportPaper = async () => {
+  const { makeInk } = await import('./ink.mjs');
+  const c = document.createElement('canvas'); c.width = c.height = 512;
+  const ctx = c.getContext('2d'); makeInk(ctx, 7).paper(0, 0, 512, 512);
+  return c.toDataURL('image/webp', .85);
+};
+
+if (!q.has('export')) {
+  const orient = q.get('orient') || 'landscape', only = q.get('region');
+  const t0 = performance.now();
+  const { canvas, scene } = await paintScene(reading, orient, { only, props });
+  const stage = document.getElementById('stage');
+  stage.style.width = canvas.width + 'px'; stage.style.height = canvas.height + 'px';
+  stage.appendChild(canvas);
+  if (!q.has('clean')) {
+    const off = only ? scene.rects.find(r => r.regionId === only) : { x: 0, y: 0 };
+    const labels = Object.fromEntries([...reading.places.map(p => [p.key, p.place]), ...reading.objects.map(o => [o.id, o.label])]);
+    for (const [k, [x, y]] of [...Object.entries(scene.places), ...Object.entries(scene.objects)]) {
+      const m = document.createElement('div'); m.className = 'mk'; m.style.left = (x - off.x) + 'px'; m.style.top = (y - off.y) + 'px';
+      m.innerHTML = `<span>${labels[k] ?? k}</span>`; stage.appendChild(m);
+    }
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', canvas.width); svg.setAttribute('height', canvas.height);
+    svg.innerHTML = `<polyline fill="none" stroke="#9b3a2a" stroke-dasharray="4 6" stroke-width="1.5" points="${scene.road.map(([x, y]) => `${x - off.x},${y - off.y}`).join(' ')}"/>`;
+    stage.appendChild(svg);
+  }
+  document.getElementById('info').textContent =
+    `${orient}${only ? ' · ' + only : ''} · ${canvas.width}×${canvas.height} · ${Math.round(performance.now() - t0)}ms · dark ${JSON.stringify(scene.dark)}`;
+  window.__done = true;
+}
+</script>
+</body>
+</html>
