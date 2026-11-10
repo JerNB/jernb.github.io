@@ -1,4 +1,5 @@
 // 荒漠与大海 (加缪, 三毛) and 马孔多 (马尔克斯), the end of the road.
+import { thatchHut, palm, bananaPlant, casbah, adobeCube, nomadTent } from '../buildings.mjs';
 import { road, spread, marksAt } from '../ink.mjs';
 
 const keyOf = places => Object.fromEntries(places.map(p => [p.place, p.key]));
@@ -55,7 +56,8 @@ const DRAW = {
     c.fillStyle = a.ink(.6); c.fillRect(x - 80, y, 160, 4);
     return [x, y - 110];
   },
-  beach(a, x, y) {          // 阿尔及尔海滩: glare, one figure, the sun
+  beach(a, x, y) {          // 阿尔及尔海滩: glare, one figure, the sun, the white city above the bay
+    casbah(a, x - 150, y - 100, 180, 96);
     a.glow(x + 30, y - 210, 50, .5, '240,226,190');
     a.ctx.fillStyle = 'rgba(240,230,205,.95)'; a.ctx.beginPath(); a.ctx.arc(x + 30, y - 210, 16, 0, 7); a.ctx.fill();
     a.person(x, y, 1.2, 0);
@@ -65,8 +67,10 @@ const DRAW = {
   sahara(a, x, y) {         // 撒哈拉: a tent, a camel, a lantern
     a.prop('camel-dunes', x - 90, y - 90, 180, 100, () => {
       const c = a.ctx;
-      c.fillStyle = a.ink(.75); c.beginPath(); c.moveTo(x - 60, y); c.lineTo(x - 30, y - 34); c.lineTo(x, y); c.closePath(); c.fill();
-      camel(a, x + 40, y);
+      palm(a, x - 100, y + 2, 74, -10, .75); palm(a, x - 82, y + 6, 54, 8, .7);
+      nomadTent(a, x - 30, y + 2, 78);
+      camel(a, x + 44, y);
+      adobeCube(a, x + 100, y - 14, 34, 20, 14); adobeCube(a, x + 138, y - 8, 26, 16, 12, { dome: true });   // the little house in El Aaiún
     });
     a.glow(x - 30, y - 8, 20, .5);
     return [x, y - 90];
@@ -87,12 +91,18 @@ export const macondo = {
     const cx = w / 2, gy = P ? h * .6 : 440;
     for (let i = 0; i < (P ? 16 : 26); i++) jungleTree(a, a.rr(0, w), gy + a.rr(-30, 60), a.rr(80, 170), a.rr(.5, .95));
     a.water(0, gy + 50, w, gy + 110, { density: .7 });
-    a.house(cx - 40, gy + 10, 70, 22, 30, { wall: '#c7bca2' });
-    a.pine(cx + 50, gy + 10, 70, .8);                                // the almond tree
+    const sx = P ? .62 : 1;
+    for (const dx of [-250, -196, -112, 118, 196, 262]) palm(a, cx + dx * sx, gy + a.rr(0, 30), a.rr(96, 150), a.rr(-18, 18), .8);
+    thatchHut(a, cx - 170 * sx, gy + 2, 42, 15, 20); thatchHut(a, cx + 86 * sx, gy - 4, 38, 14, 18);
+    for (let i = 0; i < 8; i++) bananaPlant(a, a.rr(20, w - 20), gy + a.rr(16, 46), a.rr(24, 40));
+    jungleTree(a, cx + 54, gy + 22, 128, .92);                       // the chestnut tree in the courtyard
+    thatchHut(a, cx - 50, gy + 18, 80, 22, 34);                      // the Buendía house, the biggest in the village
+    thatchHut(a, cx + 150 * sx, gy + 26, 46, 16, 22);
+    for (let i = 0; i < 5; i++) a.person(cx + a.rr(-150, 190) * sx, gy + a.rr(28, 44), .95, Math.floor(a.rr(0, 3)));
     a.prop('butterflies', cx - 160, gy - 260, 320, 260, () => {
       for (let i = 0; i < 70; i++) butterfly(a, cx + a.rr(-180, 180), gy - a.rr(20, 300), a.rr(2.4, 5), a.rr(.7, .9));
     });
-    if (key['马孔多']) anchors[key['马孔多']] = [cx, gy - 150];
+    if (key['马孔多']) anchors[key['马孔多']] = [cx - 10, gy - 66];
     const r = road(w, h, orient, tt => (P ? 30 : 8) * Math.sin(tt * 5));
     anchorAll(r, places, anchors, orient);
     return { road: r, anchors };

@@ -42,7 +42,8 @@ async function withPage(fn, { width = 1400, height = 900 } = {}) {
     if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description || r.exceptionDetails.text);
     return r.result.value;
   };
-  const goto = async url => { await send('Page.enable'); await send('Page.navigate', { url }); await pause(400);
+  const goto = async url => { await send('Page.enable'); await send('Network.enable'); await send('Network.setCacheDisabled', { cacheDisabled: true });   // never verify against a stale tile
+    await send('Page.navigate', { url }); await pause(400);
     await evaluate('new Promise(r => document.readyState === "complete" ? r() : addEventListener("load", r))'); };
   try { return await fn({ send, evaluate, goto, pause }); }
   finally { ws.close(); if (child) child.kill(); }

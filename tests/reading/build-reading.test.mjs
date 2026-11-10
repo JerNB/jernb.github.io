@@ -148,3 +148,11 @@ test('search-sourced books that are secret on the shelf stay private', () => {
   });
   assert.equal(r.places.find(p => p.key === 'huozhe'), undefined);
 });
+
+test('studyOnly books stay on the spine wall but get no place on the map', () => {
+  const r = build(f => { f.curation.books.find(b => b.key === 'huozhe').studyOnly = true; });
+  assert.equal(place(r, 'huozhe'), undefined);
+  assert.deepEqual(r.study.find(s => s.key === 'huozhe'), { key: 'huozhe', label: '活着', author: '余华', wordCount: null });
+  assert.equal(r.stats.booksRead, build().stats.booksRead);
+  assert.ok(!r.links.some(l => l.to === 'huozhe'), 'no thread to a book that has no place');
+});

@@ -50,22 +50,30 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
   for (const rect of rects) {
     const region = reading.regions.find(r => r.id === rect.regionId);
     const places = reading.places.filter(p => p.region === region.id);
-    const api = makeInk(ctx, seed + region.order * 7919, props);
-    ctx.save(); ctx.translate(rect.x, rect.y);
+    // each region is painted on its own sheet, then feathered into the scroll along the road:
+    // where two countries meet, the ink of both thins out into bare paper, as it does on a handscroll
+    const layer = document.createElement('canvas');
+    layer.width = Math.round(rect.w * scale); layer.height = Math.round(rect.h * scale);
+    const lc = layer.getContext('2d');
+    lc.scale(scale, scale);
+    lc.save(); lc.translate(-rect.x, -rect.y); makeInk(lc, seed).paper(rect.x, rect.y, rect.w, rect.h); lc.restore();
+    const api = makeInk(lc, seed + region.order * 7919, props);
     const out = painterFor(region.painter).paint(api, { w: rect.w, h: rect.h }, region, places, orient,
       { objects: reading.objects.filter(o => o.region === region.id), links: reading.links });
-    ctx.restore();
+    const len = orient === 'portrait' ? rect.h : rect.w, F = Math.min(FEATHER, len / 3);
+    const first = rect === lay.rects[0], last = rect === lay.rects.at(-1);
+    const fade = orient === 'portrait' ? lc.createLinearGradient(0, 0, 0, len) : lc.createLinearGradient(0, 0, len, 0);
+    fade.addColorStop(0, `rgba(0,0,0,${first ? 1 : 0})`); fade.addColorStop(F / len, 'rgba(0,0,0,1)');
+    fade.addColorStop(1 - F / len, 'rgba(0,0,0,1)'); fade.addColorStop(1, `rgba(0,0,0,${last ? 1 : 0})`);
+    lc.setTransform(scale, 0, 0, scale, 0, 0); lc.globalAlpha = 1;
+    lc.globalCompositeOperation = 'destination-in'; lc.fillStyle = fade; lc.fillRect(0, 0, rect.w, rect.h);
+    ctx.drawImage(layer, rect.x, rect.y, rect.w, rect.h);
     scene.road.push(...out.road.map(([x, y]) => [round(x + rect.x), round(y + rect.y)]));
     for (const [k, [x, y]] of Object.entries(out.anchors ?? {})) scene.places[k] = [round(x + rect.x), round(y + rect.y)];
     for (const [k, [x, y]] of Object.entries(out.objects ?? {})) scene.objects[k] = [round(x + rect.x), round(y + rect.y)];
     for (const [a, b] of out.dark ?? []) scene.dark.push([round(a + rect[axis]), round(b + rect[axis])]);
   }
-  // soften seams between neighbouring regions
-  const seam = makeInk(ctx, seed);
-  for (const rect of rects.slice(1)) {
-    if (orient === 'portrait') seam.mist(0, rect.y - 50, rect.w, 100, .35);
-    else seam.hmist(rect.x - 60, 0, 120, rect.h, .3);
-  }
   return { canvas, scene };
 }
+const FEATHER = 110;
 const round = v => Math.round(v * 10) / 10;

@@ -25,6 +25,8 @@ function serve() {
   });
   return new Promise(r => server.listen(0, '127.0.0.1', () => r(server)));
 }
+// content hash in the URL: a re-rendered tile must never be served from a browser's cache
+const url = rel => `images/reading/${rel}?v=${require('crypto').createHash('md5').update(fs.readFileSync(path.join(OUT, rel))).digest('hex').slice(0, 8)}`;
 const save = (rel, dataUrl) => { const f = path.join(OUT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, Buffer.from(dataUrl.split(',')[1], 'base64')); return fs.statSync(f).size; };
 
 (async () => {
@@ -43,10 +45,10 @@ const save = (rel, dataUrl) => { const f = path.join(OUT, rel); fs.mkdirSync(pat
         const tiles = out.tiles.map(t => {
           bytes2x += save(`tiles/${orient}/${t.name}@2x.webp`, t.dataUrl2x);
           save(`tiles/${orient}/${t.name}.webp`, t.dataUrl1x);
-          return { src2x: `images/reading/tiles/${orient}/${t.name}@2x.webp`, src1x: `images/reading/tiles/${orient}/${t.name}.webp`, x: t.x, y: t.y, w: t.w, h: t.h };
+          return { src2x: url(`tiles/${orient}/${t.name}@2x.webp`), src1x: url(`tiles/${orient}/${t.name}.webp`), x: t.x, y: t.y, w: t.w, h: t.h };
         });
         save(`lqip-${orient}.webp`, out.lqipDataUrl);
-        scene[orient] = { ...out.scene, tiles, lqip: `images/reading/lqip-${orient}.webp`, paper: 'images/reading/paper.webp' };
+        scene[orient] = { ...out.scene, tiles, lqip: url(`lqip-${orient}.webp`), paper: url('paper.webp') };
         console.log(`${orient}: ${out.scene.width}×${out.scene.height}, ${tiles.length} tiles, ${(bytes2x / 1048576).toFixed(2)} MB @2x`);
       }
       const reading = JSON.parse(fs.readFileSync(path.join(root, 'data/reading.json'), 'utf8'));

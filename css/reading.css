@@ -42,11 +42,13 @@
   border-top: 1px solid rgba(30, 27, 23, .35);
   border-bottom: 1px solid rgba(30, 27, 23, .35);
   box-shadow: inset 0 10px 18px -14px rgba(30, 27, 23, .6), inset 0 -10px 18px -14px rgba(30, 27, 23, .6);
-  scrollbar-width: thin;
-  scrollbar-color: #5a5348 transparent;
+  scrollbar-width: none;            /* a handscroll has no scrollbar: wheel, drag, keys and touch all still move it */
   overscroll-behavior-x: contain;
   cursor: grab;
 }
+.scroll::-webkit-scrollbar { display: none; }
+html:has(body.reading-page) { scrollbar-width: none; }
+html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 .scroll:active { cursor: grabbing; }
 .scroll:focus-visible { outline: 2px solid var(--scroll-ink-soft); outline-offset: 3px; }
 .scroll-track { position: relative; background-repeat: no-repeat; }
@@ -82,15 +84,14 @@
   flex-direction: row-reverse;
   align-items: flex-start;
   gap: 4px;
-  padding: 4px 2px;
-  border: 0;
-  background: none;
+  padding: 6px 4px;
+  border: 1px solid rgba(30, 27, 23, .32);          /* 榜题: a small cartouche keeps the name legible over ink */
+  background: rgba(205, 196, 174, .84);
   color: var(--scroll-ink);
   font-family: 'Noto Serif SC', serif;
   cursor: default;
   transform: translate(-50%, -100%);
-  text-shadow: 0 0 6px rgba(196, 187, 167, .95), 0 0 2px rgba(196, 187, 167, .95);
-  transition: transform 380ms var(--ease);
+  transition: transform 380ms var(--ease), opacity 260ms var(--ease);
 }
 .place.below { transform: translate(-50%, 0); }
 .place:hover, .place:focus-visible { transform: translate(-50%, calc(-100% - 3px)); }
@@ -99,39 +100,41 @@
 .place .name { writing-mode: vertical-rl; font-size: 15px; letter-spacing: .2em; line-height: 1; }
 .place .book { writing-mode: vertical-rl; font-size: 11px; letter-spacing: .12em; line-height: 1; color: var(--scroll-ink-soft); }
 .place .seal {
-  position: absolute; right: -10px; bottom: -6px;
+  position: absolute; right: -7px; bottom: -7px;
   width: 12px; height: 12px;
   background: var(--seal); color: var(--scroll-glow);
   font-size: 8.5px; line-height: 12px; text-align: center; border-radius: 1px; text-shadow: none;
 }
-.place.light { color: var(--scroll-glow); text-shadow: 0 0 6px rgba(12, 10, 9, .95); }
+.place.light { color: var(--scroll-glow); background: rgba(22, 19, 16, .62); border-color: rgba(230, 220, 196, .34); }
 .place.light .book { color: rgba(230, 220, 196, .78); }
 
-.tiba {
-  position: absolute;
-  top: 4px;
-  right: calc(100% + 12px);
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 8px;
-  max-height: 260px;
+/* 笺: the slip of paper that opens beside a place */
+.jian {
+  position: absolute; left: 0; top: 0; z-index: 6;
   writing-mode: vertical-rl;
-  font-size: 12.5px;
-  line-height: 1.85;
-  letter-spacing: .12em;
-  color: var(--scroll-ink-soft);
-  white-space: normal;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 400ms var(--ease);
+  max-height: 284px;
+  padding: 14px 12px;
+  border: 1px solid rgba(30, 27, 23, .55);
+  /* 朱丝栏: one hairline of seal red between the columns */
+  background-image: repeating-linear-gradient(to left, transparent 0 25px, rgba(155, 58, 42, .2) 25px 26px), linear-gradient(#ddd4bd, #ddd4bd);
+  background-origin: content-box, padding-box;
+  background-clip: content-box, padding-box;
+  box-shadow: 0 8px 20px -10px rgba(30, 27, 23, .7);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px; line-height: 26px; letter-spacing: .1em;
+  color: var(--scroll-ink);
+  opacity: 0; pointer-events: none;
+  transition: opacity 260ms var(--ease);
 }
-.tiba .quote { max-height: 260px; }
-.tiba .mine { color: var(--mine); }
-.place.flip .tiba { right: auto; left: calc(100% + 12px); }
-.place.low .tiba { top: auto; bottom: 4px; }
-.place:hover .tiba, .place:focus-visible .tiba { opacity: 1; }
-.place.light .tiba { color: var(--scroll-glow); }
-.place.light .tiba .mine { color: #b9c7b1; }
+.jian.is-on { opacity: 1; }
+.jian p { margin: 0; }
+.jian-head { font-size: 14px; letter-spacing: .16em; }
+.jian-head small { font-size: 11px; letter-spacing: .12em; color: var(--scroll-ink-soft); margin-top: 1em; }
+.jian .tag { color: var(--seal); font-size: 11px; letter-spacing: 0; }
+.jian .mine { color: var(--mine); }
+.scroll.is-gliding .jian { opacity: 0; transition-duration: 120ms; }
+.scroll.is-gliding .place { pointer-events: none; }      /* no slips flickering open as places pass under the pointer */
+.has-open .place:not(.is-open), .has-open .thread-note { opacity: .4; }
 
 /* the traveler and the 加缪 → 三毛 thread */
 .traveler { position: absolute; z-index: 4; width: 12px; height: 18px; left: 0; top: 0; pointer-events: none; will-change: transform; }
@@ -143,6 +146,7 @@
   position: absolute; z-index: 3; writing-mode: vertical-rl;
   font-family: 'Noto Serif SC', serif; font-size: 12px; letter-spacing: .14em; color: var(--mine);
   transform: translate(-50%, -50%);
+  transition: opacity 260ms var(--ease);
   text-shadow: 0 0 6px rgba(196, 187, 167, .95);
 }
 
@@ -205,9 +209,8 @@
 @media (max-width: 767px) {
   .reading-head, .scroll-hint { width: auto; margin-left: 16px; margin-right: 16px; }
   .reading-head h1 { font-size: 40px; }
-  .tiba { max-height: 200px; font-size: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tile, .place, .tiba, .spine, .spine .who, .traveler path { transition: none; }
+  .tile, .place, .jian, .spine, .spine .who, .traveler path { transition: none; }
 }

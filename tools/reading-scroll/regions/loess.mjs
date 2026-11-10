@@ -1,5 +1,6 @@
 // 黄土与田野: 王小波's Yunnan fields and Beijing, 史铁生 / 路遥's loess plateau, 余华's paddy.
 // 乡土中国 is written into the slope as a faint inscription rather than drawn as a place.
+import { thatchHut, siheyuan, factory, pigsty } from '../buildings.mjs';
 import { road, spread } from '../ink.mjs';
 
 const MARKS = { // place → [drawer, landscape x fraction, ground y]
@@ -67,32 +68,25 @@ const DRAW = {
     for (let k = 0; k < 6; k++) { c.strokeStyle = a.ink(.5 - k * .05); c.lineWidth = .9; c.beginPath();
       for (let px = x - 110; px < x + 110; px += 4) { const py = y - k * 14 + Math.sin(px * .03 + k) * 4; px === x - 110 ? c.moveTo(px, py) : c.lineTo(px, py); } c.stroke(); }
     for (let i = 0; i < 3; i++) banana(a, x - 90 + i * 26, y - 70);
-    a.house(x + 40, y - 74, 34, 14, 18);
+    thatchHut(a, x + 36, y - 74, 34, 13, 16, { stilts: 7 });
     return [x, y - 110];
   },
   hutong(a, x, y) {               // 胡同: grey courtyard walls and a gate
-    for (let i = 0; i < 3; i++) a.house(x - 80 + i * 56, y - (i % 2) * 8, 46, 16, 26, { wall: '#b9b1a0' });
-    a.ctx.strokeStyle = a.ink(.7); a.ctx.lineWidth = .8; a.ctx.strokeRect(x - 96, y - 8, 190, 10);
-    a.person(x + 30, y + 10, .9, 0); a.willow(x + 100, y + 6, 50, .6);
-    return [x, y - 70];
+    const pt = siheyuan(a, x - 96, y, 190);
+    a.person(x + 70, y + 10, .9, 0); a.person(x - 70, y + 8, .9, 4);
+    return pt;
   },
   crowd(a, x, y) {                // 广场 · 沉默的大多数: a silent crowd, all facing one way
     for (let r = 0; r < 4; r++) for (let i = 0; i < 9; i++) a.person(x - 70 + i * 16 + r * 5, y - r * 9, .75 - r * .06, 0);
     return [x, y - 70];
   },
   pigpen(a, x, y) {               // 一只特立独行的猪: a pen, and one pig standing on the roof
-    const c = a.ctx;
-    a.house(x - 40, y, 60, 16, 22);
-    c.strokeStyle = a.ink(.8); c.lineWidth = .8; for (let i = 0; i < 10; i++) { c.beginPath(); c.moveTo(x + 30 + i * 6, y); c.lineTo(x + 30 + i * 6, y - 12); c.stroke(); }
-    c.beginPath(); c.moveTo(x + 28, y - 9); c.lineTo(x + 90, y - 9); c.stroke();
-    pig(a, x - 6, y - 36);
-    return [x, y - 80];
+    pigsty(a, x - 40, y, 130);
+    pig(a, x - 24, y - 27);
+    return [x + 30, y - 60];
   },
-  factory(a, x, y) {              // 豆腐厂: a low workshop with a chimney and steam
-    a.house(x - 50, y, 90, 20, 26, { shop: true });
-    const c = a.ctx; c.fillStyle = a.ink(.85); c.fillRect(x + 50, y - 70, 8, 70);
-    for (let i = 0; i < 5; i++) { c.fillStyle = `rgba(230,222,204,${.5 - i * .08})`; c.beginPath(); c.arc(x + 56 + i * 10, y - 80 - i * 12, 7 + i * 3, 0, 7); c.fill(); }
-    return [x, y - 100];
+  factory(a, x, y) {              // 豆腐厂: a brick workshop under its stack
+    return factory(a, x - 66, y, 120, 28);
   },
   caves(a, x, y) {                // 清平湾: cave dwellings cut into the loess, an ox
     a.prop('cave-dwellings', x - 90, y - 90, 180, 100, () => {
@@ -116,7 +110,7 @@ const DRAW = {
     a.person(x + 40, y, 1.1, 1);
     return [x, y - 70];
   },
-  inscription(a, x, y) { a.inscription('乡土中国', x, y, 18, .42); return [x, y - 30]; },
+  inscription(a, x, y) { a.inscription('乡土中国', x, y, 18, .42); return [x - 40, y + 76]; },
 };
 function banana(a, x, y) { const c = a.ctx; c.strokeStyle = a.ink(.7); c.lineWidth = 1.6; c.beginPath(); c.moveTo(x, y + 60); c.lineTo(x + 2, y); c.stroke();
   for (let i = 0; i < 5; i++) { const an = -Math.PI / 2 + (i - 2) * .55; c.fillStyle = a.ink(.45); c.beginPath(); c.ellipse(x + Math.cos(an) * 18, y + Math.sin(an) * 12, 20, 5, an, 0, 7); c.fill(); } }

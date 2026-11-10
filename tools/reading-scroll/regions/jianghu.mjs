@@ -1,4 +1,5 @@
 // 江湖: 金庸's mountains and rivers → a 清明上河图-style market town → 古龙's night.
+import { namedHouse, huafang, plum } from '../buildings.mjs';
 import { road, ROAD_Y, ROAD_X, spread } from '../ink.mjs';
 
 const tone = region => .75 + .5 * region.density;
@@ -119,17 +120,20 @@ function shanhePortrait(a, w, h, t, put, anchors, places) {
 /* ---------- 市井: the river town ---------- */
 export const shijing = {
   paint(a, { w, h }, region, places, orient) {
-    if (orient === 'portrait') return shijingPortrait(a, w, h);
+    if (orient === 'portrait') return shijingPortrait(a, w, h, places);
     a.mountain({ x0: -60, x1: w + 60, base: 250, amp: 70, freq: .009, seed: 61, tone: .35, depth: 90, cun: .3, edge: .5 });
     a.mist(0, 220, w, 60, .6);
     const bx0 = w * .52, bx1 = w * .68;          // bridge over a creek that crosses the street
     creekBand(a, bx0, bx1, h);
+    const key = byPlace(places), anchors = {};
+    const named = Object.entries(TOWN).map(([name, [f, flag]]) => ({ name, flag, x: f * w }));
     const rows = [[300, .5, .38], [326, .62, .5], [352, .75, .66], [382, .86, .8], [414, .93, .9], [452, 1, 1]];
     for (const [ry, sc, al] of rows) {
       a.ctx.save(); a.ctx.globalAlpha = al;
       let x = a.rr(-20, 10);
       while (x < w + 20) {
         { const f = (ry - 280) / 220, cl = bx0 - 80 + f * 70, cr = bx0 - 30 + f * (bx1 - bx0 + 30); if (x + 56 * sc > cl && x < cr + 10) { x = cr + 14; continue; } }   // keep the creek open
+        if (sc > .85) { const hit = named.find(n => x + 60 * sc > n.x - 26 && x < n.x + 104); if (hit) { x = hit.x + 108; continue; } }   // room for the houses that carry a name
         const g = a.rng();
         if (g < .16) { a.ctx.save(); a.ctx.translate(x, ry); a.ctx.scale(sc, sc); a.willow(0, 0, a.rr(40, 60), .75); a.ctx.restore(); x += a.rr(18, 30) * sc; continue; }
         if (g < .24) { a.ctx.strokeStyle = a.ink(.7); a.ctx.lineWidth = .8; const ww = a.rr(40, 70) * sc; a.ctx.strokeRect(x, ry - 7 * sc, ww, 7 * sc); x += ww + 6; continue; }
@@ -143,6 +147,7 @@ export const shijing = {
       a.ctx.restore();
       a.mist(0, ry - 36 * sc, w, 26 * sc, .35 * (1 - sc) + .06);
     }
+    for (const n of named) { const pt = namedHouse(a, n.x, 452, 66, n.name, { flag: n.flag }); if (key[n.name]) anchors[key[n.name]] = pt; }
     // the street, crowded
     for (let i = 0; i < 40; i++) { const x = a.rr(0, w); if (x > bx0 - 10 && x < bx1 + 10) continue; a.person(x, a.rr(462, 476), 1, Math.floor(a.rr(0, 5))); }
     a.cart(w * .2, 474); a.cart(w * .8, 476);
@@ -156,9 +161,11 @@ export const shijing = {
       if (x < bx0 - 20 || x > bx1 + 20) return [x, y];
       const t = (x - (bx0 - 20)) / (bx1 - bx0 + 40); return [x, ROAD_Y - 4 * 26 * t * (1 - t)];
     });
-    return { road: r, anchors: spread(r, places.map(p => p.key), orient) };
+    for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], orient));
+    return { road: r, anchors };
   },
 };
+const TOWN = { 松鹤楼: [.13, '酒'], 回雁楼: [.36, '酒'], 扬州茶馆: [.8, '茶'] };
 function creekBand(a, x0, x1, h) {
   // a canal running from the back of the town down into the river, under the bridge
   const L = [[x0 - 70, 280], [x0 - 20, 420], [x0 + 6, 500]], R = [[x0 - 40, 280], [x1 - 40, 420], [x1 - 6, 500]];
@@ -170,7 +177,7 @@ function creekBand(a, x0, x1, h) {
   for (let i = 0; i < 70; i++) { const t = a.rng(), y = 290 + t * 200, xl = (x0 - 70) + t * 76, xr = (x0 - 40) + t * (x1 - x0 + 34);
     const xm = a.rr(xl + 4, xr - 4); a.ctx.strokeStyle = a.ink(.22); a.ctx.lineWidth = .6; a.ctx.beginPath(); a.ctx.moveTo(xm - 6, y); a.ctx.lineTo(xm + 6, y); a.ctx.stroke(); }
 }
-function shijingPortrait(a, w, h) {
+function shijingPortrait(a, w, h, places) {
   a.water(0, 0, 90, h, { density: .8 });                       // river runs down the left side
   for (let i = 0; i < 4; i++) a.boat(10, 120 + i * 210, 50);
   let y = 60;
@@ -181,7 +188,15 @@ function shijingPortrait(a, w, h) {
     if (a.rng() < .5) a.willow(a.rr(120, w - 40), y + 2, 44, .7);
     y += a.rr(80, 110);
   }
-  return { road: road(w, h, 'portrait', t => 30 * Math.sin(t * 9)), anchors: {} };
+  const key = byPlace(places), anchors = {}, r = road(w, h, 'portrait', t => 30 * Math.sin(t * 9));
+  Object.entries(TOWN).forEach(([name, [, flag]], i, all) => {
+    const x = i % 2 ? 150 : 250, y = h * (i + 1) / (all.length + 1) + 50;
+    a.ctx.fillStyle = 'rgba(179,169,148,.94)'; a.ctx.fillRect(x - 30, y - 96, 150, 108);           // clear a plot in the crowd of roofs
+    const pt = namedHouse(a, x, y, 62, name, { flag });
+    if (key[name]) anchors[key[name]] = pt;
+  });
+  for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], 'portrait'));
+  return { road: r, anchors };
 }
 
 /* ---------- 古龙: the night ---------- */
@@ -192,18 +207,25 @@ export const night = {
       a.night(0, 0, w, h, { strength: .88 });
       a.moon(w * .7, 110, 30);
       ridgeSilhouette(a, -20, w + 20, 320, 90, h);
-      inn(a, 70, 470); if (key['小楼']) anchors[key['小楼']] = [100, 380];
-      valley(a, 200, 720); if (key['恶人谷']) anchors[key['恶人谷']] = [200, 640];
-      a.person(250, 560, 1.3, 3, true);
+      const yi = h * .36, ym = h * .55, yv = h * .77;               // inn, manor, valley, then the boat on the water below
+      inn(a, 70, yi); if (key['小楼']) anchors[key['小楼']] = [100, yi - 90];
+      plumManor(a, 262, ym); if (key['万梅山庄']) anchors[key['万梅山庄']] = [262, ym - 92];
+      a.person(60, h * .63, 1.3, 3, true);
+      valley(a, 150, yv); if (key['恶人谷']) anchors[key['恶人谷']] = [150, yv - 80];
+      a.water(0, h - 104, w, h - 10, { dark: true });
+      huafang(a, 214, h - 44, 112); if (key['香帅的船']) anchors[key['香帅的船']] = [318, h - 112];
       return { road: road(w, h, 'portrait', t => -40 * Math.sin(t * 5)), anchors, dark: [[0, h]] };
     }
     a.night(0, 0, w, h, { fadeIn: 320, fadeOut: 240 });
     a.moon(w * .6, 108, 34);
     ridgeSilhouette(a, 40, w - 10, 360, 130);
-    inn(a, w * .3, 452); if (key['小楼']) anchors[key['小楼']] = [w * .3 + 30, 380];
-    valley(a, w * .72, 470); if (key['恶人谷']) anchors[key['恶人谷']] = [w * .72, 400];
-    a.person(w * .5, 476, 1.3, 3, true); a.person(w * .38, 468, 1, 0, true);
-    a.ctx.strokeStyle = 'rgba(236,228,208,.55)'; a.ctx.lineWidth = .8; a.ctx.beginPath(); a.ctx.moveTo(w * .5 + 18, 458); a.ctx.lineTo(w * .5 + 110, 442); a.ctx.stroke(); // one flash of the blade
+    inn(a, w * .2, 452); if (key['小楼']) anchors[key['小楼']] = [w * .2 + 30, 380];
+    plumManor(a, w * .46, 456); if (key['万梅山庄']) anchors[key['万梅山庄']] = [w * .46, 366];
+    valley(a, w * .68, 470); if (key['恶人谷']) anchors[key['恶人谷']] = [w * .68, 400];
+    a.water(w * .7, 498, w * .3, h, { dark: true, fadeIn: 110 });
+    huafang(a, w * .8, 536, 116); if (key['香帅的船']) anchors[key['香帅的船']] = [w * .8 + 40, 462];
+    a.person(w * .31, 478, 1.3, 3, true); a.person(w * .27, 470, 1, 0, true);
+    a.ctx.strokeStyle = 'rgba(236,228,208,.55)'; a.ctx.lineWidth = .8; a.ctx.beginPath(); a.ctx.moveTo(w * .31 + 14, 460); a.ctx.lineTo(w * .31 + 74, 448); a.ctx.stroke(); // one flash of the blade
     const r = road(w, h, orient);
     for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], orient));
     return { road: r, anchors, dark: [[200, w - 160]] };
@@ -218,6 +240,16 @@ function ridgeSilhouette(a, x0, x1, base, amp, H = 560) {
   }
   a.ctx.fillStyle = 'rgba(12,10,9,.82)'; a.ctx.beginPath(); a.ctx.moveTo(x0, H); pts.forEach(([x, y]) => a.ctx.lineTo(x, y)); a.ctx.lineTo(x1, H); a.ctx.closePath(); a.ctx.fill();
   a.ctx.strokeStyle = 'rgba(236,228,208,.4)'; a.ctx.lineWidth = 1; a.ctx.beginPath(); pts.forEach(([x, y], i) => i ? a.ctx.lineTo(x, y) : a.ctx.moveTo(x, y)); a.ctx.stroke();
+}
+/** 万梅山庄: a walled garden of plum trees in flower, one lit hall behind the moon gate. */
+function plumManor(a, x, y) {
+  const c = a.ctx;
+  a.house(x - 24, y - 8, 52, 18, 24, { lit: true });
+  c.fillStyle = 'rgba(24,21,18,.96)'; c.fillRect(x - 78, y - 16, 160, 18);
+  c.strokeStyle = 'rgba(236,228,208,.5)'; c.lineWidth = .8; c.strokeRect(x - 78, y - 16, 160, 18);
+  c.fillStyle = 'rgba(236,228,208,.35)'; c.fillRect(x - 80, y - 19, 164, 3);
+  c.fillStyle = 'rgba(236,205,140,.75)'; c.beginPath(); c.arc(x + 2, y - 7, 7, 0, 7); c.fill();             // the moon gate
+  plum(a, x - 58, y + 4, 62); plum(a, x + 60, y + 2, 74); plum(a, x + 96, y + 6, 44);
 }
 function inn(a, x, y) {
   a.prop('inn-moon', x - 60, y - 140, 180, 160, () => {

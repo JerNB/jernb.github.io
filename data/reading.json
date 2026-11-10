@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-09",
+  "generatedAt": "2026-11-10",
   "regions": [
     {
       "id": "xingnang",
@@ -7,7 +7,7 @@
       "order": 0,
       "painter": "xingnang",
       "minWidth": 700,
-      "density": 0.354
+      "density": 0.207
     },
     {
       "id": "jianghu-shanhe",
@@ -39,7 +39,7 @@
       "order": 4,
       "painter": "loess",
       "minWidth": 1500,
-      "density": 0.208
+      "density": 0.121
     },
     {
       "id": "snow",
@@ -55,7 +55,7 @@
       "order": 6,
       "painter": "sea",
       "minWidth": 1000,
-      "density": 0.204
+      "density": 0.119
     },
     {
       "id": "whitenight",
@@ -87,7 +87,7 @@
       "order": 10,
       "painter": "desert",
       "minWidth": 1100,
-      "density": 0.219
+      "density": 0.128
     },
     {
       "id": "macondo",
@@ -180,71 +180,6 @@
       "objectId": "lamp"
     },
     {
-      "key": "bai-ma-xiao-xi-feng",
-      "label": "白马啸西风",
-      "region": "jianghu-shanhe",
-      "place": "大漠",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/86/cpplatform_h7cpgr6h1regwvbbdgljz1/s_cpplatform_h7cpgr6h1regwvbbdgljz11741083404.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/fc232c10813ab9ba1g015bf8",
-      "hours": null,
-      "wordCount": 72920,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "bi-xue-jian",
-      "label": "碧血剑",
-      "region": "jianghu-shanhe",
-      "place": "金蛇洞",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/12/yuewen_932433/s_yuewen_9324331744883551.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/fc0328705e3a51fc0ac5b9d",
-      "hours": null,
-      "wordCount": 528689,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "fei-hu-wai-zhuan",
-      "label": "飞狐外传",
-      "region": "jianghu-shanhe",
-      "place": "商家堡",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/85/yuewen_932427/s_yuewen_9324271744883562.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/a7a327f05e3a4ba7aa2d196",
-      "hours": null,
-      "wordCount": 465790,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "lian-cheng-jue",
-      "label": "连城诀",
-      "region": "jianghu-shanhe",
-      "place": "荆州城",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/99/YueWen_345964/s_YueWen_345964.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/78932f6055476c7894568a3",
-      "hours": null,
-      "wordCount": 237887,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "lu-ding-ji",
-      "label": "鹿鼎记",
-      "region": "jianghu-shanhe",
-      "place": "扬州",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/59/cpplatform_7wwtxmuuba9stqrz3ixyqn/s_cpplatform_7wwtxmuuba9stqrz3ixyqn1764301162.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/e21320b0813abacedg01501d",
-      "hours": null,
-      "wordCount": 1241214,
-      "tiba": null,
-      "objectId": null
-    },
-    {
       "key": "she-diao",
       "label": "射雕英雄传",
       "region": "jianghu-shanhe",
@@ -271,71 +206,6 @@
       "objectId": null
     },
     {
-      "key": "shu-jian-en-chou-lu",
-      "label": "书剑恩仇录",
-      "region": "jianghu-shanhe",
-      "place": "天山",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/11/yuewen_932432/s_yuewen_9324321744883554.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/39b326305e3a5039ba4dcc9",
-      "hours": null,
-      "wordCount": 535468,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "tian-long-ba-bu",
-      "label": "天龙八部",
-      "region": "jianghu-shanhe",
-      "place": "雁门关",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/9/yuewen_932430/s_yuewen_9324301744883558.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/54d328e05e3a4e54dc9cba7",
-      "hours": null,
-      "wordCount": 1249921,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "xia-ke-xing",
-      "label": "侠客行",
-      "region": "jianghu-shanhe",
-      "place": "侠客岛",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/outpic/724/3004171724.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/eb9322c0811e80094g0146d6",
-      "hours": null,
-      "wordCount": null,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "xiao-ao-jiang-hu",
-      "label": "笑傲江湖",
-      "region": "jianghu-shanhe",
-      "place": "华山",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/87/yuewen_932429/s_yuewen_9324291744883560.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/14932fc05e3a4d149e80ecc",
-      "hours": null,
-      "wordCount": 992897,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "xue-shan-fei-hu",
-      "label": "雪山飞狐",
-      "region": "jianghu-shanhe",
-      "place": "玉笔峰",
-      "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/67/cpplatform_nnhjkfuiejp4dsjey7ukmq/s_cpplatform_nnhjkfuiejp4dsjey7ukmq1700192807.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/b76329b0813ab8503g012917",
-      "hours": null,
-      "wordCount": 236789,
-      "tiba": null,
-      "objectId": null
-    },
-    {
       "key": "yi-tian-tu-long-ji",
       "label": "倚天屠龙记",
       "region": "jianghu-shanhe",
@@ -349,29 +219,58 @@
       "objectId": null
     },
     {
-      "key": "yuan-yang-dao",
-      "label": "鸳鸯刀",
-      "region": "jianghu-shanhe",
-      "place": "镖路",
+      "key": "lu-ding-ji",
+      "label": "鹿鼎记",
+      "region": "jianghu-shijing",
+      "place": "扬州茶馆",
       "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/70/cpplatform_2pgvjhziydxbcgndyweafn/s_cpplatform_2pgvjhziydxbcgndyweafn1741335780.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/98432400813ab9be6g010354",
+      "cover": "https://cdn.weread.qq.com/weread/cover/59/cpplatform_7wwtxmuuba9stqrz3ixyqn/s_cpplatform_7wwtxmuuba9stqrz3ixyqn1764301162.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/e21320b0813abacedg01501d",
       "hours": null,
-      "wordCount": 36898,
+      "wordCount": 1241214,
       "tiba": null,
       "objectId": null
     },
     {
-      "key": "yue-nv-jian",
-      "label": "越女剑",
-      "region": "jianghu-shanhe",
-      "place": "若耶溪",
+      "key": "tian-long-ba-bu",
+      "label": "天龙八部",
+      "region": "jianghu-shijing",
+      "place": "松鹤楼",
       "author": "金庸",
-      "cover": "https://cdn.weread.qq.com/weread/cover/76/cpplatform_gjyeavm8wr1vqsrwvdkycz/s_cpplatform_gjyeavm8wr1vqsrwvdkycz1741167835.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/e9f32480813ab9bacg01259a",
+      "cover": "https://cdn.weread.qq.com/weread/cover/9/yuewen_932430/s_yuewen_9324301744883558.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/54d328e05e3a4e54dc9cba7",
       "hours": null,
-      "wordCount": 16585,
+      "wordCount": 1249921,
       "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "xiao-ao-jiang-hu",
+      "label": "笑傲江湖",
+      "region": "jianghu-shijing",
+      "place": "回雁楼",
+      "author": "金庸",
+      "cover": "https://cdn.weread.qq.com/weread/cover/87/yuewen_932429/s_yuewen_9324291744883560.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/14932fc05e3a4d149e80ecc",
+      "hours": null,
+      "wordCount": 992897,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "chu-liu-xiang",
+      "label": "楚留香传奇",
+      "region": "jianghu-night",
+      "place": "香帅的船",
+      "author": "古龙",
+      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/697/23796697/t6_23796697.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/2e932a50716b1bd92e90c44",
+      "hours": 7.8,
+      "wordCount": 649434,
+      "tiba": {
+        "quote": "杨柳岸。\n夜已将残，月已将残。",
+        "mine": null
+      },
       "objectId": null
     },
     {
@@ -388,6 +287,19 @@
         "quote": "。 \n    这是幅美丽而雄壮的图画。这是支哀艳而苍凉的恋歌。",
         "mine": null
       },
+      "objectId": null
+    },
+    {
+      "key": "lu-xiao-feng",
+      "label": "陆小凤传奇",
+      "region": "jianghu-night",
+      "place": "万梅山庄",
+      "author": "古龙",
+      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/701/23796701/t6_23796701.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/e2132680716b1bdde2106d1",
+      "hours": 10.7,
+      "wordCount": 940675,
+      "tiba": null,
       "objectId": null
     },
     {
@@ -675,7 +587,7 @@
       "label": "月亮与六便士",
       "region": "depths",
       "place": "塔希提",
-      "author": "毛姆",
+      "author": "[英]毛姆",
       "cover": "https://cdn.weread.qq.com/weread/cover/12/YueWen_25136944/t6_YueWen_25136944.jpg",
       "readerLink": "https://weread.qq.com/web/reader/34e323e0717f8f3034ee3cc",
       "hours": null,
@@ -749,11 +661,11 @@
       "label": "局外人",
       "region": "desert",
       "place": "阿尔及尔海滩",
-      "author": "[法]加缪",
-      "cover": "https://cdn.weread.qq.com/weread/cover/44/YueWen_912325/s_YueWen_912325.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/7bd329e05debc57bdc79852",
+      "author": "[法]阿尔贝·加缪",
+      "cover": "https://cdn.weread.qq.com/weread/cover/56/cpplatform_vezcupvdlkkykxkyjm9e7d/s_cpplatform_vezcupvdlkkykxkyjm9e7d1779954918.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/90132990813abb794g014c0c",
       "hours": null,
-      "wordCount": 65695,
+      "wordCount": 53743,
       "tiba": null,
       "objectId": null
     },
@@ -837,19 +749,13 @@
       "key": "fei-hu-wai-zhuan",
       "label": "飞狐外传",
       "author": "金庸",
-      "wordCount": 465790
+      "wordCount": 230391
     },
     {
       "key": "lian-cheng-jue",
       "label": "连城诀",
       "author": "金庸",
       "wordCount": 237887
-    },
-    {
-      "key": "lu-ding-ji",
-      "label": "鹿鼎记",
-      "author": "金庸",
-      "wordCount": 1241214
     },
     {
       "key": "she-diao",
@@ -870,22 +776,10 @@
       "wordCount": 535468
     },
     {
-      "key": "tian-long-ba-bu",
-      "label": "天龙八部",
-      "author": "金庸",
-      "wordCount": 1249921
-    },
-    {
       "key": "xia-ke-xing",
       "label": "侠客行",
       "author": "金庸",
       "wordCount": null
-    },
-    {
-      "key": "xiao-ao-jiang-hu",
-      "label": "笑傲江湖",
-      "author": "金庸",
-      "wordCount": 992897
     },
     {
       "key": "xue-shan-fei-hu",
@@ -912,10 +806,40 @@
       "wordCount": 16585
     },
     {
+      "key": "lu-ding-ji",
+      "label": "鹿鼎记",
+      "author": "金庸",
+      "wordCount": 1241214
+    },
+    {
+      "key": "tian-long-ba-bu",
+      "label": "天龙八部",
+      "author": "金庸",
+      "wordCount": 1249921
+    },
+    {
+      "key": "xiao-ao-jiang-hu",
+      "label": "笑傲江湖",
+      "author": "金庸",
+      "wordCount": 992897
+    },
+    {
+      "key": "chu-liu-xiang",
+      "label": "楚留香传奇",
+      "author": "古龙",
+      "wordCount": 649434
+    },
+    {
       "key": "jue-dai-shuang-jiao",
       "label": "绝代双骄",
       "author": "古龙",
       "wordCount": 765063
+    },
+    {
+      "key": "lu-xiao-feng",
+      "label": "陆小凤传奇",
+      "author": "古龙",
+      "wordCount": 940675
     },
     {
       "key": "xiao-li-fei-dao",
@@ -1034,7 +958,7 @@
     {
       "key": "yue-liang-yu-liu-bian-shi",
       "label": "月亮与六便士",
-      "author": "毛姆",
+      "author": "[英]毛姆",
       "wordCount": 151767
     },
     {
@@ -1064,8 +988,8 @@
     {
       "key": "ju-wai-ren",
       "label": "局外人",
-      "author": "[法]加缪",
-      "wordCount": 65695
+      "author": "[法]阿尔贝·加缪",
+      "wordCount": 53743
     },
     {
       "key": "sa-ha-la-de-gu-shi",
@@ -1118,7 +1042,7 @@
   "stats": {
     "hours": 118,
     "readDays": 250,
-    "booksRead": 48,
+    "booksRead": 50,
     "notes": 488
   },
   "warnings": []

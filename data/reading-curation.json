@@ -174,7 +174,8 @@
       "region": "jianghu-shanhe",
       "place": "商家堡",
       "search": "飞狐外传 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "xue-shan-fei-hu",
@@ -182,7 +183,8 @@
       "region": "jianghu-shanhe",
       "place": "玉笔峰",
       "search": "雪山飞狐 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "lian-cheng-jue",
@@ -190,13 +192,14 @@
       "region": "jianghu-shanhe",
       "place": "荆州城",
       "search": "连城诀 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "tian-long-ba-bu",
       "label": "天龙八部",
-      "region": "jianghu-shanhe",
-      "place": "雁门关",
+      "region": "jianghu-shijing",
+      "place": "松鹤楼",
       "search": "天龙八部 金庸",
       "read": true
     },
@@ -214,21 +217,22 @@
       "region": "jianghu-shanhe",
       "place": "大漠",
       "search": "白马啸西风 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "lu-ding-ji",
       "label": "鹿鼎记",
-      "region": "jianghu-shanhe",
-      "place": "扬州",
+      "region": "jianghu-shijing",
+      "place": "扬州茶馆",
       "search": "鹿鼎记 金庸",
       "read": true
     },
     {
       "key": "xiao-ao-jiang-hu",
       "label": "笑傲江湖",
-      "region": "jianghu-shanhe",
-      "place": "华山",
+      "region": "jianghu-shijing",
+      "place": "回雁楼",
       "search": "笑傲江湖 金庸",
       "read": true
     },
@@ -238,7 +242,8 @@
       "region": "jianghu-shanhe",
       "place": "天山",
       "search": "书剑恩仇录 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "shen-diao",
@@ -254,7 +259,8 @@
       "region": "jianghu-shanhe",
       "place": "侠客岛",
       "search": "侠客行 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "yi-tian-tu-long-ji",
@@ -270,7 +276,8 @@
       "region": "jianghu-shanhe",
       "place": "金蛇洞",
       "search": "碧血剑 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "yuan-yang-dao",
@@ -278,7 +285,8 @@
       "region": "jianghu-shanhe",
       "place": "镖路",
       "search": "鸳鸯刀 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "yue-nv-jian",
@@ -286,7 +294,8 @@
       "region": "jianghu-shanhe",
       "place": "若耶溪",
       "search": "越女剑 金庸",
-      "read": true
+      "read": true,
+      "studyOnly": true
     },
     {
       "key": "xiao-li-fei-dao",
@@ -317,18 +326,17 @@
       "match": [
         "古龙：陆小凤传奇（全7册）"
       ],
-      "read": false
+      "read": true
     },
     {
       "key": "chu-liu-xiang",
-      "label": "楚留香",
+      "label": "楚留香传奇",
       "region": "jianghu-night",
       "place": "香帅的船",
       "match": [
-        "楚留香传奇",
         "古龙：楚留香新传（全4册）"
       ],
-      "read": false
+      "read": true
     },
     {
       "key": "huang-jin-shi-dai",

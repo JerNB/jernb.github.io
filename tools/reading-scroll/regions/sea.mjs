@@ -1,4 +1,5 @@
 // 海边与深井: 村上's forest, the shore, the sun going down in the west, the library and its well.
+import { minka, stoneLantern } from '../buildings.mjs';
 import { road, spread, marksAt } from '../ink.mjs';
 
 const MARKS = { 森林: ['forest', .14, 430], 海边: ['shore', .38, 450], 太阳以西: ['sunset', .6, 300], 甲村图书馆: ['library', .84, 430] };
@@ -33,7 +34,8 @@ const DRAW = {
   },
   sunset(a, x, y) { a.glow(x, y, 60, .35, '236,214,170'); a.ctx.fillStyle = 'rgba(232,220,196,.95)'; a.ctx.beginPath(); a.ctx.arc(x, y + 20, 26, Math.PI, 0); a.ctx.fill(); return [x, y - 30]; },
   library(a, x, y) {
-    a.house(x - 50, y, 70, 22, 28, { wall: '#c7bea8' });
+    minka(a, x - 66, y, 86, 22, 28);                       // 甲村图书馆: an old house turned library
+    stoneLantern(a, x - 82, y + 8, .9);
     a.prop('well', x + 34, y - 46, 60, 56, () => {
       const c = a.ctx; c.fillStyle = a.ink(.8); c.beginPath(); c.ellipse(x + 60, y, 18, 6, 0, 0, 7); c.fill();
       c.fillStyle = '#b3a994'; c.fillRect(x + 42, y - 14, 36, 14); c.strokeStyle = a.ink(.85); c.lineWidth = .9; c.strokeRect(x + 42, y - 14, 36, 14);

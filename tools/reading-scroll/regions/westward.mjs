@@ -1,4 +1,5 @@
 // 白夜之城, 深处, 舞台: three short regions on the way west.
+import { facade, onionDome, needleSpire, lampPost, embankment, bareTree, thatchHut, palm } from '../buildings.mjs';
 import { road, spread, marksAt } from '../ink.mjs';
 
 const anchorAll = (r, places, anchors, orient) => { for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], orient)); };
@@ -11,27 +12,36 @@ export const whitenight = {
     const g = a.ctx.createLinearGradient(0, 0, 0, h); g.addColorStop(0, 'rgba(236,228,208,.35)'); g.addColorStop(.6, 'rgba(236,228,208,0)');
     a.ctx.fillStyle = g; a.ctx.fillRect(0, 0, w, h);
     const cy = P ? h * .5 : 420, cx = w / 2;
-    skyline(a, P ? 0 : 40, P ? w : w - 40, cy - 40);
-    a.water(0, cy - 30, w, cy + 30, { density: .8 });
-    a.prop('petersburg-bridge', cx - 140, cy - 80, 280, 110, () => {
-      a.bridge(cx - 130, cy - 26, cx + 130, cy - 26, 18);
-      for (const lx of [cx - 100, cx - 40, cx + 40, cx + 100]) { a.ctx.strokeStyle = a.ink(.9); a.ctx.lineWidth = 1; a.ctx.beginPath(); a.ctx.moveTo(lx, cy - 40); a.ctx.lineTo(lx, cy - 64); a.ctx.stroke(); a.glow(lx, cy - 66, 10, .5); }
-    });
-    a.person(cx - 20, cy - 34, 1, 0); a.person(cx - 8, cy - 34, 1, 4);   // two figures on the bridge
-    if (key['涅瓦河畔']) anchors[key['涅瓦河畔']] = [cx, cy - 130];
+    skyline(a, 0, w, cy - 96);
+    a.mist(0, cy - 110, w, 44, .5);
+    // this bank: a palace front, a church of onion domes, bare lindens, the granite quay
+    const lw = P ? 150 : 190, lx = P ? 14 : cx - 60 - lw, qy = cy - 30;
+    bareTree(a, lx - 16, qy, 60, .55); bareTree(a, lx + lw + 26, qy, 70, .6);
+    facade(a, lx, qy, lw, 62, 26, { floors: 3, pediment: true });
+    const chx = P ? w - 150 : cx + 90;
+    facade(a, chx, qy, 110, 40, 22, { floors: 2, wall: '#c9c0a8' });
+    onionDome(a, chx + 56, qy - 42, 15); onionDome(a, chx + 22, qy - 42, 9); onionDome(a, chx + 92, qy - 42, 9);
+    bareTree(a, chx + 150, qy, 64, .55);
+    a.water(0, cy - 16, w, cy + 44, { density: .9 });
+    embankment(a, 0, w, qy, 14);
+    for (let x = 36; x < w; x += P ? 110 : 128) lampPost(a, x, qy, 30);
+    a.prop('petersburg-bridge', cx - 140, cy - 80, 280, 110, () => {});
+    a.person(cx - 6, qy, 1.05, 0); a.person(cx + 8, qy, 1, 4);         // the dreamer and Nastenka at the railing
+    a.boat(P ? 60 : cx + 150, cy + 26, 44);
+    if (key['涅瓦河畔']) anchors[key['涅瓦河畔']] = [cx + (P ? 0 : 20), qy - 44];
     const r = road(w, h, orient, tt => (P ? 30 : 6) * Math.sin(tt * 5));
     anchorAll(r, places, anchors, orient);
     return { road: r, anchors };
   },
 };
 function skyline(a, x0, x1, y) {
-  const c = a.ctx; let x = x0;
-  while (x < x1) {
-    const bw = a.rr(30, 60), bh = a.rr(30, 60);
-    c.fillStyle = a.ink(.35); c.fillRect(x, y - bh, bw, bh);
-    if (a.rng() < .25) { c.beginPath(); c.arc(x + bw / 2, y - bh - 8, 9, Math.PI, 0); c.fill(); c.beginPath(); c.moveTo(x + bw / 2 - 3, y - bh - 16); c.quadraticCurveTo(x + bw / 2, y - bh - 30, x + bw / 2 + 3, y - bh - 16); c.fill(); } // onion dome
-    x += bw + a.rr(2, 10);
-  }
+  // the far bank: a pale frieze of palaces, one gold needle, one great dome
+  const c = a.ctx; c.save(); c.globalAlpha = .42;
+  let x = x0;
+  while (x < x1) { const bw = a.rr(46, 84); facade(a, x, y, Math.min(bw, x1 - x), a.rr(16, 24), 0, { floors: 2, tone: .55 }); x += bw + a.rr(0, 3); }
+  needleSpire(a, x0 + (x1 - x0) * .5, y - 18, 96, .6);
+  c.fillStyle = a.ink(.55); const dx = x0 + (x1 - x0) * .2; c.fillRect(dx - 12, y - 34, 24, 14); c.beginPath(); c.ellipse(dx, y - 34, 14, 18, 0, Math.PI, 0); c.fill(); c.fillRect(dx - .6, y - 60, 1.2, 9);
+  c.restore();
 }
 
 /* 深处: the prison's high window (dark), then 塔希提 opening beyond it */
@@ -66,14 +76,10 @@ export const depths = {
 function tahiti(a, x, y) {
   a.moon(x + 40, y - 230, 18);
   a.water(x - 160, y + 10, 320, y + 70, { density: .6, fadeIn: 80, fadeOut: 60 });
-  for (let i = 0; i < 4; i++) palm(a, x - 80 + i * 46, y + 10, a.rr(70, 100));
-  a.house(x - 20, y + 6, 40, 14, 20);
+  for (let i = 0; i < 5; i++) palm(a, x - 110 + i * 50 + a.rr(-8, 8), y + 12, a.rr(70, 110), a.rr(-18, 18));
+  thatchHut(a, x - 30, y + 10, 46, 14, 20, { stilts: 9 });
+  a.person(x + 44, y + 12, 1, 0); a.boat(x + 70, y + 46, 40);
 }
-function palm(a, x, y, hgt) {
-  const c = a.ctx; c.strokeStyle = a.ink(.8); c.lineWidth = 2; c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + 10, y - hgt * .6, x + 4, y - hgt); c.stroke();
-  for (let i = 0; i < 7; i++) { const an = Math.PI + i / 6 * Math.PI; c.lineWidth = 1.2; c.beginPath(); c.moveTo(x + 4, y - hgt); c.quadraticCurveTo(x + 4 + Math.cos(an) * 16, y - hgt - 10, x + 4 + Math.cos(an) * 30, y - hgt + Math.abs(Math.sin(an)) * 4 + 8); c.stroke(); }
-}
-
 /* 舞台: a stage, curtains, footlights — a quiet nod to Jerry the performer */
 export const stage = {
   paint(a, { w, h }, region, places, orient) {

@@ -1,4 +1,5 @@
 // 雪国: 川端's tunnel and mountain road, 三岛's garden and the burning 金阁 (the scroll's one fire).
+import { minka, stoneLantern } from '../buildings.mjs';
 import { road, spread, marksAt } from '../ink.mjs';
 
 const MARKS = { 隧道: ['tunnel', .14, 430], 天城山道: ['path', .38, 420], 松枝家: ['garden', .6, 430], 金阁: ['pavilion', .84, 440] };
@@ -46,7 +47,8 @@ const DRAW = {
     return [x, y - 90];
   },
   garden(a, x, y) {                 // 松枝家: a mansion garden under snow
-    a.house(x - 60, y, 80, 22, 30, { storeys: 2, wall: '#cbc2ad' });
+    minka(a, x - 74, y, 96, 22, 30, { snow: true, storeys: 2 });
+    stoneLantern(a, x + 44, y + 10, 1, true);
     const c = a.ctx; c.fillStyle = 'rgba(150,142,125,.3)'; c.beginPath(); c.ellipse(x + 50, y + 18, 50, 9, 0, 0, 7); c.fill();
     a.pine(x + 70, y + 4, 56, .85);
     return [x, y - 100];

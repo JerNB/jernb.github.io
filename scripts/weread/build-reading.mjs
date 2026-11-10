@@ -48,11 +48,14 @@ export function buildReading(raw, curation, { now = new Date().toISOString().sli
       wordCount: words.length ? words.reduce((a, b) => a + b, 0) : null,
       tiba: pickTiba(entry, ids, raw),
       objectId: (curation.objects ?? []).find(o => o.books.includes(entry.key))?.id ?? null,
+      studyOnly: entry.studyOnly === true,
     });
   }
   places.sort((a, b) => regionOrder.get(a.region) - regionOrder.get(b.region) || a.key.localeCompare(b.key));
 
   const study = places.map(p => ({ key: p.key, label: p.label, author: p.author, wordCount: p.wordCount }));
+  // studyOnly: read, shown on the 书房 wall, but not given a place on the map
+  for (let i = places.length; i--;) { if (places[i].studyOnly) places.splice(i, 1); else delete places[i].studyOnly; }
   for (const b of shelfBooks) {
     if (finished(b) && !b.secret && !matchedIds.has(b.bookId)) {
       warnings.push(`finished but not curated (study only): ${b.title}`);

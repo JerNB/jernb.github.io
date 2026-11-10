@@ -1,11 +1,60 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { stepToward, wheelIntent } from '../../js/reading/scroll.mjs';
+import { glide, flingTarget, keyIntent, wheelIntent } from '../../js/reading/scroll.mjs';
 
-test('stepToward converges with a half-life', () => {
-  assert.equal(stepToward(0, 100, 120), 50);
-  assert.equal(stepToward(0, 100, 0), 0);
-  assert.equal(stepToward(99.7, 100, 16), 100);   // snaps when within half a pixel
+const run = (state, target, dt, frames, tau) => { const seen = []; for (let i = 0; i < frames && !state.done; i++) { state = glide(state, target, dt, tau); seen.push(state.pos); } return { state, seen }; };
+
+test('glide does nothing without elapsed time', () => {
+  assert.deepEqual(glide({ pos: 10, vel: 0 }, 100, 0), { pos: 10, vel: 0, done: false });
+});
+
+test('glide eases in from rest: the second frame travels further than the first', () => {
+  const { seen } = run({ pos: 0, vel: 0 }, 1000, 16, 2);
+  assert.ok(seen[0] > 0);
+  assert.ok(seen[1] - seen[0] > seen[0], `${seen[0]} then ${seen[1] - seen[0]}`);
+});
+
+test('glide never overshoots or moves backwards, and lands exactly on the target', () => {
+  const { state, seen } = run({ pos: 0, vel: 0 }, 1000.4, 16, 400);
+  for (let i = 1; i < seen.length; i++) assert.ok(seen[i] >= seen[i - 1] && seen[i] <= 1000.4);
+  assert.deepEqual(state, { pos: 1000.4, vel: 0, done: true });
+  assert.ok(seen.length < 90, `took ${seen.length} frames`);        // under 1.5 s at 60 Hz
+});
+
+test('glide is frame-rate independent', () => {
+  const at60 = run({ pos: 0, vel: 0 }, 1000, 16, 15).state.pos;      // 240 ms
+  const at120 = run({ pos: 0, vel: 0 }, 1000, 8, 30).state.pos;
+  assert.ok(Math.abs(at60 - at120) < 0.01, `${at60} vs ${at120}`);
+});
+
+test('glide carries velocity through a retarget (no stop-start between wheel notches)', () => {
+  let s = run({ pos: 0, vel: 0 }, 300, 16, 6).state;
+  const before = s.vel;
+  s = glide(s, 600, 16);
+  assert.ok(before > 0 && s.vel > before * 0.9);
+});
+
+test('a fling coasts from the release velocity and stops where flingTarget says', () => {
+  const target = flingTarget(500, 2, 325);
+  assert.equal(target, 1150);
+  const { state, seen } = run({ pos: 500, vel: 2 }, target, 16, 600, 325);
+  assert.ok(Math.abs(seen[0] - 500 - 2 * 16) < 2, `first frame moved ${seen[0] - 500}`);
+  for (let i = 1; i < seen.length; i++) assert.ok(seen[i] >= seen[i - 1] && seen[i] <= target);
+  assert.equal(state.pos, target);
+});
+
+test('arrow and paging keys move the target, clamped to the scroll', () => {
+  assert.equal(keyIntent('ArrowRight', 500, 2000, 1000), 620);
+  assert.equal(keyIntent('ArrowLeft', 50, 2000, 1000), 0);
+  assert.equal(keyIntent('PageDown', 500, 2000, 1000), 1350);
+  assert.equal(keyIntent('PageUp', 500, 2000, 1000), 0);
+  assert.equal(keyIntent('End', 500, 2000, 1000), 2000);
+  assert.equal(keyIntent('Home', 500, 2000, 1000), 0);
+  assert.equal(keyIntent('a', 500, 2000, 1000), null);
+});
+
+test('wheel gain scales the distance, not the capture rule', () => {
+  assert.deepEqual(wheelIntent({ deltaX: 0, deltaY: 100, deltaMode: 0 }, 500, 500, 2000, 'landscape', 1.5), { capture: true, target: 650 });
 });
 
 test('wheel captured mid-scroll', () => {
@@ -35,15 +84,6 @@ test('portrait never captures', () => {
 
 test('deltaMode 1 (lines) scales by 16', () => {
   assert.deepEqual(wheelIntent({ deltaX: 0, deltaY: 3, deltaMode: 1 }, 500, 500, 2000, 'landscape'), { capture: true, target: 548 });
-});
-
-test('loop settles when the browser rounds scroll positions to device pixels', () => {
-  for (const dpr of [1, 1.25, 1.5, 2]) {
-    const round = v => Math.round(v * dpr) / dpr;
-    let pos = 0; const target = 1000.4;
-    for (let i = 0; i < 400 && pos !== target; i++) { const next = stepToward(pos, target, 16); pos = next === target ? target : round(next); }
-    assert.equal(pos, target, `dpr ${dpr}`);
-  }
 });
 
 test('wheel released within a pixel of the end', () => {
