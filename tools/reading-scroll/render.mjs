@@ -92,9 +92,12 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
     const lc = layer.getContext('2d');
     lc.scale(scale, scale);
     lc.save(); lc.translate(-rect.x, -rect.y); makeInk(lc, seed).paper(rect.x, rect.y, rect.w, rect.h); lc.restore();
-    const api = makeInk(lc, seed + region.order * 7919, props);
+    const fore = document.createElement('canvas'); fore.width = layer.width; fore.height = layer.height;
+    const api = makeInk(lc, seed + region.order * 7919, props, fore.getContext('2d'));
     const out = painterFor(region.painter).paint(api, { w: rect.w, h: rect.h }, region, places, orient,
       { objects: reading.objects.filter(o => o.region === region.id), links: reading.links });
+    recede(lc, layer, scale, out.dark?.length ? HAZE_DARK : HAZE);
+    lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'source-over'; lc.drawImage(fore, 0, 0);
     feather(lc, rect, orient, scale, makeInk(lc, seed + region.order * 31).fbm, rect === lay.rects[0] || !!only, rect === lay.rects.at(-1) || !!only);
     ctx.drawImage(layer, rect.x, rect.y, rect.w, rect.h);
     scene.road.push(...out.road.map(([x, y]) => [round(x + rect.x), round(y + rect.y)]));
@@ -204,5 +207,17 @@ function joinery(a, scene, orient, rects) {
   }
   c.lineCap = 'butt';
 }
-const FEATHER = 150;
+const FEATHER = 150, HAZE = .2, HAZE_DARK = .06;
+/**
+ * 远淡近浓: the code-drawn scene is softened a touch and veiled toward the paper, so it sits
+ * behind the ink paintings (drawn on their own sheet afterwards) instead of competing with them.
+ */
+function recede(lc, layer, scale, haze) {
+  const tmp = document.createElement('canvas'); tmp.width = layer.width; tmp.height = layer.height;
+  const tc = tmp.getContext('2d'); tc.filter = `blur(${(.55 * scale).toFixed(2)}px)`; tc.drawImage(layer, 0, 0);
+  lc.save(); lc.setTransform(1, 0, 0, 1, 0, 0);
+  lc.globalCompositeOperation = 'copy'; lc.drawImage(tmp, 0, 0);
+  lc.globalCompositeOperation = 'source-atop'; lc.fillStyle = `rgba(179,169,148,${haze})`; lc.fillRect(0, 0, layer.width, layer.height);
+  lc.restore();
+}
 const round = v => Math.round(v * 10) / 10;

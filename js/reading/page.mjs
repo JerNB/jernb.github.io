@@ -4,6 +4,7 @@ import { pointOnAxis, inRanges, orderAlong } from './path.mjs';
 import { createScrollController } from './scroll.mjs';
 import { toChineseNumeral } from './numerals.mjs';
 import { clipQuote, placeSlip } from './jian.mjs';
+import { packShelf } from './shelf.mjs';
 
 const section = document.querySelector('.scroll');
 const track = section.querySelector('.scroll-track');
@@ -136,7 +137,7 @@ function build() {
     track.append(b);
   };
   const byKey = Object.fromEntries(reading.places.map(p => [p.key, p]));
-  const renderers = {}, anchorsAll = {};
+  const renderers = {}, anchorsAll = {}, slipFor = {};
   for (const p of reading.places) {
     if (p.objectId) continue;
     const pt = S.places[p.key]; if (!pt) continue;
@@ -146,8 +147,9 @@ function build() {
     if (p.tiba?.mine) rows.push({ tag: '批注', text: clipQuote(p.tiba.mine, CLIP), cls: 'mine' });
     if (p.hours >= 1) rows.push({ tag: '读', text: `${toChineseNumeral(Math.round(p.hours))}小时`, cls: 'hours' });
     anchorsAll[p.key] = pt;
+    slipFor[p.key] = { title: `《${p.label}》`, author: p.author, rows };
     renderers[p.key] = () => placeBtn(pt, p.place, p.place === p.label ? '' : `《${p.label}》`,
-      { title: `《${p.label}》`, author: p.author, rows },
+      slipFor[p.key],
       `${p.place}，《${p.label}》${p.author ? '，' + p.author : ''}${t ? '。' + t : ''}`);
   }
   for (const o of reading.objects) {
@@ -177,23 +179,51 @@ function build() {
     track.append(note);
   }
 
-  /* 书房 and 卷尾跋 after the painted strip */
+  /* 书房: a bookcase of every book read, after the painted strip */
   const study = el('section', 'study');
   study.setAttribute('aria-label', '书房：读过的全部书');
-  const shelf = el('ul', 'shelf');
-  for (const s of reading.study) {
-    const li = el('li', 'spine');
-    const h = hash(s.key);
-    const wpx = spineW(s);
-    li.style.width = `${wpx * k}px`;
-    li.style.height = `${(150 + h % 50) * k}px`;
-    const tone = 30 + (h % 13) - 6;                    // ±6% around a warm ink
-    li.style.background = `hsl(${32 + (h % 9)}, ${10 + (h % 7)}%, ${tone}%)`;
-    li.append(el('span', null, s.label));
-    if (s.author) li.append(el('span', 'who', s.author));
-    shelf.append(li);
-  }
-  study.append(el('h2', 'study-title', '书房'), shelf);
+  const plaque = el('div', 'plaque');
+  plaque.append(el('h2', null, '书房'), el('small', null, `凡${toChineseNumeral(reading.study.length)}部`));
+  const caseEl = el('div', 'bookcase');
+  const ws = reading.study.map(s => Math.round(Math.max(19, spineW(s)) * k));
+  const ORN = 46 * k;                                                 // room at a tier's end for a vase or a seal stone
+  const tierW = P ? (S.width - 32) * k - ORN - 64 : Math.ceil(ws.reduce((x, y) => x + y + 2, 0) / 3 * 1.1);   // three tiers on a wide screen
+  const tiers = packShelf(ws.map(w => w + 2), tierW);
+  const tierH = (P ? 150 : 128) * k;
+  const CLOTH = ['#3a332c', '#4a3f35', '#5a4c3d', '#3d4246', '#6b5a44', '#2e2a26', '#54493f', '#47413b'];
+  tiers.forEach((idx, t) => {
+    const row = el('ul', 'tier');
+    row.style.height = `${tierH}px`;
+    for (const i of idx) {
+      const s = reading.study[i], h = hash(s.key), li = el('li', 'book');
+      const bh = tierH * (.7 + (h % 23) / 100);
+      Object.assign(li.style, { width: `${ws[i]}px`, height: `${bh}px` });
+      li.style.setProperty('--cloth', CLOTH[h % CLOTH.length]);
+      const label = el('span', 'label', s.label);
+      const room = bh * .62 - 8, n = [...s.label].length;
+      label.style.fontSize = `${Math.max(7.5, Math.min(ws[i] > 22 ? 11 : 9.5, room / (n * 1.04)))}px`;
+      label.style.maxHeight = `${bh * .66}px`;
+      li.append(label);
+      li.setAttribute('aria-label', `《${s.label}》${s.author ? '，' + s.author : ''}`);
+      const slip = slipFor[s.key] ?? { title: `《${s.label}》`, author: s.author, rows: [] };
+      li.addEventListener('pointerenter', () => show(li, slip));
+      li.addEventListener('pointerleave', hide);
+      row.append(li);
+    }
+    if (t === 0 || t === tiers.length - 1) {                          // a plum branch in a vase up top, a seal stone below
+      const o = el('li', `ornament ${t === 0 ? 'vase' : 'sealstone'}`);
+      o.setAttribute('aria-hidden', 'true');
+      o.innerHTML = t === 0
+        ? '<svg viewBox="0 0 40 90"><path class="br" d="M20 52 C18 38 24 28 16 14 M19 34 C26 30 30 22 33 12 M17 22 C11 18 9 12 6 6"/><g class="pb"><circle cx="16" cy="14" r="2.2"/><circle cx="33" cy="12" r="2"/><circle cx="6" cy="6" r="1.8"/><circle cx="27" cy="24" r="1.7"/><circle cx="11" cy="17" r="1.6"/><circle cx="22" cy="40" r="1.5"/></g><path class="vs" d="M15 52 Q13 58 12 66 Q10 80 20 88 Q30 80 28 66 Q27 58 25 52 Z"/></svg>'
+        : '<svg viewBox="0 0 40 60"><rect class="st" x="11" y="14" width="18" height="40" rx="2"/><path class="lion" d="M11 14 Q20 2 29 14 Z"/><rect class="face" x="11" y="51" width="18" height="5"/></svg>';
+      o.style.width = `${ORN}px`;
+      row.append(o);
+    }
+    caseEl.append(row);
+  });
+  study.append(plaque, caseEl);
+
+  /* 卷尾跋 */
   const colo = el('section', 'colophon');
   colo.setAttribute('aria-label', '卷尾跋');
   const st = reading.stats;
@@ -206,17 +236,16 @@ function build() {
 
   let trackW, trackH;
   if (P) {
-    Object.assign(study.style, { left: `${20 * k}px`, top: `${H + 60}px`, width: `${(S.width - 40) * k}px`, paddingLeft: '28px' });
-    study.querySelector('.study-title').style.left = '0';
+    Object.assign(study.style, { left: `${16 * k}px`, top: `${H + 50}px`, width: `${(S.width - 32) * k}px` });
     const studyH = study.offsetHeight;
-    Object.assign(colo.style, { left: '50%', transform: 'translateX(-50%)', top: `${H + 60 + studyH + 60}px` });
-    trackW = W; trackH = H + 60 + studyH + 60 + colo.offsetHeight + 60;
+    Object.assign(colo.style, { left: '50%', transform: 'translateX(-50%)', top: `${H + 50 + studyH + 60}px` });
+    trackW = W; trackH = H + 50 + studyH + 60 + colo.offsetHeight + 60;
   } else {
-    const studyW = reading.study.reduce((a, s) => a + spineW(s) + 3, 0) * k + 60;
-    Object.assign(study.style, { left: `${W + 80}px`, top: '0', height: `${470 * k}px`, width: `${studyW}px`, paddingLeft: '40px' });
-    study.querySelector('.study-title').style.left = '0';
-    Object.assign(colo.style, { left: `${W + 80 + studyW + 90}px`, top: `${70 * k}px` });
-    trackW = W + 80 + studyW + 90 + colo.offsetWidth + 120; trackH = H;
+    Object.assign(study.style, { left: `${W + 60}px`, top: '0' });
+    const sw = study.offsetWidth, sh = study.offsetHeight;
+    study.style.top = `${Math.max(8, (H - sh) / 2)}px`;
+    Object.assign(colo.style, { left: `${W + 60 + sw + 90}px`, top: `${Math.max(20, (H - colo.offsetHeight) / 2)}px` });
+    trackW = W + 60 + sw + 90 + colo.offsetWidth + 120; trackH = H;
   }
   track.style.width = `${trackW}px`; track.style.height = `${trackH}px`;
 

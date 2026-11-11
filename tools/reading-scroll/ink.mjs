@@ -8,7 +8,11 @@ export const GLOW = '#e6dcc4';
 export const PAPER_RGB = [184, 175, 155];   // mean paper tone, used for mist
 const OCC_RGB = [182, 173, 153];            // paper occlusion behind ridges
 
-export function makeInk(ctx, seed = 20261108, props = new Map()) {
+/**
+ * `fg`, when given, is a separate sheet that day paintings are drawn onto (in the same coordinates),
+ * so the code-drawn scene underneath can be pushed back into the distance without touching them.
+ */
+export function makeInk(ctx, seed = 20261108, props = new Map(), fg = null) {
   /* ---------- seeded randomness & noise ---------- */
   let S = seed % 2147483647 || 1;
   const rng = () => { S = (S * 16807) % 2147483647; return (S - 1) / 2147483646; };
@@ -260,8 +264,13 @@ export function makeInk(ctx, seed = 20261108, props = new Map()) {
   function prop(name, x, y, w, h, fallback) {
     const p = props.get(name);
     if (!p) return fallback();
-    ctx.save(); ctx.globalCompositeOperation = p.night ? 'screen' : 'source-over';
-    ctx.drawImage(p.img, x, y, w, h); ctx.restore();
+    paint(p, x, y, w, h);
+  }
+  function paint(p, x, y, w, h) {                                     // night paintings need the dark under them; day ones go on top
+    const c = !p.night && fg ? fg : ctx;
+    c.save(); if (c !== ctx) c.setTransform(ctx.getTransform());
+    c.globalCompositeOperation = p.night ? 'screen' : 'source-over';
+    c.drawImage(p.img, x, y, w, h); c.restore();
   }
   /**
    * Stand a painting on the ground: drawn `w` wide (its whole canvas, margins included), with the
@@ -273,8 +282,7 @@ export function makeInk(ctx, seed = 20261108, props = new Map()) {
     if (!p) return { used: false, out: fallback() };
     const h = w * p.img.height / p.img.width, b = p.box;
     const x = cx - w * (b.x0 + b.x1) / 2, y = gy - h * b.y1;
-    ctx.save(); ctx.globalCompositeOperation = p.night ? 'screen' : 'source-over';
-    ctx.drawImage(p.img, x, y, w, h); ctx.restore();
+    paint(p, x, y, w, h);
     return { used: true, x, y, k: w / p.img.width, left: x + w * b.x0, right: x + w * b.x1, top: y + h * b.y0, bottom: gy };
   }
 
