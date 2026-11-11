@@ -8,6 +8,8 @@ import { clipQuote, placeSlip } from './jian.mjs';
 const section = document.querySelector('.scroll');
 const track = section.querySelector('.scroll-track');
 const hint = document.querySelector('.scroll-hint');
+const stage = document.querySelector('.reading-stage');
+const roll = stage.querySelector('.roll');
 const mqPortrait = matchMedia('(max-width: 767px)');
 const mqReduced = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -21,6 +23,7 @@ const spineW = s => s.wordCount ? Math.min(46, Math.max(17, s.wordCount / 12000)
 const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
 
 let update = () => {};
+let rolled = true;
 let closeSlip = () => {};
 let currentOrient = null;
 const controllers = {};
@@ -28,10 +31,12 @@ const controllers = {};
 function build() {
   const orient = mqPortrait.matches ? 'portrait' : 'landscape';
   const S = scene[orient], P = orient === 'portrait', ax = P ? 1 : 0;
-  const k = P ? section.clientWidth / S.width || 1 : 1;
+  // landscape: the painting is scaled to fill the stage between the title and the bottom of the screen
+  const k = P ? section.clientWidth / S.width || 1 : Math.min(1.5, Math.max(.8, stage.clientHeight / S.height));
   section.dataset.orient = orient;
   track.replaceChildren();
-  hint.textContent = P ? '向下滑动，沿着路走下去' : '滚动鼠标，画卷向左展开';
+  hint.textContent = rolled ? '点开卷轴' : P ? '向下滑动，沿着路走下去' : '滚动鼠标，画卷向左展开';
+  stage.dataset.orient = orient;
 
   /* painted strip: LQIP under the tiles */
   const W = S.width * k, H = S.height * k;
@@ -207,10 +212,10 @@ function build() {
     Object.assign(colo.style, { left: '50%', transform: 'translateX(-50%)', top: `${H + 60 + studyH + 60}px` });
     trackW = W; trackH = H + 60 + studyH + 60 + colo.offsetHeight + 60;
   } else {
-    const studyW = reading.study.reduce((a, s) => a + spineW(s) + 3, 0) + 60;
-    Object.assign(study.style, { left: `${W + 80}px`, top: '0', height: `${470}px`, width: `${studyW}px`, paddingLeft: '40px' });
+    const studyW = reading.study.reduce((a, s) => a + spineW(s) + 3, 0) * k + 60;
+    Object.assign(study.style, { left: `${W + 80}px`, top: '0', height: `${470 * k}px`, width: `${studyW}px`, paddingLeft: '40px' });
     study.querySelector('.study-title').style.left = '0';
-    Object.assign(colo.style, { left: `${W + 80 + studyW + 90}px`, top: '70px' });
+    Object.assign(colo.style, { left: `${W + 80 + studyW + 90}px`, top: `${70 * k}px` });
     trackW = W + 80 + studyW + 90 + colo.offsetWidth + 120; trackH = H;
   }
   track.style.width = `${trackW}px`; track.style.height = `${trackH}px`;
@@ -261,11 +266,74 @@ function build() {
   controllers[orient] ??= createScrollController(section, { orient, reducedMotion: mqReduced.matches,
     onFrame: p => { if (currentOrient === orient) update(p); } });   // a stale orientation's listener stays silent
   section.dataset.state = 'ready';
+  placeRoll(H, P);
   update(controllers[orient].position);
 }
 
 build();
+
+/* the rolled scroll: it sits over the hidden painting until it is opened */
+function placeRoll(H, P) {
+  if (!rolled) return;
+  roll.dataset.orient = P ? 'portrait' : 'landscape';
+  const st = stage.getBoundingClientRect(), s = section.getBoundingClientRect();
+  if (P) {
+    roll.style.setProperty('--roll-len', `${s.width + 20}px`);
+    roll.style.left = `${s.left - st.left - 10}px`; roll.style.top = '24px';
+  } else {
+    roll.style.setProperty('--roll-len', `${H}px`);
+    roll.style.left = `${s.left - st.left + s.width / 2 - roll.offsetWidth / 2}px`;
+    roll.style.top = `${s.top - st.top + H / 2 - roll.offsetHeight / 2}px`;
+  }
+  roll.removeAttribute('aria-busy');
+}
+const EASE = 'cubic-bezier(0.45, 0.05, 0.25, 1)';
+async function unroll(e) {
+  const byKey = e?.detail === 0;                                    // opened with Enter or Space: keyboard focus moves into the painting
+  if (!rolled || section.dataset.state !== 'ready') return;
+  rolled = false;
+  const P = section.dataset.orient === 'portrait';
+  const done = () => {
+    section.classList.remove('is-rolled'); section.style.height = '';
+    section.getAnimations().forEach(a => a.cancel());
+    roll.hidden = true; section.tabIndex = 0;
+    hint.textContent = P ? '向下滑动，沿着路走下去' : '滚动鼠标，画卷向左展开'; hint.style.visibility = '';
+    if (byKey) section.focus({ preventScroll: true });
+  };
+  if (mqReduced.matches) { done(); return; }
+  roll.classList.add('is-opening'); hint.style.visibility = 'hidden';                                  // the tie and the slip come off first
+  const r = roll.getBoundingClientRect(), s = section.getBoundingClientRect();
+  if (P) {
+    const reach = Math.max(260, Math.min(section.querySelector('.scroll-track').offsetHeight, innerHeight - s.top - 16));
+    section.style.height = '0px'; section.classList.remove('is-rolled');
+    const D = 1500;
+    roll.animate([{ transform: 'translateY(0)' }, { transform: `translateY(${reach}px)` }], { duration: D, delay: 260, easing: EASE, fill: 'forwards' });
+    roll.animate([{ opacity: 1 }, { opacity: 0 }], { duration: D * .14, delay: 260 + D * .86, fill: 'forwards' });
+    await section.animate([{ height: '0px' }, { height: `${reach}px` }], { duration: D, delay: 260, easing: EASE, fill: 'forwards' }).finished;
+    return done();
+  }
+  // landscape: the roll moves to the left end of the painting, then rolls away to the right,
+  // the painting opening behind it
+  const toEdge = s.left - (r.left + r.width / 2);
+  await roll.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${toEdge}px)` }], { duration: 560, delay: 220, easing: EASE, fill: 'forwards' }).finished;
+  const D = 1900;
+  section.classList.remove('is-rolled');
+  // the roll's centre rides exactly on the opening edge; it thins as the paper comes off it
+  roll.animate([{ transform: `translateX(${toEdge}px) scaleX(1)` }, { transform: `translateX(${toEdge + s.width}px) scaleX(.7)` }], { duration: D, easing: EASE, fill: 'forwards' });
+  roll.animate([{ opacity: 1 }, { opacity: 0 }], { duration: D * .14, delay: D * .86, fill: 'forwards' });
+  await section.animate([{ clipPath: 'inset(-2px 100% -2px 0)' }, { clipPath: 'inset(-2px 0% -2px 0)' }], { duration: D, easing: EASE, fill: 'forwards' }).finished;
+  done();
+}
+roll.addEventListener('click', unroll);
 addEventListener('pointerdown', e => { if (!e.target.closest?.('.place')) closeSlip(); });
 mqPortrait.addEventListener('change', build);
 let lastW = section.clientWidth;
-addEventListener('resize', () => { if (mqPortrait.matches && Math.abs(section.clientWidth - lastW) > 2) { lastW = section.clientWidth; build(); } });
+let lastH = stage.clientHeight, resizeT = 0;
+addEventListener('resize', () => {
+  clearTimeout(resizeT);
+  resizeT = setTimeout(() => {
+    if (mqPortrait.matches ? Math.abs(section.clientWidth - lastW) > 2 : Math.abs(stage.clientHeight - lastH) > 8) {
+      lastW = section.clientWidth; lastH = stage.clientHeight; build();
+    }
+  }, 120);
+});
