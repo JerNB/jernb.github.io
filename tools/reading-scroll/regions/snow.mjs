@@ -47,14 +47,14 @@ const DRAW = {
     return [x, y - 90];
   },
   garden(a, x, y) {                 // 松枝家: a mansion garden under snow
-    minka(a, x - 74, y, 96, 22, 30, { snow: true, storeys: 2 });
-    stoneLantern(a, x + 44, y + 10, 1, true);
+    const r = a.propAt('snow-house', x - 10, y + 12, 170, () => { minka(a, x - 74, y, 96, 22, 30, { snow: true, storeys: 2 }); stoneLantern(a, x + 44, y + 10, 1, true); });
+    if (r.used) return [x - 10, r.top - 6];
     const c = a.ctx; c.fillStyle = 'rgba(150,142,125,.3)'; c.beginPath(); c.ellipse(x + 50, y + 18, 50, 9, 0, 0, 7); c.fill();
     a.pine(x + 70, y + 4, 56, .85);
     return [x, y - 100];
   },
   pavilion(a, x, y) {               // 金阁 over its pond, the one fire on the scroll
-    a.prop('golden-pavilion', x - 90, y - 150, 180, 170, () => {
+    const gp = a.propAt('golden-pavilion', x, y + 34, 210, () => {
       const c = a.ctx;
       a.glow(x, y - 60, 130, .55, '214,120,60');
       c.fillStyle = 'rgba(150,142,125,.35)'; c.beginPath(); c.ellipse(x, y + 16, 110, 14, 0, 0, 7); c.fill();
@@ -68,6 +68,7 @@ const DRAW = {
       for (let i = 0; i < 26; i++) { c.fillStyle = `rgba(${a.rr(200, 230)},${a.rr(90, 140)},50,${a.rr(.3, .7)})`; c.beginPath(); c.arc(x + a.rr(-50, 50), y - a.rr(30, 120), a.rr(1, 3), 0, 7); c.fill(); } // embers
       c.globalAlpha = .3; c.fillStyle = '#c9a96a'; c.beginPath(); c.ellipse(x, y + 16, 32, 7, 0, 0, 7); c.fill(); c.globalAlpha = 1;   // reflection
     });
-    return [x, y - 140];
+    if (gp.used) a.glow(x, y - 70, 120, .22, '214,120,60');
+    return [x, gp.used ? gp.top - 8 : y - 140];
   },
 };

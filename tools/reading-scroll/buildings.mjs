@@ -311,6 +311,14 @@ export function pigsty(a, x, y, w = 90) {
 /** A wine house that carries a name: two storeys, a balcony, a hanging signboard. */
 export function namedHouse(a, x, y, w, name, { flag = '酒', lit = false } = {}) {
   const c = a.ctx;
+  const r = a.propAt('winehouse', x + w / 2, y + 2, 140, () => null);
+  if (r.used) {                                                       // the painting's own signboard is left blank for the name
+    const n = [...name].length, sx = r.x + 127 * r.k - 6, sy = r.y + 232 * r.k, sh = n * 12 + 6;
+    c.fillStyle = '#ddd4bd'; c.fillRect(sx, sy, 12, sh); c.strokeStyle = a.ink(.85); c.lineWidth = .8; c.strokeRect(sx, sy, 12, sh);
+    c.fillStyle = a.ink(.95); c.font = "10.5px 'Ma Shan Zheng', 'Noto Serif SC', serif"; c.textAlign = 'center';
+    [...name].forEach((ch, i) => c.fillText(ch, sx + 6, sy + 13 + i * 12));
+    return [x + w / 2, r.top - 10];
+  }
   a.house(x, y, w, 24, 30, { shop: true, storeys: 2, flag, lit });
   c.strokeStyle = a.ink(.9); c.lineWidth = .8; line(c, x - 3, y - 24 - 9, x + w + 3, y - 24 - 9);        // balcony rail
   for (let bx = x - 3; bx <= x + w + 3; bx += 4) line(c, bx, y - 24 - 9, bx, y - 24 - 2);

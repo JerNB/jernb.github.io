@@ -208,24 +208,24 @@ export const night = {
       a.moon(w * .7, 110, 30);
       ridgeSilhouette(a, -20, w + 20, 320, 90, h);
       const yi = h * .36, ym = h * .55, yv = h * .77;               // inn, manor, valley, then the boat on the water below
-      inn(a, 70, yi); if (key['小楼']) anchors[key['小楼']] = [100, yi - 90];
-      plumManor(a, 262, ym); if (key['万梅山庄']) anchors[key['万梅山庄']] = [262, ym - 92];
+      { const t = inn(a, 70, yi); if (key['小楼']) anchors[key['小楼']] = [102, t]; }
+      { const t = plumManor(a, 250, ym); if (key['万梅山庄']) anchors[key['万梅山庄']] = [250, t]; }
       a.person(60, h * .63, 1.3, 3, true);
       valley(a, 150, yv); if (key['恶人谷']) anchors[key['恶人谷']] = [150, yv - 80];
       a.water(0, h - 104, w, h - 10, { dark: true });
-      huafang(a, 214, h - 44, 112); if (key['香帅的船']) anchors[key['香帅的船']] = [318, h - 112];
+      { const t = boatAt(a, 270, h - 38, 112); if (key['香帅的船']) anchors[key['香帅的船']] = [270, t]; }
       return { road: road(w, h, 'portrait', t => -40 * Math.sin(t * 5)), anchors, dark: [[0, h]] };
     }
-    a.night(0, 0, w, h, { fadeIn: 320, fadeOut: 240 });
+    a.night(0, 0, w, h, { fadeIn: 300, fadeOut: 150 });
     a.moon(w * .6, 108, 34);
     ridgeSilhouette(a, 40, w - 10, 360, 130);
-    inn(a, w * .2, 452); if (key['小楼']) anchors[key['小楼']] = [w * .2 + 30, 380];
-    plumManor(a, w * .46, 456); if (key['万梅山庄']) anchors[key['万梅山庄']] = [w * .46, 366];
+    { const t = inn(a, w * .27, 452); if (key['小楼']) anchors[key['小楼']] = [w * .27 + 32, t]; }
+    { const t = plumManor(a, w * .46, 456); if (key['万梅山庄']) anchors[key['万梅山庄']] = [w * .46, t]; }
     valley(a, w * .68, 470); if (key['恶人谷']) anchors[key['恶人谷']] = [w * .68, 400];
     a.water(w * .7, 498, w * .3, h, { dark: true, fadeIn: 110 });
-    huafang(a, w * .8, 536, 116); if (key['香帅的船']) anchors[key['香帅的船']] = [w * .8 + 40, 462];
-    a.person(w * .31, 478, 1.3, 3, true); a.person(w * .27, 470, 1, 0, true);
-    a.ctx.strokeStyle = 'rgba(236,228,208,.55)'; a.ctx.lineWidth = .8; a.ctx.beginPath(); a.ctx.moveTo(w * .31 + 14, 460); a.ctx.lineTo(w * .31 + 74, 448); a.ctx.stroke(); // one flash of the blade
+    { const t = boatAt(a, w * .8, 540, 116); if (key['香帅的船']) anchors[key['香帅的船']] = [w * .8, t]; }
+    a.person(w * .37, 478, 1.3, 3, true); a.person(w * .34, 470, 1, 0, true);
+    a.ctx.strokeStyle = 'rgba(236,228,208,.55)'; a.ctx.lineWidth = .8; a.ctx.beginPath(); a.ctx.moveTo(w * .37 + 14, 460); a.ctx.lineTo(w * .37 + 54, 452); a.ctx.stroke(); // one flash of the blade
     const r = road(w, h, orient);
     for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], orient));
     return { road: r, anchors, dark: [[200, w - 160]] };
@@ -243,6 +243,10 @@ function ridgeSilhouette(a, x0, x1, base, amp, H = 560) {
 }
 /** 万梅山庄: a walled garden of plum trees in flower, one lit hall behind the moon gate. */
 function plumManor(a, x, y) {
+  const r = a.propAt('plum-manor', x, y + 6, 250, () => plumManorDrawn(a, x, y));
+  return r.used ? r.top - 6 : y - 90;
+}
+function plumManorDrawn(a, x, y) {
   const c = a.ctx;
   a.house(x - 24, y - 8, 52, 18, 24, { lit: true });
   c.fillStyle = 'rgba(24,21,18,.96)'; c.fillRect(x - 78, y - 16, 160, 18);
@@ -251,11 +255,18 @@ function plumManor(a, x, y) {
   c.fillStyle = 'rgba(236,205,140,.75)'; c.beginPath(); c.arc(x + 2, y - 7, 7, 0, 7); c.fill();             // the moon gate
   plum(a, x - 58, y + 4, 62); plum(a, x + 60, y + 2, 74); plum(a, x + 96, y + 6, 44);
 }
+/** 香帅的船 on dark water; `cx` is the middle of the boat, `wy` the waterline. */
+function boatAt(a, cx, wy, len) {
+  const r = a.propAt('pleasure-boat', cx, wy + 8, 190, () => huafang(a, cx - len / 2, wy, len));
+  return r.used ? r.top - 6 : wy - 80;
+}
 function inn(a, x, y) {
-  a.prop('inn-moon', x - 60, y - 140, 180, 160, () => {
+  const r = a.propAt('inn-moon', x + 32, y + 4, 190, () => {
     a.house(x, y, 64, 26, 32, { shop: true, lit: true, flag: '酒', storeys: 2 });
     a.ctx.fillStyle = 'rgba(240,214,150,.95)'; a.ctx.beginPath(); a.ctx.ellipse(x - 4, y - 34, 3, 4, 0, 0, 7); a.ctx.fill();
   });
+  if (r.used) a.glow(x + 32, y - 30, 90, .25);
+  return r.used ? r.top - 8 : y - 72;
 }
 function valley(a, x, y) {
   // two jagged cliffs with a narrow gap: 恶人谷

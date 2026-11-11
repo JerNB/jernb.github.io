@@ -258,14 +258,28 @@ export function makeInk(ctx, seed = 20261108, props = new Map()) {
   }
   /** AI-painted prop if supplied in images/reading/props/, else the procedural stand-in. */
   function prop(name, x, y, w, h, fallback) {
-    const img = props.get(name);
-    if (!img) return fallback();
-    const prev = ctx.globalCompositeOperation; ctx.globalCompositeOperation = 'multiply';
-    ctx.drawImage(img, x, y, w, h); ctx.globalCompositeOperation = prev;
+    const p = props.get(name);
+    if (!p) return fallback();
+    ctx.save(); ctx.globalCompositeOperation = p.night ? 'screen' : 'source-over';
+    ctx.drawImage(p.img, x, y, w, h); ctx.restore();
+  }
+  /**
+   * Stand a painting on the ground: drawn `w` wide (its whole canvas, margins included), with the
+   * bottom centre of its subject at (cx, gy). Returns the subject's box on the scroll, or the
+   * fallback's result (`used: false`) when the painting is not there.
+   */
+  function propAt(name, cx, gy, w, fallback) {
+    const p = props.get(name);
+    if (!p) return { used: false, out: fallback() };
+    const h = w * p.img.height / p.img.width, b = p.box;
+    const x = cx - w * (b.x0 + b.x1) / 2, y = gy - h * b.y1;
+    ctx.save(); ctx.globalCompositeOperation = p.night ? 'screen' : 'source-over';
+    ctx.drawImage(p.img, x, y, w, h); ctx.restore();
+    return { used: true, x, y, k: w / p.img.width, left: x + w * b.x0, right: x + w * b.x1, top: y + h * b.y0, bottom: gy };
   }
 
   return { ctx, rng, rr, n1, fbm, fbm2, sm, ink, field, paper, mountain, mist, hmist, house, glow, person, cart, ox, willow, pine,
-    boat, bridge, cityWall, water, night, moon, inscription, prop };
+    boat, bridge, cityWall, water, night, moon, inscription, prop, propAt };
 }
 
 /** Default road: enters at the leading edge and leaves at the trailing edge at the shared height,

@@ -14,10 +14,10 @@ export const xingnang = {
     const out = {};
     const draw = { compass: x => compass(a, x, ty), lamp: x => lamp(a, x, ty), scale: x => scale(a, x, ty) };
     ['compass', 'lamp', 'scale'].forEach((id, i) => {
-      a.prop(id, xs[i] - 50, ty - 110, 100, 110, () => draw[id](xs[i]));
-      out[id] = [xs[i], ty - 120];
+      const r = a.propAt(id, xs[i], ty - 12, 130, () => draw[id](xs[i]));   // standing on the table top
+      out[id] = [xs[i], r.used ? r.top - 8 : ty - 120];
     });
-    bundle(a, cx + tw / 2 + 30, ty + 40);
+    a.propAt('bundle', cx + tw / 2 + 70, ty + 58, 170, () => bundle(a, cx + tw / 2 + 30, ty + 40));
     const anchors = {};
     for (const o of objects) o.books.forEach((k, i) => { const [x, y] = out[o.id]; anchors[k] = [x, y - 10 - i * 4]; });
     for (const p of places) anchors[p.key] ??= [cx, ty - 140];

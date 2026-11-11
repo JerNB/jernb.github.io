@@ -15,20 +15,23 @@ export const whitenight = {
     skyline(a, 0, w, cy - 96);
     a.mist(0, cy - 110, w, 44, .5);
     // this bank: a palace front, a church of onion domes, bare lindens, the granite quay
-    const lw = P ? 150 : 190, lx = P ? 14 : cx - 60 - lw, qy = cy - 30;
-    bareTree(a, lx - 16, qy, 60, .55); bareTree(a, lx + lw + 26, qy, 70, .6);
-    facade(a, lx, qy, lw, 62, 26, { floors: 3, pediment: true });
-    const chx = P ? w - 150 : cx + 90;
-    facade(a, chx, qy, 110, 40, 22, { floors: 2, wall: '#c9c0a8' });
-    onionDome(a, chx + 56, qy - 42, 15); onionDome(a, chx + 22, qy - 42, 9); onionDome(a, chx + 92, qy - 42, 9);
-    bareTree(a, chx + 150, qy, 64, .55);
+    const qy = cy - 30;
     a.water(0, cy - 16, w, cy + 44, { density: .9 });
-    embankment(a, 0, w, qy, 14);
-    for (let x = 36; x < w; x += P ? 110 : 128) lampPost(a, x, qy, 30);
-    a.prop('petersburg-bridge', cx - 140, cy - 80, 280, 110, () => {});
-    a.person(cx - 6, qy, 1.05, 0); a.person(cx + 8, qy, 1, 4);         // the dreamer and Nastenka at the railing
-    a.boat(P ? 60 : cx + 150, cy + 26, 44);
-    if (key['涅瓦河畔']) anchors[key['涅瓦河畔']] = [cx + (P ? 0 : 20), qy - 44];
+    const quay = a.propAt('petersburg-quay', cx, qy + 18, P ? 520 : 600, () => {
+      const lw = P ? 150 : 190, lx = P ? 14 : cx - 60 - lw;
+      bareTree(a, lx - 16, qy, 60, .55); bareTree(a, lx + lw + 26, qy, 70, .6);
+      facade(a, lx, qy, lw, 62, 26, { floors: 3, pediment: true });
+      const chx = P ? w - 150 : cx + 90;
+      facade(a, chx, qy, 110, 40, 22, { floors: 2, wall: '#c9c0a8' });
+      onionDome(a, chx + 56, qy - 42, 15); onionDome(a, chx + 22, qy - 42, 9); onionDome(a, chx + 92, qy - 42, 9);
+      bareTree(a, chx + 150, qy, 64, .55);
+      embankment(a, 0, w, qy, 14);
+      for (let x = 36; x < w; x += P ? 110 : 128) lampPost(a, x, qy, 30);
+      a.person(cx - 6, qy, 1.05, 0); a.person(cx + 8, qy, 1, 4);       // the dreamer and Nastenka at the railing
+    });
+    if (quay.used) { embankment(a, 0, quay.left + 6, qy + 4, 14); embankment(a, quay.right - 6, w, qy + 4, 14); }   // the quay runs on past the painting
+    a.boat(P ? 60 : cx + 190, cy + 34, 44);
+    if (key['涅瓦河畔']) anchors[key['涅瓦河畔']] = [cx, quay.used ? quay.top - 4 : qy - 44];
     const r = road(w, h, orient, tt => (P ? 30 : 6) * Math.sin(tt * 5));
     anchorAll(r, places, anchors, orient);
     return { road: r, anchors };
@@ -51,11 +54,13 @@ export const depths = {
     if (!P) {
       a.night(0, 0, w * .62, h, { fadeOut: 160, strength: .9 });
       const wx = w * .26, wy = 150;
-      a.ctx.fillStyle = 'rgba(214,206,186,.9)'; a.ctx.fillRect(wx - 26, wy, 52, 70);
-      a.ctx.strokeStyle = 'rgba(8,7,6,.95)'; a.ctx.lineWidth = 3; for (let i = 1; i < 5; i++) { a.ctx.beginPath(); a.ctx.moveTo(wx - 26 + i * 10.4, wy); a.ctx.lineTo(wx - 26 + i * 10.4, wy + 70); a.ctx.stroke(); }
-      a.ctx.fillStyle = 'rgba(236,228,208,.08)'; a.ctx.beginPath(); a.ctx.moveTo(wx - 26, wy + 70); a.ctx.lineTo(wx + 26, wy + 70); a.ctx.lineTo(wx + 110, 520); a.ctx.lineTo(wx - 70, 520); a.ctx.fill(); // shaft of light
-      a.person(wx + 10, 500, 1.2, 0, true);
-      if (key['高窗']) anchors[key['高窗']] = [wx, wy - 20];
+      const hw = a.propAt('high-window', wx, 505, 290, () => {
+        a.ctx.fillStyle = 'rgba(214,206,186,.9)'; a.ctx.fillRect(wx - 26, wy, 52, 70);
+        a.ctx.strokeStyle = 'rgba(8,7,6,.95)'; a.ctx.lineWidth = 3; for (let i = 1; i < 5; i++) { a.ctx.beginPath(); a.ctx.moveTo(wx - 26 + i * 10.4, wy); a.ctx.lineTo(wx - 26 + i * 10.4, wy + 70); a.ctx.stroke(); }
+        a.ctx.fillStyle = 'rgba(236,228,208,.08)'; a.ctx.beginPath(); a.ctx.moveTo(wx - 26, wy + 70); a.ctx.lineTo(wx + 26, wy + 70); a.ctx.lineTo(wx + 110, 520); a.ctx.lineTo(wx - 70, 520); a.ctx.fill(); // shaft of light
+        a.person(wx + 10, 500, 1.2, 0, true);
+      });
+      if (key['高窗']) anchors[key['高窗']] = hw.used ? [hw.left - 34, hw.top + 60] : [wx, wy - 20];
       tahiti(a, w * .82, 440, w);
       if (key['塔希提']) anchors[key['塔希提']] = [w * .82, 300];
       const r = road(w, h, orient);
@@ -63,18 +68,20 @@ export const depths = {
       return { road: r, anchors, dark: [[0, w * .5]] };
     }
     a.night(0, 0, w, h * .55, { strength: .9 });
-    a.ctx.fillStyle = 'rgba(214,206,186,.9)'; a.ctx.fillRect(w / 2 - 24, 120, 48, 64);
-    a.ctx.strokeStyle = 'rgba(8,7,6,.95)'; a.ctx.lineWidth = 3; for (let i = 1; i < 5; i++) { a.ctx.beginPath(); a.ctx.moveTo(w / 2 - 24 + i * 9.6, 120); a.ctx.lineTo(w / 2 - 24 + i * 9.6, 184); a.ctx.stroke(); }
-    if (key['高窗']) anchors[key['高窗']] = [w / 2, 100];
-    tahiti(a, w / 2, h * .85, w);
-    if (key['塔希提']) anchors[key['塔希提']] = [w / 2, h * .85 - 140];
+    const hw = a.propAt('high-window', w / 2 - 20, h * .5, 220, () => {
+      a.ctx.fillStyle = 'rgba(214,206,186,.9)'; a.ctx.fillRect(w / 2 - 24, 120, 48, 64);
+      a.ctx.strokeStyle = 'rgba(8,7,6,.95)'; a.ctx.lineWidth = 3; for (let i = 1; i < 5; i++) { a.ctx.beginPath(); a.ctx.moveTo(w / 2 - 24 + i * 9.6, 120); a.ctx.lineTo(w / 2 - 24 + i * 9.6, 184); a.ctx.stroke(); }
+    });
+    if (key['高窗']) anchors[key['高窗']] = hw.used ? [hw.left - 40, hw.top + 50] : [w / 2, 100];
+    tahiti(a, w / 2, h * .85, w, 120);
+    if (key['塔希提']) anchors[key['塔希提']] = [w / 2 - 125, h * .85 - 40];
     const r = road(w, h, orient, tt => 30 * Math.sin(tt * 5));
     anchorAll(r, places, anchors, orient);
     return { road: r, anchors, dark: [[0, h * .5]] };
   },
 };
-function tahiti(a, x, y) {
-  a.moon(x + 40, y - 230, 18);
+function tahiti(a, x, y, w, moonUp = 230) {
+  a.moon(x + 110, y - moonUp, 16);
   a.water(x - 160, y + 10, 320, y + 70, { density: .6, fadeIn: 80, fadeOut: 60 });
   for (let i = 0; i < 5; i++) palm(a, x - 110 + i * 50 + a.rr(-8, 8), y + 12, a.rr(70, 110), a.rr(-18, 18));
   thatchHut(a, x - 30, y + 10, 46, 14, 20, { stilts: 9 });

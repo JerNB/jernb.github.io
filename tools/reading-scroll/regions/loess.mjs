@@ -72,7 +72,8 @@ const DRAW = {
     return [x, y - 110];
   },
   hutong(a, x, y) {               // 胡同: grey courtyard walls and a gate
-    const pt = siheyuan(a, x - 96, y, 190);
+    const s = a.propAt('siheyuan', x, y + 4, 230, () => siheyuan(a, x - 96, y, 190));
+    const pt = s.used ? [x - 30, s.top - 6] : s.out;
     a.person(x + 70, y + 10, .9, 0); a.person(x - 70, y + 8, .9, 4);
     return pt;
   },
@@ -86,16 +87,17 @@ const DRAW = {
     return [x + 30, y - 60];
   },
   factory(a, x, y) {              // 豆腐厂: a brick workshop under its stack
-    return factory(a, x - 66, y, 120, 28);
+    const r = a.propAt('factory', x, y + 2, 210, () => factory(a, x - 66, y, 120, 28));
+    return r.used ? [r.left + (r.right - r.left) * .38, r.top + 30] : r.out;
   },
   caves(a, x, y) {                // 清平湾: cave dwellings cut into the loess, an ox
-    a.prop('cave-dwellings', x - 90, y - 90, 180, 100, () => {
+    const cv = a.propAt('cave-dwellings', x, y + 12, 230, () => {
       const c = a.ctx;
       for (let i = 0; i < 4; i++) { const cx = x - 70 + i * 44; c.fillStyle = a.ink(.85); c.beginPath(); c.moveTo(cx - 12, y); c.lineTo(cx - 12, y - 16); c.arc(cx, y - 16, 12, Math.PI, 0); c.lineTo(cx + 12, y); c.fill();
         c.strokeStyle = 'rgba(230,222,204,.6)'; c.lineWidth = .6; for (let k = 0; k < 3; k++) { c.beginPath(); c.moveTo(cx - 8 + k * 8, y - 2); c.lineTo(cx - 8 + k * 8, y - 18); c.stroke(); } }
     });
     a.ox(x + 110, y + 20, 1.3);
-    return [x, y - 70];
+    return [x, cv.used ? cv.top - 6 : y - 70];
   },
   village(a, x, y) {              // 双水村: a village of caves and courtyards along a gully
     const c = a.ctx;
@@ -106,9 +108,9 @@ const DRAW = {
   paddy(a, x, y) {                // 福贵的田: flooded paddy, an old ox, an old man
     a.water(x - 130, y - 20, 260, y + 30, { density: .6 });
     const c = a.ctx; c.strokeStyle = a.ink(.6); c.lineWidth = 1.2; for (const yy of [y - 20, y + 4, y + 30]) { c.beginPath(); c.moveTo(x - 130, yy); c.lineTo(x + 130, yy); c.stroke(); }
-    a.prop('old-ox', x - 40, y - 60, 120, 70, () => a.ox(x, y, 1.6));
-    a.person(x + 40, y, 1.1, 1);
-    return [x, y - 70];
+    const ox = a.propAt('old-ox', x, y + 14, 150, () => a.ox(x, y, 1.6));
+    if (!ox.used) a.person(x + 40, y, 1.1, 1);                       // the painting has its own old man
+    return [x, ox.used ? ox.top - 8 : y - 70];
   },
   inscription(a, x, y) { a.inscription('乡土中国', x, y, 18, .42); return [x - 40, y + 76]; },
 };
