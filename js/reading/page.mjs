@@ -199,15 +199,24 @@ function build() {
       const bh = tierH * (.7 + (h % 23) / 100);
       Object.assign(li.style, { width: `${ws[i]}px`, height: `${bh}px` });
       li.style.setProperty('--cloth', CLOTH[h % CLOTH.length]);
+      li.dataset.title = s.label;
+      // each book is a real button: Tab reaches it, Enter or a tap opens its slip, like a place on the map
+      const btn = el('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', `《${s.label}》${s.author ? '，' + s.author : ''}`);
       const label = el('span', 'label', s.label);
+      label.setAttribute('aria-hidden', 'true');
       const room = bh * .62 - 8, n = [...s.label].length;
       label.style.fontSize = `${Math.max(7.5, Math.min(ws[i] > 22 ? 11 : 9.5, room / (n * 1.04)))}px`;
       label.style.maxHeight = `${bh * .66}px`;
-      li.append(label);
-      li.setAttribute('aria-label', `《${s.label}》${s.author ? '，' + s.author : ''}`);
+      btn.append(label);
+      li.append(btn);
       const slip = slipFor[s.key] ?? { title: `《${s.label}》`, author: s.author, rows: [] };
-      li.addEventListener('pointerenter', () => show(li, slip));
-      li.addEventListener('pointerleave', hide);
+      btn.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') show(li, slip); });
+      btn.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && document.activeElement !== btn) hide(); });
+      btn.addEventListener('focus', () => show(li, slip));
+      btn.addEventListener('blur', hide);
+      btn.addEventListener('click', () => show(li, slip));
       row.append(li);
     }
     if (t === 0 || t === tiers.length - 1) {                          // a plum branch in a vase up top, a seal stone below
@@ -323,7 +332,7 @@ async function unroll(e) {
   rolled = false;
   const P = section.dataset.orient === 'portrait';
   const done = () => {
-    section.classList.remove('is-rolled'); section.style.height = '';
+    section.classList.remove('is-rolled'); section.style.height = ''; section.inert = false;   // inert until fully open
     section.getAnimations().forEach(a => a.cancel());
     roll.hidden = true; section.tabIndex = 0;
     hint.textContent = P ? '向下滑动，沿着路走下去' : '滚动鼠标，画卷向左展开'; hint.style.visibility = '';
@@ -354,7 +363,7 @@ async function unroll(e) {
   done();
 }
 roll.addEventListener('click', unroll);
-addEventListener('pointerdown', e => { if (!e.target.closest?.('.place')) closeSlip(); });
+addEventListener('pointerdown', e => { if (!e.target.closest?.('.place, .book')) closeSlip(); });
 mqPortrait.addEventListener('change', build);
 let lastW = section.clientWidth;
 let lastH = stage.clientHeight, resizeT = 0;

@@ -280,7 +280,9 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
   transition: transform 300ms var(--ease);
   cursor: default;
 }
-.book:hover, .book.is-open { transform: translateY(-6px); }
+.book:hover, .book.is-open, .book:focus-within { transform: translateY(-6px); }
+.book button { all: unset; position: absolute; inset: 0; cursor: default; }
+.book button:focus-visible { outline: 1.5px solid var(--scroll-glow); outline-offset: -3px; }
 /* 题签: the paper title slip on the spine */
 .book .label {
   position: absolute; top: 11px; left: 50%; translate: -50% 0;

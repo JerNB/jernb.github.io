@@ -173,7 +173,7 @@ Scene = { version:1, seed:int, landscape:SceneOrient, portrait:SceneOrient }
 
   For 古龙: 小李飞刀 → 小楼, 绝代双骄 (4 vols) → 恶人谷. Also add 陆小凤 (陆小凤传奇) and 楚留香 (楚留香传奇), both with `"read": false`, so Jerry can flip them. Add `objects` for 罗盘 / 灯 / 秤, and `links: [{from:'ju-wai-ren-or-summer', to:'sahala', note:'想到了三毛'}]`, using the real keys of 我身上有个不可战胜的夏天 and 撒哈拉的故事.
 - [ ] **Step 5: Run** `node --test tests/reading/`. Expected: all pass.
-- [ ] **Step 6: Run** `node scripts/sync-weread.mjs`. Expected: exit 0. `data/reading.json` has about 51 `study` entries, no title containing 随他们去, and `stats.hours` near 127. Any warnings are listed. Fix curation titles until the only warnings are intentional ones.
+- [ ] **Step 6: Run** `node scripts/sync-weread.mjs`. Expected: exit 0. `data/reading.json` has about 51 `study` entries, no book that is private on WeRead, and `stats.hours` near 127. Any warnings are listed. Fix curation titles until the only warnings are intentional ones.
 - [ ] **Step 7: Verify** `grep -c wrk- data/reading.json`. Expected: `0`.
 - [ ] **Step 8: Commit** the curation, script, tests and `data/reading.json` with the message `feat(reading): sync WeRead into reading.json`.
 

@@ -60,7 +60,7 @@ The journey heads **west** (China → Japan → Russia → Europe → Africa →
 | 11 | 书房 | All read books as a spine wall | Spine thickness = book length (word count) |
 | 12 | 卷尾跋 | Reading stats | Vertical colophon text: total hours, reading days, books read, notes |
 
-The pool is about 51 books. 随他们去 is private and never shown.
+The pool is about 51 books. Books marked private on WeRead are never shown.
 
 ## 5. Data
 
@@ -86,7 +86,7 @@ The pool is about 51 books. 随他们去 is private and never shown.
 - **Thoughts are private by default.** Only thoughts whose id is listed in the curation are emitted. When a book has no public thought, its 题跋 falls back to one of Jerry's own highlights (the curation may pin which one). Highlights are quotes from the book, not Jerry's words; they are public by default but can be turned off per book.
 - **题跋 for books with no WeRead notes** (金庸, 活着, 平凡的世界, 局外人 …): the curation may hold an optional `tiba` line written by Jerry; without one, the place shows only its name and seal. Launch does not wait on this content. *(my call)*
 - **New finished books**: regions are append-only with fixed slots plus slack, so adding a book never shifts other regions. A finished book that is missing from the curation goes to the 书房 spine wall only, and sync prints a warning listing it. Tiles are re-rendered only when the curation or the painter changes, not on every sync. *(my call)*
-- **Colophon totals exclude the private book**: subtract its hours (it appears in `readLongest`) and its notes (from `/user/notebooks`). Reading days can't be split, so they stay account-wide. *(my call)*
+- **Colophon totals exclude private books**: subtract their hours (from `readLongest`) and their notes (from `/user/notebooks`). Reading days can't be split, so they stay account-wide. *(my call)*
 - Ink density per region comes from the sum of known reading hours. Books with no WeRead hours (read elsewhere) get a medium default so they never look unread.
 
 ### 5.3 Sync

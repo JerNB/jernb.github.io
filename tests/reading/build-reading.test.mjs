@@ -7,7 +7,7 @@ function fixture() {
   const raw = {
     shelf: { books: [
       { bookId: 'b1', title: '黄金时代', author: '王小波', cover: 'c1', finishReading: 1, secret: 0 },
-      { bookId: 'b2', title: '随他们去', author: 'R', cover: 'c2', finishReading: 1, secret: 1 },
+      { bookId: 'b2', title: '某本私密书', author: 'R', cover: 'c2', finishReading: 1, secret: 1 },
       { bookId: 'b3', title: '白夜', author: '陀思妥耶夫斯基', cover: 'c3', finishReading: 0, secret: 0 },
       { bookId: 'b4', title: '纳瓦尔宝典', author: 'N', cover: 'c4', finishReading: 0, secret: 0 },
       { bookId: 'v1', title: '古龙文集：绝代双骄1', author: '古龙', cover: 'cv', finishReading: 1, secret: 0 },
@@ -43,7 +43,7 @@ function fixture() {
     links: [{ from: 'summer', to: 'sahara', note: '想到了三毛' }, { from: 'summer', to: 'huozhe', note: 'x' }],
     books: [
       { key: 'golden-age', label: '黄金时代', region: 'loess', place: '黄金时代', match: ['黄金时代'] },
-      { key: 'let-them', label: '随他们去', region: 'loess', place: '?', match: ['随他们去'], read: true },
+      { key: 'private-one', label: '某本私密书', region: 'loess', place: '?', match: ['某本私密书'], read: true },
       { key: 'white-nights', label: '白夜', region: 'whitenight', place: '白夜之城', match: ['白夜'], read: true },
       { key: 'naval', label: '纳瓦尔宝典', region: 'xingnang', place: '秤', match: ['纳瓦尔宝典'] },
       { key: 'twins', label: '绝代双骄', region: 'jianghu-night', place: '恶人谷', match: ['古龙文集：绝代双骄1', '古龙文集：绝代双骄2'] },
@@ -61,8 +61,8 @@ const place = (r, key) => r.places.find(p => p.key === key);
 test('secret books never appear', () => {
   const r = build();
   const all = JSON.stringify([r.places, r.study, r.links, r.objects]);
-  assert.ok(!all.includes('随他们去'));
-  assert.equal(place(r, 'let-them'), undefined);
+  assert.ok(!all.includes('某本私密书'));
+  assert.equal(place(r, 'private-one'), undefined);
   assert.equal(r.stats.hours, Math.floor((133.3 - 6.2) * H / H));
   assert.equal(r.stats.notes, 491 - 10);
 });

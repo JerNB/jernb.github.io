@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/reading.css?v=5">
+  <link rel="stylesheet" href="css/reading.css?v=6">
   <link rel="preload" href="data/reading-scene.json" as="fetch" crossorigin>
   <script src="js/page-title-ripple.js" defer></script>
-  <script type="module" src="js/reading/page.mjs?v=5"></script>
+  <script type="module" src="js/reading/page.mjs?v=6"></script>
   <style>
     .atmo .brand { display: flex; align-items: center; gap: 10px; }
     .atmo .brand-logo { width: 28px; height: 28px; color: #5c5a55; transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1); }
@@ -59,7 +59,7 @@
           </span>
           <span class="roll-cap" aria-hidden="true"></span>
         </button>
-        <section class="scroll is-rolled" tabindex="-1" aria-label="书卷：读过的书，按地方排开" data-state="loading">
+        <section class="scroll is-rolled" tabindex="-1" inert aria-label="书卷：读过的书，按地方排开" data-state="loading">
           <div class="scroll-track"></div>
         </section>
       </div>
