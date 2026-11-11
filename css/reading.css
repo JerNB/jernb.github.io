@@ -137,9 +137,33 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 .has-open .place:not(.is-open), .has-open .thread-note { opacity: .4; }
 
 /* the traveler and the 加缪 → 三毛 thread */
-.traveler { position: absolute; z-index: 4; width: 12px; height: 18px; left: 0; top: 0; pointer-events: none; will-change: transform; }
-.traveler path, .traveler circle, .traveler ellipse { fill: var(--scroll-ink); transition: fill 600ms var(--ease); }
-.traveler.light path, .traveler.light circle, .traveler.light ellipse { fill: var(--scroll-glow); }
+.traveler { position: absolute; z-index: 4; width: 48px; height: 34px; left: 0; top: 0; pointer-events: none; will-change: transform; overflow: visible; }
+.traveler g { transform-box: view-box; transform-origin: 24px 33px; }
+.traveler .ink { fill: var(--scroll-ink); }
+.traveler .ink-line { fill: none; stroke: var(--scroll-ink); stroke-width: 1.3; stroke-linecap: round; }
+.traveler .ink-line.thin { stroke-width: .7; }
+.traveler .robe { fill: #ece4d0; stroke: var(--scroll-ink); stroke-width: .9; stroke-linejoin: round; }
+.traveler .bundle { fill: var(--seal); }
+.traveler .shade { fill: rgba(30, 27, 23, .28); }
+.traveler .hull { fill: var(--scroll-ink); }
+.traveler .wake { fill: none; stroke: rgba(30, 27, 23, .45); stroke-width: .8; stroke-linecap: round; }
+.traveler .skiff { display: none; }
+.traveler.afloat .skiff { display: inline; animation: rock 2.6s ease-in-out infinite; }
+.traveler.afloat .walker { display: none; }
+.traveler.back .walker, .traveler.back .skiff { transform: scaleX(-1); }
+.traveler.walking .walker { animation: bob 360ms steps(2, jump-none) infinite; }
+.traveler.walking .legs path:first-child { animation: stride 360ms steps(2, jump-none) infinite; transform-box: fill-box; transform-origin: top; }
+.traveler.walking .legs path:last-child { animation: stride 360ms steps(2, jump-none) infinite reverse; transform-box: fill-box; transform-origin: top; }
+/* on the night ink the outlines turn to moonlight; the robe and the red bundle carry the figure */
+.traveler.light .ink { fill: var(--scroll-glow); }
+.traveler.light .ink-line { stroke: var(--scroll-glow); }
+.traveler.light .robe { stroke: var(--scroll-glow); }
+.traveler.light .hull { fill: #4a443b; stroke: var(--scroll-glow); stroke-width: .6; }
+.traveler.light .wake { stroke: rgba(230, 220, 196, .5); }
+.traveler.light .shade { fill: rgba(0, 0, 0, .5); }
+@keyframes bob { from { translate: 0 0; } to { translate: 0 -1.2px; } }
+@keyframes stride { from { rotate: -14deg; } to { rotate: 14deg; } }
+@keyframes rock { 0%, 100% { rotate: -2deg; } 50% { rotate: 2deg; } }
 .thread { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; overflow: visible; }
 .thread path { fill: none; stroke: rgba(30, 27, 23, .45); stroke-width: 1; stroke-dasharray: 2 5; }
 .thread-note {
@@ -212,5 +236,6 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tile, .place, .jian, .spine, .spine .who, .traveler path { transition: none; }
+  .tile, .place, .jian, .spine, .spine .who { transition: none; }
+  .traveler g, .traveler path { animation: none !important; }
 }

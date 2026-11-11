@@ -215,17 +215,45 @@ function build() {
   }
   track.style.width = `${trackW}px`; track.style.height = `${trackH}px`;
 
-  /* the traveler */
+  /* the traveler: a figure in an undyed robe with a red bundle on a staff, unlike any of the
+     ink people painted into the scroll; where the road is afloat, the same figure poles a skiff */
   const tr = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  tr.classList.add('traveler'); tr.setAttribute('viewBox', '0 0 12 18'); tr.setAttribute('aria-hidden', 'true');
-  tr.innerHTML = '<ellipse cx="6" cy="2.4" rx="5.4" ry="1.4"/><circle cx="6" cy="4" r="2"/><path d="M4.2 6 L7.8 6 L9.6 18 L2.4 18Z"/>';
+  tr.classList.add('traveler'); tr.setAttribute('viewBox', '0 0 48 34'); tr.setAttribute('aria-hidden', 'true');
+  tr.innerHTML = `
+    <g class="walker">
+      <ellipse class="shade" cx="24" cy="33" rx="7" ry="1.3"/>
+      <g class="legs"><path class="ink-line" d="M22 27 L20.5 33"/><path class="ink-line" d="M26 27 L27.5 33"/></g>
+      <path class="robe" d="M21.2 14.5 L26.8 14.5 L29.2 28.5 L18.8 28.5 Z"/>
+      <path class="ink-line thin" d="M20.6 21 L27.4 21"/>
+      <circle class="ink" cx="24" cy="12.2" r="2.3"/>
+      <path class="ink" d="M15.5 10.6 Q24 3.2 32.5 10.6 Q24 9 15.5 10.6 Z"/>
+      <path class="ink-line" d="M30.5 9 L27.2 33"/>
+      <circle class="bundle" cx="31.2" cy="9.6" r="2.9"/>
+    </g>
+    <g class="skiff">
+      <path class="wake" d="M2 30.5 Q10 29 18 30.5 M30 31.5 Q38 30 46 31.5"/>
+      <path class="hull" d="M5 26 Q24 33 43 25 L40 29.5 Q24 34 8 29.5 Z"/>
+      <path class="ink-line" d="M34 4 L29 33"/>
+      <path class="robe" d="M21.5 13.5 L26.5 13.5 L28.4 26 L19.6 26 Z"/>
+      <circle class="ink" cx="24" cy="11.2" r="2.2"/>
+      <path class="ink" d="M16 9.8 Q24 2.8 32 9.8 Q24 8.3 16 9.8 Z"/>
+      <circle class="bundle" cx="15.5" cy="24" r="2.6"/>
+    </g>`;
   track.append(tr);
+  let lastV = null, idle = 0;
   update = pos => {
     const v = P ? (scrollY + innerHeight * .55 - (section.getBoundingClientRect().top + scrollY)) / k
                 : (pos + section.clientWidth * .38) / k;
     const [x, y] = pointOnAxis(S.road, ax, v);
-    tr.style.transform = `translate(${x * k - 6}px, ${y * k - 18}px)`;
+    const afloat = inRanges(S.water ?? [], v);
+    tr.style.transform = `translate(${x * k - 24}px, ${y * k - 33}px)`;
     tr.classList.toggle('light', isDark([x, y]));
+    tr.classList.toggle('afloat', afloat);
+    if (lastV !== null && Math.abs(v - lastV) > .5) {                // step while the scroll moves, face the way it goes
+      if (!P) tr.classList.toggle('back', v < lastV);
+      tr.classList.add('walking'); clearTimeout(idle); idle = setTimeout(() => tr.classList.remove('walking'), 180);
+    }
+    lastV = v;
     position();                                    // an open slip keeps to the visible part of the scroll
   };
 

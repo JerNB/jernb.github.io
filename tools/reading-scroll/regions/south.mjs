@@ -1,6 +1,6 @@
 // 荒漠与大海 (加缪, 三毛) and 马孔多 (马尔克斯), the end of the road.
 import { thatchHut, palm, bananaPlant, casbah, adobeCube, nomadTent } from '../buildings.mjs';
-import { road, spread, marksAt } from '../ink.mjs';
+import { road, spread, marksAt, sail } from '../ink.mjs';
 
 const keyOf = places => Object.fromEntries(places.map(p => [p.place, p.key]));
 const anchorAll = (r, places, anchors, orient) => { for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], orient)); };
@@ -23,9 +23,10 @@ export const desert = {
       for (let k = 0; k < 6; k++) dune(a, a.ctx, -20, w + 20, h * .62 + k * 40, .2 + k * .07);
     }
     for (const m of marksAt(w, h, orient, DESERT)) { const pt = DRAW[m.kind](a, m.x, m.y); if (key[m.name]) anchors[key[m.name]] = pt; }
-    const r = road(w, h, orient, tt => (P ? 40 : 10) * Math.sin(tt * 6));
+    let r = road(w, h, orient, tt => (P ? 40 : 10) * Math.sin(tt * 6));
+    if (!P) r = sail(r, -200, w * .1, 466, 60);                         // from Tahiti across the sea, landing below the ruins
     anchorAll(r, places, anchors, orient);
-    return { road: r, anchors };
+    return { road: r, anchors, water: P ? [[h * .1 + 20, h * .45 - 20]] : [[0, w * .1]] };
   },
 };
 function dune(a, c, x0, x1, y, tone) {

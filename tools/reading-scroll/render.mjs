@@ -79,9 +79,8 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
   const ctx = canvas.getContext('2d');
   ctx.scale(scale, scale);
   ctx.translate(-origin.x, -origin.y);
-  makeInk(ctx, seed).paper(origin.x, origin.y, W, H);
 
-  const scene = { width: lay.width, height: lay.height, rects: lay.rects, road: [], dark: [], places: {}, objects: {} };
+  const scene = { width: lay.width, height: lay.height, rects: lay.rects, road: [], dark: [], water: [], places: {}, objects: {} };
   const axis = orient === 'portrait' ? 'y' : 'x';
   for (const rect of rects) {
     const region = reading.regions.find(r => r.id === rect.regionId);
@@ -96,20 +95,114 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
     const api = makeInk(lc, seed + region.order * 7919, props);
     const out = painterFor(region.painter).paint(api, { w: rect.w, h: rect.h }, region, places, orient,
       { objects: reading.objects.filter(o => o.region === region.id), links: reading.links });
-    const len = orient === 'portrait' ? rect.h : rect.w, F = Math.min(FEATHER, len / 3);
-    const first = rect === lay.rects[0], last = rect === lay.rects.at(-1);
-    const fade = orient === 'portrait' ? lc.createLinearGradient(0, 0, 0, len) : lc.createLinearGradient(0, 0, len, 0);
-    fade.addColorStop(0, `rgba(0,0,0,${first ? 1 : 0})`); fade.addColorStop(F / len, 'rgba(0,0,0,1)');
-    fade.addColorStop(1 - F / len, 'rgba(0,0,0,1)'); fade.addColorStop(1, `rgba(0,0,0,${last ? 1 : 0})`);
-    lc.setTransform(scale, 0, 0, scale, 0, 0); lc.globalAlpha = 1;
-    lc.globalCompositeOperation = 'destination-in'; lc.fillStyle = fade; lc.fillRect(0, 0, rect.w, rect.h);
+    feather(lc, rect, orient, scale, makeInk(lc, seed + region.order * 31).fbm, rect === lay.rects[0] || !!only, rect === lay.rects.at(-1) || !!only);
     ctx.drawImage(layer, rect.x, rect.y, rect.w, rect.h);
     scene.road.push(...out.road.map(([x, y]) => [round(x + rect.x), round(y + rect.y)]));
     for (const [k, [x, y]] of Object.entries(out.anchors ?? {})) scene.places[k] = [round(x + rect.x), round(y + rect.y)];
     for (const [k, [x, y]] of Object.entries(out.objects ?? {})) scene.objects[k] = [round(x + rect.x), round(y + rect.y)];
     for (const [a, b] of out.dark ?? []) scene.dark.push([round(a + rect[axis]), round(b + rect[axis])]);
+    for (const [a, b] of out.water ?? []) scene.water.push([round(a + rect[axis]), round(b + rect[axis])]);
   }
+  if (!only) dusk(makeInk(ctx, seed + 77), scene, orient);
+  // underneath everything: the land that runs on between the countries, then the paper
+  ctx.save(); ctx.globalCompositeOperation = 'destination-over';
+  const under = document.createElement('canvas'); under.width = canvas.width; under.height = canvas.height;
+  const uc = under.getContext('2d'); uc.scale(scale, scale); uc.translate(-origin.x, -origin.y);
+  makeInk(uc, seed).paper(origin.x, origin.y, W, H);
+  joinery(makeInk(uc, seed + 4242), scene, orient, rects);
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(under, 0, 0);
+  ctx.restore();
   return { canvas, scene };
 }
-const FEATHER = 110;
+
+/**
+ * Fade a region's sheet into nothing along both ends of the road. The fade starts at a ragged,
+ * noise-driven line (never a straight vertical edge) and runs FEATHER px, so neighbouring
+ * countries dissolve into the mist and land of `joinery` instead of meeting as panels.
+ */
+function feather(lc, rect, orient, scale, fbm, keepStart, keepEnd) {
+  const P = orient === 'portrait', len = P ? rect.h : rect.w, across = P ? rect.w : rect.h;
+  const F = Math.min(FEATHER, len / 5), J = F * .55;
+  // the mask is drawn strip by strip on its own sheet (destination-in would clear everything
+  // outside each strip), then applied to the region in one pass
+  const m = document.createElement('canvas'); m.width = Math.round(rect.w * scale); m.height = Math.round(rect.h * scale);
+  const mc = m.getContext('2d'); mc.scale(scale, scale);
+  for (let v = 0; v < across; v += 3) {
+    const a = keepStart ? 0 : J * fbm(v * .011 + 3.1), b = keepEnd ? 0 : J * fbm(v * .011 + 57.7);
+    const g = P ? mc.createLinearGradient(0, 0, 0, len) : mc.createLinearGradient(0, 0, len, 0);
+    const s0 = keepStart ? 1 : 0, s1 = keepEnd ? 1 : 0;
+    g.addColorStop(0, `rgba(0,0,0,${s0})`); g.addColorStop(a / len, `rgba(0,0,0,${s0})`);
+    g.addColorStop(Math.min(.5, (a + F) / len), 'rgba(0,0,0,1)'); g.addColorStop(Math.max(.5, 1 - (b + F) / len), 'rgba(0,0,0,1)');
+    g.addColorStop(1 - b / len, `rgba(0,0,0,${s1})`); g.addColorStop(1, `rgba(0,0,0,${s1})`);
+    mc.fillStyle = g;
+    if (P) mc.fillRect(v, 0, 3, len); else mc.fillRect(0, v, len, 3);              // exact strips: overlaps would draw lines
+  }
+  lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalAlpha = 1; lc.globalCompositeOperation = 'destination-in';
+  lc.drawImage(m, 0, 0);
+  lc.globalCompositeOperation = 'source-over';
+}
+
+/**
+ * Night never starts at a wall: ink gathers over DUSK px before each dark stretch and thins out
+ * over the same distance after it, laid over whatever is painted there (evening over the town,
+ * dawn over the loess). Columns carry a little noise so the dusk is a wash, not a gradient.
+ */
+const DUSK = 520, INTO = 380;
+function dusk(a, scene, orient) {
+  const c = a.ctx, P = orient === 'portrait', len = P ? scene.height : scene.width, across = P ? scene.width : scene.height;
+  const ramp = (from, to, dir) => {                                   // dir +1: darkening toward `to`; -1: lightening
+    const g = P ? c.createLinearGradient(0, from, 0, to) : c.createLinearGradient(from, 0, to, 0);
+    for (let i = 0; i <= 24; i++) {
+      const u = i / 24, t = dir > 0 ? u : 1 - u;
+      const peak = Math.min(1, (dir > 0 ? u * (DUSK + INTO) / DUSK : (1 - u) * (DUSK + INTO) / DUSK));   // full strength at the dark edge
+      const fade = dir > 0 ? (u > DUSK / (DUSK + INTO) ? 1 - (u - DUSK / (DUSK + INTO)) / (INTO / (DUSK + INTO)) : peak) : (u < INTO / (DUSK + INTO) ? 1 - (INTO / (DUSK + INTO) - u) / (INTO / (DUSK + INTO)) : peak);
+      const k = Math.max(0, Math.min(1, dir > 0 ? Math.min(peak, fade) : Math.min(peak, fade)));
+      g.addColorStop(u, a.ink(.42 * k * k * (3 - 2 * k) * (.85 + .3 * a.fbm(t * 4 + from * .01))));
+    }
+    c.fillStyle = g;
+    if (P) c.fillRect(0, from, across, to - from); else c.fillRect(from, 0, to - from, across);
+  };
+  for (const [s, e] of scene.dark) {
+    if (s > 0) ramp(Math.max(0, s - DUSK), s + INTO, 1);
+    if (e < len) ramp(e - INTO, Math.min(len, e + DUSK), -1);
+  }
+}
+
+/**
+ * What shows through where two regions fade out: one far ridge and one strip of ground running the
+ * whole length of the scroll, the road as a worn path, and open water wherever the road is afloat
+ * on both sides of a seam. Inside each region its own painting covers all of this.
+ */
+function joinery(a, scene, orient, rects) {
+  const c = a.ctx, P = orient === 'portrait', W = scene.width, H = scene.height;
+  const afloat = v => scene.water.some(([s, e]) => v >= s - 2 && v <= e + 2);
+  if (!P) {
+    a.mountain({ x0: -200, x1: W + 200, base: 300, amp: 46, freq: .0035, seed: 7, tone: .26, depth: 80, cun: .2, edge: .4 });
+    a.mist(0, 250, W, 90, .55);
+    const g = c.createLinearGradient(0, 470, 0, H); g.addColorStop(0, 'rgba(150,140,118,0)'); g.addColorStop(.35, 'rgba(150,140,118,.22)'); g.addColorStop(1, 'rgba(120,110,92,.32)');
+    c.fillStyle = g; c.fillRect(0, 470, W, H - 470);
+    for (let i = 0; i < W / 9; i++) {                                   // dry grass along the verge
+      const x = a.rr(0, W), y = a.rr(482, 540), l = a.rr(4, 11);
+      c.strokeStyle = a.ink(a.rr(.12, .3)); c.lineWidth = a.rr(.4, .9); c.beginPath(); c.moveTo(x, y); c.quadraticCurveTo(x + a.rr(-2, 2), y - l * .6, x + a.rr(-4, 4), y - l); c.stroke();
+    }
+  }
+  for (const r of rects.slice(1)) {                                      // water across a seam the road sails over
+    const v = P ? r.y : r.x;
+    if (!afloat(v - 4) || !afloat(v + 4)) continue;
+    if (P) a.water(0, v - 260, W, v + 260, { density: 1 });
+    else a.water(v - 280, 430, 560, 510, { density: 1.1, fadeIn: 120, fadeOut: 120 });
+  }
+  c.lineCap = 'round';                                                   // the road itself, worn into the ground
+  for (let i = 1; i < scene.road.length; i++) {
+    const [x0, y0] = scene.road[i - 1], [x1, y1] = scene.road[i];
+    if (afloat(P ? y0 : x0)) continue;
+    for (let k = 0; k < 3; k++) {
+      c.strokeStyle = a.ink(P ? a.rr(.04, .1) : a.rr(.08, .2)); c.lineWidth = a.rr(.8, P ? 1.6 : 2.2);
+      const o = (k - 1) * 2.4;
+      c.beginPath(); c.moveTo(x0 + (P ? o : 0), y0 + (P ? 0 : o) + 4); c.lineTo(x1 + (P ? o : 0), y1 + (P ? 0 : o) + 4); c.stroke();
+    }
+  }
+  c.lineCap = 'butt';
+}
+const FEATHER = 150;
 const round = v => Math.round(v * 10) / 10;

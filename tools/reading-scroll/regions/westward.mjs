@@ -1,6 +1,6 @@
 // 白夜之城, 深处, 舞台: three short regions on the way west.
 import { facade, onionDome, needleSpire, lampPost, embankment, bareTree, thatchHut, palm } from '../buildings.mjs';
-import { road, spread, marksAt } from '../ink.mjs';
+import { road, spread, marksAt, sail } from '../ink.mjs';
 
 const anchorAll = (r, places, anchors, orient) => { for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], orient)); };
 const keyOf = places => Object.fromEntries(places.map(p => [p.place, p.key]));
@@ -30,11 +30,11 @@ export const whitenight = {
       a.person(cx - 6, qy, 1.05, 0); a.person(cx + 8, qy, 1, 4);       // the dreamer and Nastenka at the railing
     });
     if (quay.used) { embankment(a, 0, quay.left + 6, qy + 4, 14); embankment(a, quay.right - 6, w, qy + 4, 14); }   // the quay runs on past the painting
-    a.boat(P ? 60 : cx + 190, cy + 34, 44);
     if (key['涅瓦河畔']) anchors[key['涅瓦河畔']] = [cx, quay.used ? quay.top - 4 : qy - 44];
-    const r = road(w, h, orient, tt => (P ? 30 : 6) * Math.sin(tt * 5));
+    let r = road(w, h, orient, tt => (P ? 30 : 6) * Math.sin(tt * 5));
+    if (!P) r = sail(r, w * .12, w * .88, cy + 28, 60);                 // down the Neva below the quay
     anchorAll(r, places, anchors, orient);
-    return { road: r, anchors };
+    return { road: r, anchors, water: P ? [[cy - 10, cy + 40]] : [[w * .12, w * .88]] };
   },
 };
 function skyline(a, x0, x1, y) {
@@ -61,11 +61,12 @@ export const depths = {
         a.person(wx + 10, 500, 1.2, 0, true);
       });
       if (key['高窗']) anchors[key['高窗']] = hw.used ? [hw.left - 34, hw.top + 60] : [wx, wy - 20];
-      tahiti(a, w * .82, 440, w);
-      if (key['塔希提']) anchors[key['塔希提']] = [w * .82, 300];
-      const r = road(w, h, orient);
+      tahiti(a, w * .76, 440, w);
+      a.water(w * .62, 446, w * .38, 512, { density: .8, fadeIn: 90 });   // the lagoon opens to the sea
+      if (key['塔希提']) anchors[key['塔希提']] = [w * .76, 300];
+      const r = sail(road(w, h, orient), w * .86, w + 200, 466, 60);
       anchorAll(r, places, anchors, orient);
-      return { road: r, anchors, dark: [[0, w * .5]] };
+      return { road: r, anchors, dark: [[0, w * .5]], water: [[w * .86, w]] };
     }
     a.night(0, 0, w, h * .55, { strength: .9 });
     const hw = a.propAt('high-window', w / 2 - 20, h * .5, 220, () => {
@@ -77,7 +78,7 @@ export const depths = {
     if (key['塔希提']) anchors[key['塔希提']] = [w / 2 - 125, h * .85 - 40];
     const r = road(w, h, orient, tt => 30 * Math.sin(tt * 5));
     anchorAll(r, places, anchors, orient);
-    return { road: r, anchors, dark: [[0, h * .5]] };
+    return { road: r, anchors, dark: [[0, h * .5]], water: [[h * .85 + 14, h * .85 + 66]] };
   },
 };
 function tahiti(a, x, y, w, moonUp = 230) {

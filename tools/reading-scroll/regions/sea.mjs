@@ -1,6 +1,6 @@
 // 海边与深井: 村上's forest, the shore, the sun going down in the west, the library and its well.
 import { minka, stoneLantern } from '../buildings.mjs';
-import { road, spread, marksAt } from '../ink.mjs';
+import { road, spread, marksAt, sail } from '../ink.mjs';
 
 const MARKS = { 森林: ['forest', .14, 430], 海边: ['shore', .38, 450], 太阳以西: ['sunset', .6, 300], 甲村图书馆: ['library', .84, 430] };
 
@@ -18,9 +18,11 @@ export const sea = {
       if (key[m.name]) anchors[key[m.name]] = pt;
     }
     if (!P) a.mountain({ x0: -40, x1: w * .45, base: 620, amp: 110, freq: .01, seed: 101, tone: t, depth: 110, cun: 1.2, edge: 1.3 });
-    const r = road(w, h, orient, tt => (P ? 40 : 8) * Math.sin(tt * 6));
+    let r = road(w, h, orient, tt => (P ? 40 : 8) * Math.sin(tt * 6)), water = [];
+    if (!P) { r = sail(r, w * .48, w * .72, 394); water = [[w * .48, w * .72]]; }   // out from the shore and across the bay toward the setting sun
+    else water = marksAt(w, h, orient, MARKS).filter(m => m.kind === 'shore' || m.kind === 'sunset').map(m => [m.y - 34, m.y + 34]);
     for (const p of places) if (!anchors[p.key]) Object.assign(anchors, spread(r, [p.key], orient));
-    return { road: r, anchors };
+    return { road: r, anchors, water };
   },
 };
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10",
+  "generatedAt": "2026-11-11",
   "regions": [
     {
       "id": "xingnang",
@@ -62,7 +62,7 @@
       "name": "白夜之城",
       "order": 7,
       "painter": "whitenight",
-      "minWidth": 700,
+      "minWidth": 900,
       "density": 0.5
     },
     {
@@ -71,14 +71,6 @@
       "order": 8,
       "painter": "depths",
       "minWidth": 800,
-      "density": 0.5
-    },
-    {
-      "id": "stage",
-      "name": "舞台",
-      "order": 9,
-      "painter": "stage",
-      "minWidth": 700,
       "density": 0.5
     },
     {
@@ -615,32 +607,6 @@
       "objectId": null
     },
     {
-      "key": "biao-xiang-yu-xian-shi",
-      "label": "表象与现实",
-      "region": "stage",
-      "place": "幕后",
-      "author": "[英]毛姆",
-      "cover": "https://cdn.weread.qq.com/weread/cover/65/cpplatform_czyil47wlay2tedcfobink/t6_cpplatform_czyil47wlay2tedcfobink1752237732.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/cae32b30813ab9c45g019bfd",
-      "hours": null,
-      "wordCount": 9671,
-      "tiba": null,
-      "objectId": null
-    },
-    {
-      "key": "yang-guang-xia-de-pu-tao-gan",
-      "label": "阳光下的葡萄干",
-      "region": "stage",
-      "place": "南区公寓",
-      "author": "洛琳·汉斯伯里",
-      "cover": "https://cdn.weread.qq.com/weread/cover/15/YueWen_915693/t6_YueWen_915693.jpg",
-      "readerLink": "https://weread.qq.com/web/reader/bfc323b05df8edbfcaa929d",
-      "hours": null,
-      "wordCount": 61706,
-      "tiba": null,
-      "objectId": null
-    },
-    {
       "key": "bu-ke-zhan-sheng-de-xia-tian",
       "label": "我身上有个不可战胜的夏天",
       "region": "desert",
@@ -785,7 +751,7 @@
       "key": "xue-shan-fei-hu",
       "label": "雪山飞狐",
       "author": "金庸",
-      "wordCount": 236789
+      "wordCount": 248936
     },
     {
       "key": "yi-tian-tu-long-ji",
@@ -956,18 +922,6 @@
       "wordCount": 247707
     },
     {
-      "key": "yue-liang-yu-liu-bian-shi",
-      "label": "月亮与六便士",
-      "author": "[英]毛姆",
-      "wordCount": 151767
-    },
-    {
-      "key": "zi-shen-shen-chu",
-      "label": "自深深处",
-      "author": "奥斯卡·王尔德",
-      "wordCount": 51467
-    },
-    {
       "key": "biao-xiang-yu-xian-shi",
       "label": "表象与现实",
       "author": "[英]毛姆",
@@ -978,6 +932,18 @@
       "label": "阳光下的葡萄干",
       "author": "洛琳·汉斯伯里",
       "wordCount": 61706
+    },
+    {
+      "key": "yue-liang-yu-liu-bian-shi",
+      "label": "月亮与六便士",
+      "author": "[英]毛姆",
+      "wordCount": 151767
+    },
+    {
+      "key": "zi-shen-shen-chu",
+      "label": "自深深处",
+      "author": "奥斯卡·王尔德",
+      "wordCount": 51467
     },
     {
       "key": "bu-ke-zhan-sheng-de-xia-tian",
@@ -1040,10 +1006,10 @@
     }
   ],
   "stats": {
-    "hours": 118,
-    "readDays": 250,
+    "hours": 119,
+    "readDays": 251,
     "booksRead": 50,
-    "notes": 488
+    "notes": 501
   },
   "warnings": []
 }

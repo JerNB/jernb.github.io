@@ -294,6 +294,17 @@ export function road(w, h, orient, bend = () => 0) {
   }
   return pts;
 }
+/**
+ * Landscape road that leaves the shore and runs on the water at height `y` between x0 and x1,
+ * easing on and off over `ramp` px; the traveler takes a boat there (the painter reports [x0, x1]
+ * as `water`). Pass x0 <= 0 or x1 >= w to stay afloat across the region's edge.
+ */
+export function sail(pts, x0, x1, y, ramp = 70) {
+  return pts.map(([x, py]) => {
+    const k = Math.min(1, Math.max(0, Math.min((x - (x0 - ramp)) / ramp, (x1 + ramp - x) / ramp)));
+    return [x, py + (y - py) * k * k * (3 - 2 * k)];
+  });
+}
 /** Evenly spread anchors along a road for `keys`, lifted `lift` px above it. */
 export function spread(roadPts, keys, orient, lift = 120) {
   const out = {};

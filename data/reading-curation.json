@@ -55,7 +55,7 @@
       "name": "白夜之城",
       "order": 7,
       "painter": "whitenight",
-      "minWidth": 700
+      "minWidth": 900
     },
     {
       "id": "depths",
@@ -63,13 +63,6 @@
       "order": 8,
       "painter": "depths",
       "minWidth": 800
-    },
-    {
-      "id": "stage",
-      "name": "舞台",
-      "order": 9,
-      "painter": "stage",
-      "minWidth": 700
     },
     {
       "id": "desert",
@@ -528,20 +521,22 @@
     {
       "key": "yang-guang-xia-de-pu-tao-gan",
       "label": "阳光下的葡萄干",
-      "region": "stage",
+      "region": "depths",
       "place": "南区公寓",
       "match": [
         "阳光下的葡萄干"
-      ]
+      ],
+      "studyOnly": true
     },
     {
       "key": "biao-xiang-yu-xian-shi",
       "label": "表象与现实",
-      "region": "stage",
+      "region": "depths",
       "place": "幕后",
       "match": [
         "表象与现实（轻经典）"
-      ]
+      ],
+      "studyOnly": true
     },
     {
       "key": "bu-ke-zhan-sheng-de-xia-tian",
