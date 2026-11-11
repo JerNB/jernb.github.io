@@ -1,0 +1,1015 @@
+{
+  "generatedAt": "2026-11-11",
+  "regions": [
+    {
+      "id": "xingnang",
+      "name": "行囊",
+      "order": 0,
+      "painter": "xingnang",
+      "minWidth": 700,
+      "density": 0.207
+    },
+    {
+      "id": "jianghu-shanhe",
+      "name": "江湖 · 山河",
+      "order": 1,
+      "painter": "shanhe",
+      "minWidth": 1500,
+      "density": 0.5
+    },
+    {
+      "id": "jianghu-shijing",
+      "name": "江湖 · 市井",
+      "order": 2,
+      "painter": "shijing",
+      "minWidth": 1200,
+      "density": 0.5
+    },
+    {
+      "id": "jianghu-night",
+      "name": "江湖 · 夜",
+      "order": 3,
+      "painter": "night",
+      "minWidth": 1100,
+      "density": 1
+    },
+    {
+      "id": "loess",
+      "name": "黄土与田野",
+      "order": 4,
+      "painter": "loess",
+      "minWidth": 1500,
+      "density": 0.121
+    },
+    {
+      "id": "snow",
+      "name": "雪国",
+      "order": 5,
+      "painter": "snow",
+      "minWidth": 1100,
+      "density": 0.5
+    },
+    {
+      "id": "sea",
+      "name": "海边与深井",
+      "order": 6,
+      "painter": "sea",
+      "minWidth": 1000,
+      "density": 0.119
+    },
+    {
+      "id": "whitenight",
+      "name": "白夜之城",
+      "order": 7,
+      "painter": "whitenight",
+      "minWidth": 900,
+      "density": 0.5
+    },
+    {
+      "id": "depths",
+      "name": "深处",
+      "order": 8,
+      "painter": "depths",
+      "minWidth": 800,
+      "density": 0.5
+    },
+    {
+      "id": "desert",
+      "name": "荒漠与大海",
+      "order": 10,
+      "painter": "desert",
+      "minWidth": 1100,
+      "density": 0.128
+    },
+    {
+      "id": "macondo",
+      "name": "马孔多",
+      "order": 11,
+      "painter": "macondo",
+      "minWidth": 900,
+      "density": 0.5
+    }
+  ],
+  "places": [
+    {
+      "key": "cai-xiang-yu-fan-bo",
+      "label": "猜想与反驳",
+      "region": "xingnang",
+      "place": "罗盘",
+      "author": "卡尔·波普尔",
+      "cover": "https://cdn.weread.qq.com/weread/cover/1/YueWen_27094128/t6_YueWen_27094128.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/72732d70719d6c707276cd3",
+      "hours": null,
+      "wordCount": 395913,
+      "tiba": {
+        "quote": "我问自己，它确证了什么呢？无非是可以用这理论解释一个病例而已。但是我想这没有什么意义，因为每个可以想到的病例都能用阿德勒理论或者同样用弗洛伊德理论加以解释。",
+        "mine": null
+      },
+      "objectId": "compass"
+    },
+    {
+      "key": "mang-ge-zhi-dao",
+      "label": "芒格之道",
+      "region": "xingnang",
+      "place": "秤",
+      "author": "查理·芒格 芒格书院",
+      "cover": "https://cdn.weread.qq.com/weread/cover/44/cpplatform_tweycmwdgv5kegl9rgght1/t6_cpplatform_tweycmwdgv5kegl9rgght11687684560.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/88132470813ab7eeag012b8d",
+      "hours": null,
+      "wordCount": 493743,
+      "tiba": {
+        "quote": "每过完一天，\n要努力比早上醒来时\n更聪明一点点。\n——查理·芒格",
+        "mine": null
+      },
+      "objectId": "scale"
+    },
+    {
+      "key": "na-wa-er-bao-dian",
+      "label": "纳瓦尔宝典",
+      "region": "xingnang",
+      "place": "秤",
+      "author": "埃里克·乔根森",
+      "cover": "https://cdn.weread.qq.com/weread/cover/89/YueWen_44026191/t6_YueWen_44026191.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/e1e32b00729fc94fe1e824d",
+      "hours": null,
+      "wordCount": 103404,
+      "tiba": {
+        "quote": "把时间花在省钱上是不会致富的。\n省出时间来赚钱才是正确的思路。",
+        "mine": null
+      },
+      "objectId": "scale"
+    },
+    {
+      "key": "si-kao-kuai-yu-man",
+      "label": "思考，快与慢",
+      "region": "xingnang",
+      "place": "灯",
+      "author": "丹尼尔·卡尼曼",
+      "cover": "https://cdn.weread.qq.com/weread/cover/86/YueWen_573975/t6_YueWen_573975.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/af83263058c217af81f8979",
+      "hours": null,
+      "wordCount": 328673,
+      "tiba": {
+        "quote": "人们把相似度当成一种简单的启发手段（简单地说就是经验法则）来作艰难的判断。对这种启发性手段的依赖必然会造成其预测带有成见（系统性失误）。",
+        "mine": null
+      },
+      "objectId": "lamp"
+    },
+    {
+      "key": "zhu-tui",
+      "label": "助推",
+      "region": "xingnang",
+      "place": "灯",
+      "author": "[美]理查德·塞勒 [美]卡斯·桑斯坦",
+      "cover": "https://cdn.weread.qq.com/weread/cover/23/cpplatform_puwkyh83x9yyjh8wfjcggz/t6_cpplatform_puwkyh83x9yyjh8wfjcggz1691491500.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/7e432ba0813ab80a8g01459e",
+      "hours": 9.2,
+      "wordCount": 192512,
+      "tiba": {
+        "quote": "这就是人们常说的“公地悲剧”。",
+        "mine": null
+      },
+      "objectId": "lamp"
+    },
+    {
+      "key": "she-diao",
+      "label": "射雕英雄传",
+      "region": "jianghu-shanhe",
+      "place": "桃花岛",
+      "author": "金庸",
+      "cover": "https://cdn.weread.qq.com/weread/cover/13/yuewen_932434/s_yuewen_9324341744883548.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/836321705e3a52836d02e0b",
+      "hours": null,
+      "wordCount": 954975,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "shen-diao",
+      "label": "神雕侠侣",
+      "region": "jianghu-shanhe",
+      "place": "襄阳城",
+      "author": "金庸",
+      "cover": "https://cdn.weread.qq.com/weread/cover/10/yuewen_932431/s_yuewen_9324311744883556.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/381329505e3a4f3819e01e4",
+      "hours": null,
+      "wordCount": 1015278,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "yi-tian-tu-long-ji",
+      "label": "倚天屠龙记",
+      "region": "jianghu-shanhe",
+      "place": "光明顶",
+      "author": "金庸",
+      "cover": "https://cdn.weread.qq.com/weread/cover/86/yuewen_932428/s_yuewen_9324281744883603.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/10032ac05e3a4c100bce151",
+      "hours": null,
+      "wordCount": 984162,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "lu-ding-ji",
+      "label": "鹿鼎记",
+      "region": "jianghu-shijing",
+      "place": "扬州茶馆",
+      "author": "金庸",
+      "cover": "https://cdn.weread.qq.com/weread/cover/59/cpplatform_7wwtxmuuba9stqrz3ixyqn/s_cpplatform_7wwtxmuuba9stqrz3ixyqn1764301162.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/e21320b0813abacedg01501d",
+      "hours": null,
+      "wordCount": 1241214,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "tian-long-ba-bu",
+      "label": "天龙八部",
+      "region": "jianghu-shijing",
+      "place": "松鹤楼",
+      "author": "金庸",
+      "cover": "https://cdn.weread.qq.com/weread/cover/9/yuewen_932430/s_yuewen_9324301744883558.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/54d328e05e3a4e54dc9cba7",
+      "hours": null,
+      "wordCount": 1249921,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "xiao-ao-jiang-hu",
+      "label": "笑傲江湖",
+      "region": "jianghu-shijing",
+      "place": "回雁楼",
+      "author": "金庸",
+      "cover": "https://cdn.weread.qq.com/weread/cover/87/yuewen_932429/s_yuewen_9324291744883560.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/14932fc05e3a4d149e80ecc",
+      "hours": null,
+      "wordCount": 992897,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "chu-liu-xiang",
+      "label": "楚留香传奇",
+      "region": "jianghu-night",
+      "place": "香帅的船",
+      "author": "古龙",
+      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/697/23796697/t6_23796697.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/2e932a50716b1bd92e90c44",
+      "hours": 7.8,
+      "wordCount": 649434,
+      "tiba": {
+        "quote": "杨柳岸。\n夜已将残，月已将残。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "jue-dai-shuang-jiao",
+      "label": "绝代双骄",
+      "region": "jianghu-night",
+      "place": "恶人谷",
+      "author": "古龙",
+      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/378/411378/t6_411378.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/99b32be05646f299b6182d9",
+      "hours": 3.6,
+      "wordCount": 765063,
+      "tiba": {
+        "quote": "。 \n    这是幅美丽而雄壮的图画。这是支哀艳而苍凉的恋歌。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "lu-xiao-feng",
+      "label": "陆小凤传奇",
+      "region": "jianghu-night",
+      "place": "万梅山庄",
+      "author": "古龙",
+      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/701/23796701/t6_23796701.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/e2132680716b1bdde2106d1",
+      "hours": 10.7,
+      "wordCount": 940675,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "xiao-li-fei-dao",
+      "label": "小李飞刀",
+      "region": "jianghu-night",
+      "place": "小楼",
+      "author": "古龙",
+      "cover": "https://cdn.weread.qq.com/weread/cover/48/YueWen_22926210/t6_YueWen_22926210.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/e2132c80715dd382e219baf",
+      "hours": 22.4,
+      "wordCount": 1321758,
+      "tiba": {
+        "quote": "明月何处有？\n只要你的心还未死，明月就在你的心里。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "chen-mo-de-da-duo-shu",
+      "label": "沉默的大多数",
+      "region": "loess",
+      "place": "广场",
+      "author": "王小波",
+      "cover": "https://cdn.weread.qq.com/weread/cover/73/cpplatform_syx8xeqaycqfkv7fh1reg5/t6_cpplatform_syx8xeqaycqfkv7fh1reg51752237714.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/cd5326c0813ab9ec0g015d6a",
+      "hours": null,
+      "wordCount": 9311,
+      "tiba": {
+        "quote": "照他看来，写书应该能教育人民，提升人的灵魂。这真是金玉良言。但是在这世界上的一切人之中，我最希望予以提升的一个，就是我自己。这话很卑鄙，很自私，也很诚实。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "di-jiu-tian-chang",
+      "label": "地久天长",
+      "region": "loess",
+      "place": "胡同",
+      "author": "王小波",
+      "cover": "https://cdn.weread.qq.com/weread/cover/57/cpplatform_rhrt3tpk8urubgvkxuay3j/t6_cpplatform_rhrt3tpk8urubgvkxuay3j1746694808.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/c3832400813ab9ec0g013d0e",
+      "hours": null,
+      "wordCount": 25264,
+      "tiba": {
+        "quote": "斗我们捆我们的全是自己的同学，为了什么呀，不过是为了给教导员留个好印象，以后能在讲用会上说说他们怎样站稳了立场，然后到团里当个文书、干事之类，写些狗屁不通的报告。为了这个背叛我们，值得吗？",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "ge-ming-shi-qi-de-ai-qing",
+      "label": "革命时期的爱情",
+      "region": "loess",
+      "place": "豆腐厂",
+      "author": "王小波",
+      "cover": "https://cdn.weread.qq.com/weread/cover/50/YueWen_912826/t6_YueWen_912826.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/bd532c805dedbabd5678ebd",
+      "hours": null,
+      "wordCount": 101821,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "huang-jin-shi-dai",
+      "label": "黄金时代",
+      "region": "loess",
+      "place": "黄金时代",
+      "author": "王小波",
+      "cover": "https://cdn.weread.qq.com/weread/cover/52/YueWen_912828/t6_YueWen_912828.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/2bd329b05dedbc2bd49b02c",
+      "hours": 5.4,
+      "wordCount": 117447,
+      "tiba": {
+        "quote": "这样我就有机会在上天所赐的衰老之刑面前，挺起腰杆，证明我是个好样的。但要作这个决定，我还需要一点时间。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "huo-zhe",
+      "label": "活着",
+      "region": "loess",
+      "place": "福贵的田",
+      "author": "余华",
+      "cover": "https://cdn.weread.qq.com/weread/cover/1/yuewen_834464/s_yuewen_8344641758521403.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/33332bf05cbba0333b1efb4",
+      "hours": null,
+      "wordCount": 92278,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "ping-fan-de-shi-jie",
+      "label": "平凡的世界",
+      "region": "loess",
+      "place": "双水村",
+      "author": "章衡陆",
+      "cover": "https://cdn.weread.qq.com/weread/cover/42/cpplatform_1pnmaeskl2fcgbyepr2fxu/s_cpplatform_1pnmaeskl2fcgbyepr2fxu1783069266.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/abf32100813abbb19g010755",
+      "hours": null,
+      "wordCount": 11762,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "qing-ping-wan",
+      "label": "我的遥远的清平湾",
+      "region": "loess",
+      "place": "清平湾",
+      "author": "史铁生",
+      "cover": "https://cdn.weread.qq.com/weread/cover/21/cpplatform_6u8wfukwr9cufvkqpfjzhd/t6_cpplatform_6u8wfukwr9cufvkqpfjzhd1752237716.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/32b324d0813ab9d67g0193ff",
+      "hours": null,
+      "wordCount": 11632,
+      "tiba": {
+        "quote": "哦，我的白老汉，我的牛群，我的遥远的清平湾……\n1982年",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "te-li-du-xing-de-zhu",
+      "label": "一只特立独行的猪",
+      "region": "loess",
+      "place": "猪栏",
+      "author": "王小波",
+      "cover": "https://cdn.weread.qq.com/weread/cover/12/yuewen_912831/t6_yuewen_9128311790242182.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/b13328205dedbfb138932e1",
+      "hours": null,
+      "wordCount": 101670,
+      "tiba": {
+        "quote": "我已经四十岁了，除了这只猪，还没见过谁敢于如此无视对生活的设置。相反，我倒见过很多想要设置别人生活的人，还有对被设置的生活安之若素的人。因为这个缘故，我一直怀念这只特立独行的猪。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "xiang-tu-zhong-guo",
+      "label": "乡土中国",
+      "region": "loess",
+      "place": "乡土",
+      "author": "费孝通",
+      "cover": "https://cdn.weread.qq.com/weread/cover/89/yuewen_651366/t6_yuewen_6513661742315957.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/22e32b3059f06622e6e5c85",
+      "hours": null,
+      "wordCount": 81574,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "chun-xue",
+      "label": "春雪",
+      "region": "snow",
+      "place": "松枝家",
+      "author": "三岛由纪夫",
+      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/642/35523642/t6_35523642.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/c3b32bb0721e0c3ac3bc5f6",
+      "hours": null,
+      "wordCount": 195598,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "jin-ge-si",
+      "label": "金阁寺",
+      "region": "snow",
+      "place": "金阁",
+      "author": "三岛由纪夫",
+      "cover": "https://cdn.weread.qq.com/weread/cover/5/cpPlatform_3300003470/t6_cpPlatform_3300003470.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/ed432bc0813ab67dbg0102a7",
+      "hours": null,
+      "wordCount": 122394,
+      "tiba": {
+        "quote": "可是，当我沐浴在那毫无遮挡、痛快淋漓、漫天而降的大雪里的时候，我就忘记了内心的扭曲，犹如沐浴在音乐之中，我的精神从而恢复了严整的律动。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "xue-guo",
+      "label": "雪国",
+      "region": "snow",
+      "place": "隧道",
+      "author": "[日]川端康成",
+      "cover": "https://cdn.weread.qq.com/weread/cover/61/cpplatform_5wxycrvfybgsw8itfpvd3f/t6_cpplatform_5wxycrvfybgsw8itfpvd3f1729677220.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/af332130813ab94ddg0158c8",
+      "hours": null,
+      "wordCount": 70057,
+      "tiba": {
+        "quote": "他踉跄了一下，用力稳住身形，抬头一看，银河“哗啦”一声仿佛落进了岛村的身体里。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "yi-dou-de-wu-nv",
+      "label": "伊豆的舞女",
+      "region": "snow",
+      "place": "天城山道",
+      "author": "川端康成",
+      "cover": "https://cdn.weread.qq.com/weread/cover/53/cpplatform_dhqjrebue4its2dshgapqj/t6_cpplatform_dhqjrebue4its2dshgapqj1673510702.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/f8d32ac0813ab7868g015ebc",
+      "hours": null,
+      "wordCount": 98471,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "guo-jing-yi-nan",
+      "label": "国境以南 太阳以西",
+      "region": "sea",
+      "place": "太阳以西",
+      "author": "[日]村上春树",
+      "cover": "https://cdn.weread.qq.com/weread/cover/23/YueWen_25856511/t6_YueWen_25856511.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/deb32c10718a89ffdebd45f",
+      "hours": 5.3,
+      "wordCount": 109812,
+      "tiba": {
+        "quote": "我原本抛弃的东西在追赶我。被什么追赶着的不仅仅是你，抛弃什么失去什么的不仅仅是你自己。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "hai-bian-de-ka-fu-ka",
+      "label": "海边的卡夫卡",
+      "region": "sea",
+      "place": "甲村图书馆",
+      "author": "[日]村上春树",
+      "cover": "https://wfqqreader-1252317822.image.myqcloud.com/cover/942/24918942/t6_24918942.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/6eb32020717c3b9e6ebcaf6",
+      "hours": null,
+      "wordCount": 306798,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "nuo-wei-de-sen-lin",
+      "label": "挪威的森林",
+      "region": "sea",
+      "place": "森林",
+      "author": "[日]村上春树",
+      "cover": "https://cdn.weread.qq.com/weread/cover/15/cpplatform_mhkuusf5fivqteswxbuuxi/t6_cpplatform_mhkuusf5fivqteswxbuuxi1686221024.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/60a32bf0813ab7e67g019913",
+      "hours": null,
+      "wordCount": 208060,
+      "tiba": {
+        "quote": "由于初美的死，某种东西消失了，这委实是令人不胜悲哀和难受的事，甚至对我来说。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "qie-ting-feng-yin",
+      "label": "且听风吟",
+      "region": "sea",
+      "place": "海边",
+      "author": "[日]村上春树",
+      "cover": "https://cdn.weread.qq.com/weread/cover/49/cpplatform_oce6dn71cnfvjp2yfeqp58/t6_cpplatform_oce6dn71cnfvjp2yfeqp581686221038.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/9a432c90813ab7e68g010f7e",
+      "hours": null,
+      "wordCount": 47600,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "bai-ye",
+      "label": "白夜",
+      "region": "whitenight",
+      "place": "涅瓦河畔",
+      "author": "[俄]陀思妥耶夫斯基",
+      "cover": "https://cdn.weread.qq.com/weread/cover/26/YueWen_31808217/t6_YueWen_31808217.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/fc63252071e55ad9fc6f8d7",
+      "hours": null,
+      "wordCount": 247707,
+      "tiba": {
+        "quote": "告诉您，我现在喜欢定期回忆和凭吊过去某个时候曾在那里自得其乐的地方，喜欢按已经一去不返的往昔的格局来建立现在，我常常像个影子似的徘徊在彼得堡的大街小巷，黯然神伤，既没有必要，又没有目的。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "yue-liang-yu-liu-bian-shi",
+      "label": "月亮与六便士",
+      "region": "depths",
+      "place": "塔希提",
+      "author": "[英]毛姆",
+      "cover": "https://cdn.weread.qq.com/weread/cover/12/YueWen_25136944/t6_YueWen_25136944.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/34e323e0717f8f3034ee3cc",
+      "hours": null,
+      "wordCount": 151767,
+      "tiba": {
+        "quote": "艺术是表现情感的，而表现情感的语言是人人都能理解的。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "zi-shen-shen-chu",
+      "label": "自深深处",
+      "region": "depths",
+      "place": "高窗",
+      "author": "奥斯卡·王尔德",
+      "cover": "https://cdn.weread.qq.com/weread/cover/81/cpplatform_hm2cchj21e93pdsqpnr3vf/t6_cpplatform_hm2cchj21e93pdsqpnr3vf1782891099.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/6c532800813abbaceg0164c1",
+      "hours": null,
+      "wordCount": 51467,
+      "tiba": {
+        "quote": "我们称自己的时代为功利主义的时代，却连任何一件事物的真正用途都不明白。我们已经忘记了水能够洁净，火能够净化，大地是我们所有人的母亲。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "bu-ke-zhan-sheng-de-xia-tian",
+      "label": "我身上有个不可战胜的夏天",
+      "region": "desert",
+      "place": "提帕萨",
+      "author": "[法]阿尔贝·加缪",
+      "cover": "https://cdn.weread.qq.com/weread/cover/66/cpplatform_sbfdf2jn9wphd5xut4msee/t6_cpplatform_sbfdf2jn9wphd5xut4msee1752043043.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/160321a0813aba1dfg0109cf",
+      "hours": 5.7,
+      "wordCount": 63471,
+      "tiba": {
+        "quote": "我总感觉自己生活在海上，受到威胁，却身处盛大幸福的中央。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "ju-wai-ren",
+      "label": "局外人",
+      "region": "desert",
+      "place": "阿尔及尔海滩",
+      "author": "[法]阿尔贝·加缪",
+      "cover": "https://cdn.weread.qq.com/weread/cover/56/cpplatform_vezcupvdlkkykxkyjm9e7d/s_cpplatform_vezcupvdlkkykxkyjm9e7d1779954918.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/90132990813abb794g014c0c",
+      "hours": null,
+      "wordCount": 53743,
+      "tiba": null,
+      "objectId": null
+    },
+    {
+      "key": "sa-ha-la-de-gu-shi",
+      "label": "撒哈拉的故事",
+      "region": "desert",
+      "place": "撒哈拉",
+      "author": "三毛",
+      "cover": "https://cdn.weread.qq.com/weread/cover/24/3300020524/t6_3300020524.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/27d32300813ab6e84g0147c8",
+      "hours": null,
+      "wordCount": 160306,
+      "tiba": {
+        "quote": "漫漫的黄沙，无边而庞大的天空下，只有我们两个渺小的身影在走着，四周寂寥得很。沙漠，在这个时候真是美丽极了。",
+        "mine": null
+      },
+      "objectId": null
+    },
+    {
+      "key": "bai-nian-gu-du",
+      "label": "百年孤独",
+      "region": "macondo",
+      "place": "马孔多",
+      "author": "[哥]加西亚•马尔克斯",
+      "cover": "https://cdn.weread.qq.com/weread/cover/49/yuewen_935536/t6_yuewen_9355361682243599.jpg",
+      "readerLink": "https://weread.qq.com/web/reader/8bc329705e46708bcb0c164",
+      "hours": null,
+      "wordCount": 228005,
+      "tiba": {
+        "quote": "整艘船仿佛占据着一个独特的空间，属于孤独和遗忘的空间，远离时光的侵蚀，避开飞鸟的骚扰。远征者们在船内仔细探查，却发现里面空无一物，只见一座鲜花丛林密密层层地盛开。",
+        "mine": null
+      },
+      "objectId": null
+    }
+  ],
+  "study": [
+    {
+      "key": "cai-xiang-yu-fan-bo",
+      "label": "猜想与反驳",
+      "author": "卡尔·波普尔",
+      "wordCount": 395913
+    },
+    {
+      "key": "mang-ge-zhi-dao",
+      "label": "芒格之道",
+      "author": "查理·芒格 芒格书院",
+      "wordCount": 493743
+    },
+    {
+      "key": "na-wa-er-bao-dian",
+      "label": "纳瓦尔宝典",
+      "author": "埃里克·乔根森",
+      "wordCount": 103404
+    },
+    {
+      "key": "si-kao-kuai-yu-man",
+      "label": "思考，快与慢",
+      "author": "丹尼尔·卡尼曼",
+      "wordCount": 328673
+    },
+    {
+      "key": "zhu-tui",
+      "label": "助推",
+      "author": "[美]理查德·塞勒 [美]卡斯·桑斯坦",
+      "wordCount": 192512
+    },
+    {
+      "key": "bai-ma-xiao-xi-feng",
+      "label": "白马啸西风",
+      "author": "金庸",
+      "wordCount": 72920
+    },
+    {
+      "key": "bi-xue-jian",
+      "label": "碧血剑",
+      "author": "金庸",
+      "wordCount": 528689
+    },
+    {
+      "key": "fei-hu-wai-zhuan",
+      "label": "飞狐外传",
+      "author": "金庸",
+      "wordCount": 230391
+    },
+    {
+      "key": "lian-cheng-jue",
+      "label": "连城诀",
+      "author": "金庸",
+      "wordCount": 237887
+    },
+    {
+      "key": "she-diao",
+      "label": "射雕英雄传",
+      "author": "金庸",
+      "wordCount": 954975
+    },
+    {
+      "key": "shen-diao",
+      "label": "神雕侠侣",
+      "author": "金庸",
+      "wordCount": 1015278
+    },
+    {
+      "key": "shu-jian-en-chou-lu",
+      "label": "书剑恩仇录",
+      "author": "金庸",
+      "wordCount": 535468
+    },
+    {
+      "key": "xia-ke-xing",
+      "label": "侠客行",
+      "author": "金庸",
+      "wordCount": null
+    },
+    {
+      "key": "xue-shan-fei-hu",
+      "label": "雪山飞狐",
+      "author": "金庸",
+      "wordCount": 248936
+    },
+    {
+      "key": "yi-tian-tu-long-ji",
+      "label": "倚天屠龙记",
+      "author": "金庸",
+      "wordCount": 984162
+    },
+    {
+      "key": "yuan-yang-dao",
+      "label": "鸳鸯刀",
+      "author": "金庸",
+      "wordCount": 36898
+    },
+    {
+      "key": "yue-nv-jian",
+      "label": "越女剑",
+      "author": "金庸",
+      "wordCount": 16585
+    },
+    {
+      "key": "lu-ding-ji",
+      "label": "鹿鼎记",
+      "author": "金庸",
+      "wordCount": 1241214
+    },
+    {
+      "key": "tian-long-ba-bu",
+      "label": "天龙八部",
+      "author": "金庸",
+      "wordCount": 1249921
+    },
+    {
+      "key": "xiao-ao-jiang-hu",
+      "label": "笑傲江湖",
+      "author": "金庸",
+      "wordCount": 992897
+    },
+    {
+      "key": "chu-liu-xiang",
+      "label": "楚留香传奇",
+      "author": "古龙",
+      "wordCount": 649434
+    },
+    {
+      "key": "jue-dai-shuang-jiao",
+      "label": "绝代双骄",
+      "author": "古龙",
+      "wordCount": 765063
+    },
+    {
+      "key": "lu-xiao-feng",
+      "label": "陆小凤传奇",
+      "author": "古龙",
+      "wordCount": 940675
+    },
+    {
+      "key": "xiao-li-fei-dao",
+      "label": "小李飞刀",
+      "author": "古龙",
+      "wordCount": 1321758
+    },
+    {
+      "key": "chen-mo-de-da-duo-shu",
+      "label": "沉默的大多数",
+      "author": "王小波",
+      "wordCount": 9311
+    },
+    {
+      "key": "di-jiu-tian-chang",
+      "label": "地久天长",
+      "author": "王小波",
+      "wordCount": 25264
+    },
+    {
+      "key": "ge-ming-shi-qi-de-ai-qing",
+      "label": "革命时期的爱情",
+      "author": "王小波",
+      "wordCount": 101821
+    },
+    {
+      "key": "huang-jin-shi-dai",
+      "label": "黄金时代",
+      "author": "王小波",
+      "wordCount": 117447
+    },
+    {
+      "key": "huo-zhe",
+      "label": "活着",
+      "author": "余华",
+      "wordCount": 92278
+    },
+    {
+      "key": "ping-fan-de-shi-jie",
+      "label": "平凡的世界",
+      "author": "章衡陆",
+      "wordCount": 11762
+    },
+    {
+      "key": "qing-ping-wan",
+      "label": "我的遥远的清平湾",
+      "author": "史铁生",
+      "wordCount": 11632
+    },
+    {
+      "key": "te-li-du-xing-de-zhu",
+      "label": "一只特立独行的猪",
+      "author": "王小波",
+      "wordCount": 101670
+    },
+    {
+      "key": "xiang-tu-zhong-guo",
+      "label": "乡土中国",
+      "author": "费孝通",
+      "wordCount": 81574
+    },
+    {
+      "key": "chun-xue",
+      "label": "春雪",
+      "author": "三岛由纪夫",
+      "wordCount": 195598
+    },
+    {
+      "key": "jin-ge-si",
+      "label": "金阁寺",
+      "author": "三岛由纪夫",
+      "wordCount": 122394
+    },
+    {
+      "key": "xue-guo",
+      "label": "雪国",
+      "author": "[日]川端康成",
+      "wordCount": 70057
+    },
+    {
+      "key": "yi-dou-de-wu-nv",
+      "label": "伊豆的舞女",
+      "author": "川端康成",
+      "wordCount": 98471
+    },
+    {
+      "key": "guo-jing-yi-nan",
+      "label": "国境以南 太阳以西",
+      "author": "[日]村上春树",
+      "wordCount": 109812
+    },
+    {
+      "key": "hai-bian-de-ka-fu-ka",
+      "label": "海边的卡夫卡",
+      "author": "[日]村上春树",
+      "wordCount": 306798
+    },
+    {
+      "key": "nuo-wei-de-sen-lin",
+      "label": "挪威的森林",
+      "author": "[日]村上春树",
+      "wordCount": 208060
+    },
+    {
+      "key": "qie-ting-feng-yin",
+      "label": "且听风吟",
+      "author": "[日]村上春树",
+      "wordCount": 47600
+    },
+    {
+      "key": "bai-ye",
+      "label": "白夜",
+      "author": "[俄]陀思妥耶夫斯基",
+      "wordCount": 247707
+    },
+    {
+      "key": "biao-xiang-yu-xian-shi",
+      "label": "表象与现实",
+      "author": "[英]毛姆",
+      "wordCount": 9671
+    },
+    {
+      "key": "yang-guang-xia-de-pu-tao-gan",
+      "label": "阳光下的葡萄干",
+      "author": "洛琳·汉斯伯里",
+      "wordCount": 61706
+    },
+    {
+      "key": "yue-liang-yu-liu-bian-shi",
+      "label": "月亮与六便士",
+      "author": "[英]毛姆",
+      "wordCount": 151767
+    },
+    {
+      "key": "zi-shen-shen-chu",
+      "label": "自深深处",
+      "author": "奥斯卡·王尔德",
+      "wordCount": 51467
+    },
+    {
+      "key": "bu-ke-zhan-sheng-de-xia-tian",
+      "label": "我身上有个不可战胜的夏天",
+      "author": "[法]阿尔贝·加缪",
+      "wordCount": 63471
+    },
+    {
+      "key": "ju-wai-ren",
+      "label": "局外人",
+      "author": "[法]阿尔贝·加缪",
+      "wordCount": 53743
+    },
+    {
+      "key": "sa-ha-la-de-gu-shi",
+      "label": "撒哈拉的故事",
+      "author": "三毛",
+      "wordCount": 160306
+    },
+    {
+      "key": "bai-nian-gu-du",
+      "label": "百年孤独",
+      "author": "[哥]加西亚•马尔克斯",
+      "wordCount": 228005
+    }
+  ],
+  "objects": [
+    {
+      "id": "compass",
+      "label": "罗盘",
+      "region": "xingnang",
+      "books": [
+        "cai-xiang-yu-fan-bo"
+      ]
+    },
+    {
+      "id": "lamp",
+      "label": "灯",
+      "region": "xingnang",
+      "books": [
+        "si-kao-kuai-yu-man",
+        "zhu-tui"
+      ]
+    },
+    {
+      "id": "scale",
+      "label": "秤",
+      "region": "xingnang",
+      "books": [
+        "mang-ge-zhi-dao",
+        "na-wa-er-bao-dian"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": "bu-ke-zhan-sheng-de-xia-tian",
+      "to": "sa-ha-la-de-gu-shi",
+      "note": "想到了三毛"
+    }
+  ],
+  "stats": {
+    "hours": 119,
+    "readDays": 251,
+    "booksRead": 50,
+    "notes": 501
+  },
+  "warnings": []
+}

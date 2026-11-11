@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading | Jerry Wu</title>
+  <meta name="description" content="Jerry Wu's reading, painted as an ink handscroll: every book he has read is a place on one road heading west.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/reading.css?v=6">
+  <link rel="preload" href="data/reading-scene.json" as="fetch" crossorigin>
+  <script src="js/page-title-ripple.js" defer></script>
+  <script type="module" src="js/reading/page.mjs?v=6"></script>
+  <style>
+    .atmo .brand { display: flex; align-items: center; gap: 10px; }
+    .atmo .brand-logo { width: 28px; height: 28px; color: #5c5a55; transition: 380ms cubic-bezier(0.28, 0.6, 0.2, 1); }
+    .atmo .brand:hover .brand-logo { color: #3d3a36; transform: scale(1.05); }
+  </style>
+</head>
+<body class="atmo reading-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="index.html">
+        <!-- Music note + ripple logo -->
+        <svg class="brand-logo" viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+          <circle cx="18" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+          <path d="M20 8 L20 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <ellipse cx="17" cy="23" rx="4" ry="3" fill="currentColor" opacity="0.65" transform="rotate(-20 17 23)"/>
+          <path d="M20 8 Q26 10 24 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+        <span class="brand-name">Jerry Wu</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="blogs.html">Blogs</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link active" href="reading.html" aria-current="page">Reading</a>
+        <a class="nav-link" href="performance.html">Performance</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+    </aside>
+
+    <main class="content" id="main-content">
+      <header class="reading-head">
+        <h1 class="page-title">书卷</h1>
+        <p class="reading-intro">我读过的书，画成一条往西走的路。</p>
+      </header>
+
+      <div class="reading-stage">
+        <button class="roll" type="button" aria-label="展开书卷" aria-busy="true">
+          <span class="roll-cap" aria-hidden="true"></span>
+          <span class="roll-body" aria-hidden="true">
+            <span class="roll-slip"><b>书卷</b><small>Jerry 读书记</small></span>
+            <span class="roll-tie"></span>
+          </span>
+          <span class="roll-cap" aria-hidden="true"></span>
+        </button>
+        <section class="scroll is-rolled" tabindex="-1" inert aria-label="书卷：读过的书，按地方排开" data-state="loading">
+          <div class="scroll-track"></div>
+        </section>
+      </div>
+      <p class="scroll-hint" aria-hidden="true">点开卷轴</p>
+      <noscript><p class="scroll-hint">这幅画卷需要 JavaScript 才能展开。</p></noscript>
+    </main>
+  </div>
+</body>
+</html>
