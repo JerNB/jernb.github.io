@@ -16,6 +16,12 @@
   .reading-page .reading-head { margin-bottom: 14px; }
   .reading-page .reading-head h1 { font-size: clamp(36px, 4.4vw, 52px); margin-bottom: 2px; }
   .reading-stage { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
+  /* one frame: the title starts where the scroll starts, the scroll keeps the same margin on both
+     sides instead of running off the right edge, and the hint sits centred under the scroll */
+  .reading-page { --gutter: clamp(24px, 3.2vw, 52px); }
+  .reading-page .reading-head, .reading-page .scroll-hint { width: auto; margin-inline: var(--gutter); }
+  .reading-stage { margin-inline: var(--gutter); }
+  .reading-page .scroll-hint { max-width: none; text-align: center; margin-top: 20px; }   /* clear of the rolled scroll's lower cap */
 }
 .reading-stage { position: relative; }
 
@@ -83,9 +89,9 @@
 .roll-body {
   position: relative; width: 66px; height: var(--roll-len);
   background:
-    repeating-linear-gradient(0deg, rgba(230, 220, 196, .06) 0 2px, transparent 2px 9px),
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, .05) 0 1px, transparent 1px 6px),
-    linear-gradient(to right, #241f1a 0%, #4f463c 14%, #75695a 34%, #8a7d6b 48%, #6f6354 66%, #463d34 86%, #1f1b17 100%);
+    linear-gradient(to right, rgba(20, 17, 14, .9) 0%, rgba(20, 17, 14, .45) 14%, rgba(255, 240, 210, .1) 46%, rgba(20, 17, 14, .35) 78%, rgba(20, 17, 14, .9) 100%),
+    url(../images/reading/brocade.webp) center / 72px 72px repeat,   /* 包首: the brocade, shaded as a cylinder */
+    #463d34;
   border-radius: 3px;
 }
 /* 签条: the title slip */
@@ -113,7 +119,8 @@
 .roll[data-orient="portrait"] .roll-cap { width: 14px; height: 34px; border-radius: 5px 2px 2px 5px; background: linear-gradient(to bottom, #14110e, #4a4038 30%, #6a5d50 45%, #2a241f 75%, #110f0c); }
 .roll[data-orient="portrait"] .roll-cap:last-child { border-radius: 2px 5px 5px 2px; }
 .roll[data-orient="portrait"] .roll-body { width: calc(var(--roll-len) - 28px); height: 60px;
-  background: repeating-linear-gradient(90deg, rgba(230, 220, 196, .06) 0 2px, transparent 2px 9px), linear-gradient(to bottom, #241f1a 0%, #4f463c 14%, #75695a 34%, #8a7d6b 48%, #6f6354 66%, #463d34 86%, #1f1b17 100%); }
+  background: linear-gradient(to bottom, rgba(20, 17, 14, .9) 0%, rgba(20, 17, 14, .45) 14%, rgba(255, 240, 210, .1) 46%, rgba(20, 17, 14, .35) 78%, rgba(20, 17, 14, .9) 100%),
+    url(../images/reading/brocade.webp) center / 60px 60px repeat, #463d34; }
 .roll[data-orient="portrait"] .roll-slip { top: 50%; left: 18%; translate: 0 -50%; writing-mode: horizontal-tb; flex-direction: row; width: auto; padding: 4px 10px; }
 .roll[data-orient="portrait"] .roll-tie { left: 64%; right: auto; top: -4px; bottom: -4px; width: 5px; height: auto; }
 html:has(body.reading-page) { scrollbar-width: none; }
@@ -167,7 +174,6 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 .place.below:hover, .place.below:focus-visible { transform: translate(-50%, 3px); }
 .place:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
 .place .name { writing-mode: vertical-rl; font-size: 15px; letter-spacing: .2em; line-height: 1; }
-.place .book { writing-mode: vertical-rl; font-size: 11px; letter-spacing: .12em; line-height: 1; color: var(--scroll-ink-soft); }
 .place .seal {
   position: absolute; right: -7px; bottom: -7px;
   width: 12px; height: 12px;
@@ -175,7 +181,6 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
   font-size: 8.5px; line-height: 12px; text-align: center; border-radius: 1px; text-shadow: none;
 }
 .place.light { color: var(--scroll-glow); background: rgba(22, 19, 16, .62); border-color: rgba(230, 220, 196, .34); }
-.place.light .book { color: rgba(230, 220, 196, .78); }
 
 /* 笺: the slip of paper that opens beside a place */
 .jian {
@@ -205,7 +210,7 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 .scroll.is-gliding .place { pointer-events: none; }      /* no slips flickering open as places pass under the pointer */
 .has-open .place:not(.is-open), .has-open .thread-note { opacity: .4; }
 
-/* the traveler and the 加缪 → 三毛 thread */
+/* the traveler, and the 加缪 → 三毛 旁批 */
 .traveler { position: absolute; z-index: 4; width: 48px; height: 34px; left: 0; top: 0; pointer-events: none; will-change: transform; overflow: visible; }
 .traveler g { transform-box: view-box; transform-origin: 24px 33px; }
 .traveler .ink { fill: var(--scroll-ink); }
@@ -233,17 +238,17 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 @keyframes bob { from { translate: 0 0; } to { translate: 0 -1.2px; } }
 @keyframes stride { from { rotate: -14deg; } to { rotate: 14deg; } }
 @keyframes rock { 0%, 100% { rotate: -2deg; } 50% { rotate: 2deg; } }
-.thread { position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; overflow: visible; }
-.thread path { fill: none; stroke: rgba(30, 27, 23, .45); stroke-width: 1; stroke-dasharray: 2 5; }
 .thread-note {
   position: absolute; z-index: 3; writing-mode: vertical-rl;
   font-family: 'Noto Serif SC', serif; font-size: 12px; letter-spacing: .14em; color: var(--mine);
-  transform: translate(-50%, -50%);
+  transform: translate(0, -100%);                    /* its foot level with the foot of the label it annotates */
+  pointer-events: none;
   transition: opacity 260ms var(--ease);
   text-shadow: 0 0 6px rgba(196, 187, 167, .95);
 }
 
 /* ---------- 书房: a bookcase ---------- */
+.study-window { position: absolute; z-index: 1; pointer-events: none; user-select: none; }   /* its paper is the scroll's kraft */
 .study { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 14px; font-family: 'Noto Serif SC', serif; }
 /* 匾额: a dark board, light characters */
 .plaque {
@@ -308,6 +313,12 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 }
 .colophon p { margin: 0; writing-mode: vertical-rl; font-size: 15px; line-height: 2; letter-spacing: .24em; }
 .colophon .date { font-size: 12px; color: var(--scroll-ink-soft); }
+.colophon .sign { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+/* 名章: a small 朱文 seal, red lines on the paper */
+.colophon .seal-name {
+  padding: 4px 6px; border: 1.5px solid var(--seal); border-radius: 1px; color: var(--seal);
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', serif; font-size: 14px; letter-spacing: .04em; line-height: 1;
+}
 .colophon .seal-big {
   align-self: flex-end;
   writing-mode: vertical-rl;
