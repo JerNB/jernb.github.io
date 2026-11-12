@@ -87,3 +87,19 @@ test('a touch tap on a book opens its slip and the tap does not dismiss it', asy
     assert.deepEqual(r, { open: true, closedByOutsideTap: true });
   });
 });
+
+test('a place label carries only its name, and the red seal only where there is a 划线 or 批注 to read', async t => {
+  await onPage(t, 1440, 900, async ({ evaluate }) => {
+    await evaluate(OPEN);
+    const r = await evaluate(`(async () => {
+      const d = await (await fetch('data/reading.json')).json(), noted = p => !!(p.tiba?.quote || p.tiba?.mine);
+      const byPlace = {}; for (const p of d.places) if (!p.objectId) (byPlace[p.place] ??= []).push(p);
+      const labels = [...document.querySelectorAll('.place')].map(b => ({ name: b.querySelector('.name').textContent, kids: b.children.length, seal: !!b.querySelector('.seal') }));
+      const wrong = labels.filter(l => byPlace[l.name] && l.seal !== byPlace[l.name].some(noted)).map(l => l.name);
+      return { bookSpans: document.querySelectorAll('.place .book').length, wrong, unsealed: labels.filter(l => !l.seal).length };
+    })()`);
+    assert.equal(r.bookSpans, 0);
+    assert.deepEqual(r.wrong, []);
+    assert.ok(r.unsealed > 0, 'some places have nothing to read and carry no seal');
+  });
+});

@@ -2,6 +2,7 @@
 import { makeInk } from './ink.mjs';
 import { layoutScroll } from '../../js/reading/layout.mjs';
 import { painterFor } from './regions/index.mjs';
+import { seatLabel } from './seat.mjs';
 
 export const SEED = 20261108;
 export const PROP_NAMES = ['compass', 'lamp', 'scale', 'bundle', 'winehouse', 'siheyuan', 'factory', 'cave-dwellings', 'old-ox',
@@ -98,6 +99,7 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
       { objects: reading.objects.filter(o => o.region === region.id), links: reading.links });
     recede(lc, layer, scale, out.dark?.length ? HAZE_DARK : HAZE);
     lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'source-over'; lc.drawImage(fore, 0, 0);
+    seatAll(lc, layer, scale, out, orient === 'portrait' ? 1 : 0);
     feather(lc, rect, orient, scale, makeInk(lc, seed + region.order * 31).fbm, rect === lay.rects[0] || !!only, rect === lay.rects.at(-1) || !!only);
     ctx.drawImage(layer, rect.x, rect.y, rect.w, rect.h);
     scene.road.push(...out.road.map(([x, y]) => [round(x + rect.x), round(y + rect.y)]));
@@ -116,6 +118,21 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(under, 0, 0);
   ctx.restore();
   return { canvas, scene };
+}
+
+/** Inked enough to hold up a label: clearly darker than the paper (pale far hills do not count). */
+const INK_LUM = 105;
+/** Seat every label of a region on what it names (see seat.mjs); night labels keep their place. */
+function seatAll(lc, layer, scale, out, ax) {
+  const { data } = lc.getImageData(0, 0, layer.width, layer.height);
+  const isInk = (x, y) => {
+    const px = Math.round(x * scale), py = Math.round(y * scale);
+    if (px < 0 || py < 0 || px >= layer.width || py >= layer.height) return false;
+    const i = (py * layer.width + px) * 4;
+    return data[i + 3] > 200 && .3 * data[i] + .59 * data[i + 1] + .11 * data[i + 2] < INK_LUM;
+  };
+  const night = pt => (out.dark ?? []).some(([a, b]) => pt[ax] >= a && pt[ax] <= b);
+  for (const map of [out.anchors, out.objects]) for (const [k, pt] of Object.entries(map ?? {})) if (!night(pt)) map[k] = seatLabel(pt, isInk);
 }
 
 /**

@@ -34,7 +34,7 @@ const DRAW = {
     a.person(x - 30, y - 6, 1.1, 0); a.person(x - 16, y - 4, 1, 0);
     return [x - 20, y - 70];
   },
-  sunset(a, x, y) { a.glow(x, y, 60, .35, '236,214,170'); a.ctx.fillStyle = 'rgba(232,220,196,.95)'; a.ctx.beginPath(); a.ctx.arc(x, y + 20, 26, Math.PI, 0); a.ctx.fill(); return [x, y - 30]; },
+  sunset(a, x, y) { a.glow(x, y, 60, .35, '236,214,170'); a.ctx.fillStyle = 'rgba(232,220,196,.95)'; a.ctx.beginPath(); a.ctx.arc(x, y + 20, 26, Math.PI, 0); a.ctx.fill(); return [x, y - 12]; },   // just above the sun (it is too pale to seat on)
   library(a, x, y) {
     minka(a, x - 66, y, 86, 22, 28);                       // 甲村图书馆: an old house turned library
     stoneLantern(a, x - 82, y + 8, .9);

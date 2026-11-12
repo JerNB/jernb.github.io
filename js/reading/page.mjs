@@ -82,7 +82,10 @@ function build() {
   let open = null;
   const position = () => {
     if (!open) return;
-    const t = track.getBoundingClientRect(), r = open.getBoundingClientRect();
+    // a book's slip opens beside the whole bookcase, level with the book, so it never covers the shelves
+    const box = !P && open.classList.contains('book') ? open.closest('.bookcase') : open;
+    const t = track.getBoundingClientRect(), b = box.getBoundingClientRect(), o = open.getBoundingClientRect();
+    const r = { left: b.left, right: b.right, top: o.top, bottom: o.bottom };
     const label = { left: r.left - t.left, right: r.right - t.left, top: r.top - t.top, bottom: r.bottom - t.top };
     let view;
     if (P) {
@@ -116,15 +119,16 @@ function build() {
   closeSlip = hide;
   const CLIP = P ? 90 : 140;
 
-  const placeBtn = (pt, name, book, slip, aria) => {
+  // a cartouche carries only the place's name; the book is in the slip. The red 读 seal is kept for
+  // places with a 划线 or 批注 to show, so it still means something
+  const placeBtn = (pt, name, sealed, slip, aria) => {
     const b = el('button', 'place');
     b.type = 'button';
     b.style.left = `${pt[0] * k}px`; b.style.top = `${pt[1] * k}px`;
     if (pt[1] * k < 120) b.classList.add('below');
     if (isDark(pt)) b.classList.add('light');
     b.append(el('span', 'name', name));
-    if (book) b.append(el('span', 'book', book));
-    b.append(el('span', 'seal', '读'));
+    if (sealed) b.append(el('span', 'seal', '读'));
     b.setAttribute('aria-label', aria);
     b.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') show(b, slip); });
     b.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && document.activeElement !== b) hide(); });
@@ -148,14 +152,14 @@ function build() {
     if (p.hours >= 1) rows.push({ tag: '读', text: `${toChineseNumeral(Math.round(p.hours))}小时`, cls: 'hours' });
     anchorsAll[p.key] = pt;
     slipFor[p.key] = { title: `《${p.label}》`, author: p.author, rows };
-    renderers[p.key] = () => placeBtn(pt, p.place, p.place === p.label ? '' : `《${p.label}》`,
+    renderers[p.key] = () => placeBtn(pt, p.place, !!(p.tiba?.quote || p.tiba?.mine),
       slipFor[p.key],
       `${p.place}，《${p.label}》${p.author ? '，' + p.author : ''}${t ? '。' + t : ''}`);
   }
   for (const o of reading.objects) {
     const pt = S.objects[o.id]; if (!pt || !o.books.length) continue;
     anchorsAll[`object:${o.id}`] = pt;
-    renderers[`object:${o.id}`] = () => placeBtn(pt, o.label, '',
+    renderers[`object:${o.id}`] = () => placeBtn(pt, o.label, o.books.some(kk => byKey[kk].tiba?.quote || byKey[kk].tiba?.mine),
       { title: o.label, author: '', rows: o.books.map(key => {
         const bk = byKey[key], line = clipQuote(bk.tiba?.mine || bk.tiba?.quote, 44);
         return { text: `《${bk.label}》${line ? '　' + line : ''}`, cls: bk.tiba?.mine ? 'mine' : '' };
@@ -165,17 +169,12 @@ function build() {
   for (const key of orderAlong(anchorsAll, ax)) renderers[key]();   // Tab order follows the road
   track.append(jian);
 
-  /* threads Jerry drew between books (e.g. 加缪 → 三毛) */
+  /* Jerry's 旁批 between books (e.g. 加缪 → 三毛): a small green note written beside the first
+     book's label, the way a reader writes in the margin, rather than a line drawn across the land */
   for (const l of reading.links) {
-    const a = S.places[l.from], b = S.places[l.to]; if (!a || !b) continue;
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.classList.add('thread'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('aria-hidden', 'true');
-    const [ax0, ay0, bx, by] = [a[0] * k, a[1] * k + 10, b[0] * k, b[1] * k + 10];
-    const mx = (ax0 + bx) / 2, my = Math.max(ay0, by) + 60 * k;
-    svg.innerHTML = `<path d="M${ax0},${ay0} Q${mx},${my} ${bx},${by}"/>`;
-    track.append(svg);
+    const a = S.places[l.from]; if (!a || !S.places[l.to]) continue;
     const note = el('span', 'thread-note', l.note);
-    note.style.left = `${mx}px`; note.style.top = `${(ay0 + by) / 4 + my / 2 + 10}px`;
+    note.style.left = `${a[0] * k + 22}px`; note.style.top = `${a[1] * k}px`;
     track.append(note);
   }
 
@@ -232,14 +231,21 @@ function build() {
   });
   study.append(plaque, caseEl);
 
-  /* 卷尾跋 */
+  /* 卷尾跋: dated in the column, signed with a name seal under it rather than a Latin name lying on its side */
+  const sign = () => {
+    const d = el('div', 'sign');
+    const seal = el('span', 'seal-name', 'Jerry');
+    seal.setAttribute('aria-label', 'Jerry');
+    d.append(el('p', 'date', `${chineseDate(reading.generatedAt)}记`), seal);
+    return d;
+  };
   const colo = el('section', 'colophon');
   colo.setAttribute('aria-label', '卷尾跋');
   const st = reading.stats;
   colo.append(
     el('p', null, `读书凡${toChineseNumeral(st.hours)}小时，${toChineseNumeral(st.readDays)}日。`),
     el('p', null, `书${toChineseNumeral(st.booksRead)}部，笔记${toChineseNumeral(st.notes)}条。`),
-    el('p', 'date', `${chineseDate(reading.generatedAt)}，Jerry 记`),
+    sign(),
     el('span', 'seal-big', '书卷'));
   track.append(study, colo);
 
