@@ -82,9 +82,8 @@ const DRAW = {
     return [x, y - 70];
   },
   pigpen(a, x, y) {               // 一只特立独行的猪: a pen, and one pig standing on the roof
-    pigsty(a, x - 40, y, 130);
-    pig(a, x - 24, y - 27);
-    return [x + 30, y - 60];
+    const r = a.propAt('pig-pen', x, y + 4, 200, () => { pigsty(a, x - 40, y, 130); pig(a, x - 24, y - 27); });
+    return r.used ? [x, r.top - 6] : [x + 30, y - 60];
   },
   factory(a, x, y) {              // 豆腐厂: a brick workshop under its stack
     const r = a.propAt('factory', x, y + 2, 210, () => factory(a, x - 66, y, 120, 28));
@@ -100,10 +99,12 @@ const DRAW = {
     return [x, cv.used ? cv.top - 6 : y - 70];
   },
   village(a, x, y) {              // 双水村: a village of caves and courtyards along a gully
-    const c = a.ctx;
-    for (let r = 0; r < 2; r++) for (let i = 0; i < 3; i++) { const cx = x - 60 + i * 50 + r * 20, cy = y - r * 34; c.fillStyle = a.ink(.8); c.beginPath(); c.moveTo(cx - 9, cy); c.lineTo(cx - 9, cy - 12); c.arc(cx, cy - 12, 9, Math.PI, 0); c.lineTo(cx + 9, cy); c.fill(); }
-    for (let i = 0; i < 5; i++) a.person(x + a.rr(-80, 80), y + a.rr(6, 14), .85, a.rng() < .5 ? 2 : 0);
-    return [x, y - 62];                                             // just above the upper row of caves, not up on the terraces
+    const v = a.propAt('shuangshui-village', x, y + 10, 300, () => {
+      const c = a.ctx;
+      for (let r = 0; r < 2; r++) for (let i = 0; i < 3; i++) { const cx = x - 60 + i * 50 + r * 20, cy = y - r * 34; c.fillStyle = a.ink(.8); c.beginPath(); c.moveTo(cx - 9, cy); c.lineTo(cx - 9, cy - 12); c.arc(cx, cy - 12, 9, Math.PI, 0); c.lineTo(cx + 9, cy); c.fill(); }
+      for (let i = 0; i < 5; i++) a.person(x + a.rr(-80, 80), y + a.rr(6, 14), .85, a.rng() < .5 ? 2 : 0);
+    });
+    return v.used ? [x, v.top - 6] : [x, y - 62];                   // just above the caves, not up on the terraces
   },
   paddy(a, x, y) {                // 福贵的田: flooded paddy, an old ox, an old man
     a.water(x - 130, y - 20, 260, y + 30, { density: .6 });

@@ -35,3 +35,8 @@ test('a label sunk deep inside a mass of ink is left alone rather than flung up 
   const ink = sheet([0, 100, 400, 600]);                  // a mountain all around the anchor
   assert.deepEqual(seatLabel([110, 300], ink), [110, 300]);
 });
+
+test('ink closer than the gap never lifts a label: it stays where it was', () => {
+  const ink = sheet([90, 300, 140, 360]);                 // roof 2 px under the label, less than the 6 px gap
+  assert.deepEqual(seatLabel([110, 298], ink), [110, 298]);
+});

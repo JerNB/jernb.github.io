@@ -256,11 +256,18 @@ function build() {
     Object.assign(colo.style, { left: '50%', transform: 'translateX(-50%)', top: `${H + 50 + studyH + 60}px` });
     trackW = W; trackH = H + 50 + studyH + 60 + colo.offsetHeight + 60;
   } else {
-    Object.assign(study.style, { left: `${W + 60}px`, top: '0' });
+    // the study's wall: a round window with bamboo outside, painted on the same kraft, beside the bookcase
+    const ws = Math.round(H * .44), win = el('img', 'study-window');
+    Object.assign(win, { src: 'images/reading/props/scholar-window.webp', alt: '', decoding: 'async', width: ws, height: ws });
+    win.setAttribute('aria-hidden', 'true');
+    Object.assign(win.style, { left: `${W + 30}px`, top: `${Math.round(H * .16)}px`, width: `${ws}px`, height: `${ws}px` });
+    track.append(win);
+    const x0 = W + 30 + ws + 20;
+    Object.assign(study.style, { left: `${x0}px`, top: '0' });
     const sw = study.offsetWidth, sh = study.offsetHeight;
     study.style.top = `${Math.max(8, (H - sh) / 2)}px`;
-    Object.assign(colo.style, { left: `${W + 60 + sw + 90}px`, top: `${Math.max(20, (H - colo.offsetHeight) / 2)}px` });
-    trackW = W + 60 + sw + 90 + colo.offsetWidth + 120; trackH = H;
+    Object.assign(colo.style, { left: `${x0 + sw + 90}px`, top: `${Math.max(20, (H - colo.offsetHeight) / 2)}px` });
+    trackW = x0 + sw + 90 + colo.offsetWidth + 120; trackH = H;
   }
   track.style.width = `${trackW}px`; track.style.height = `${trackH}px`;
 

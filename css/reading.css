@@ -21,7 +21,7 @@
   .reading-page { --gutter: clamp(24px, 3.2vw, 52px); }
   .reading-page .reading-head, .reading-page .scroll-hint { width: auto; margin-inline: var(--gutter); }
   .reading-stage { margin-inline: var(--gutter); }
-  .reading-page .scroll-hint { max-width: none; text-align: center; }
+  .reading-page .scroll-hint { max-width: none; text-align: center; margin-top: 20px; }   /* clear of the rolled scroll's lower cap */
 }
 .reading-stage { position: relative; }
 
@@ -89,9 +89,9 @@
 .roll-body {
   position: relative; width: 66px; height: var(--roll-len);
   background:
-    repeating-linear-gradient(0deg, rgba(230, 220, 196, .06) 0 2px, transparent 2px 9px),
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, .05) 0 1px, transparent 1px 6px),
-    linear-gradient(to right, #241f1a 0%, #4f463c 14%, #75695a 34%, #8a7d6b 48%, #6f6354 66%, #463d34 86%, #1f1b17 100%);
+    linear-gradient(to right, rgba(20, 17, 14, .9) 0%, rgba(20, 17, 14, .45) 14%, rgba(255, 240, 210, .1) 46%, rgba(20, 17, 14, .35) 78%, rgba(20, 17, 14, .9) 100%),
+    url(../images/reading/brocade.webp) center / 72px 72px repeat,   /* 包首: the brocade, shaded as a cylinder */
+    #463d34;
   border-radius: 3px;
 }
 /* 签条: the title slip */
@@ -119,7 +119,8 @@
 .roll[data-orient="portrait"] .roll-cap { width: 14px; height: 34px; border-radius: 5px 2px 2px 5px; background: linear-gradient(to bottom, #14110e, #4a4038 30%, #6a5d50 45%, #2a241f 75%, #110f0c); }
 .roll[data-orient="portrait"] .roll-cap:last-child { border-radius: 2px 5px 5px 2px; }
 .roll[data-orient="portrait"] .roll-body { width: calc(var(--roll-len) - 28px); height: 60px;
-  background: repeating-linear-gradient(90deg, rgba(230, 220, 196, .06) 0 2px, transparent 2px 9px), linear-gradient(to bottom, #241f1a 0%, #4f463c 14%, #75695a 34%, #8a7d6b 48%, #6f6354 66%, #463d34 86%, #1f1b17 100%); }
+  background: linear-gradient(to bottom, rgba(20, 17, 14, .9) 0%, rgba(20, 17, 14, .45) 14%, rgba(255, 240, 210, .1) 46%, rgba(20, 17, 14, .35) 78%, rgba(20, 17, 14, .9) 100%),
+    url(../images/reading/brocade.webp) center / 60px 60px repeat, #463d34; }
 .roll[data-orient="portrait"] .roll-slip { top: 50%; left: 18%; translate: 0 -50%; writing-mode: horizontal-tb; flex-direction: row; width: auto; padding: 4px 10px; }
 .roll[data-orient="portrait"] .roll-tie { left: 64%; right: auto; top: -4px; bottom: -4px; width: 5px; height: auto; }
 html:has(body.reading-page) { scrollbar-width: none; }
@@ -247,6 +248,7 @@ html:has(body.reading-page)::-webkit-scrollbar { display: none; }
 }
 
 /* ---------- 书房: a bookcase ---------- */
+.study-window { position: absolute; z-index: 1; pointer-events: none; user-select: none; }   /* its paper is the scroll's kraft */
 .study { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 14px; font-family: 'Noto Serif SC', serif; }
 /* 匾额: a dark board, light characters */
 .plaque {

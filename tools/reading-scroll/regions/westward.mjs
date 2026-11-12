@@ -61,9 +61,9 @@ export const depths = {
         a.person(wx + 10, 500, 1.2, 0, true);
       });
       if (key['高窗']) anchors[key['高窗']] = hw.used ? [hw.left - 34, hw.top + 60] : [wx, wy - 20];
-      tahiti(a, w * .76, 440, w);
+      const tt = tahiti(a, w * .76, 440, w);
       a.water(w * .62, 446, w * .38, 512, { density: .8, fadeIn: 90 });   // the lagoon opens to the sea
-      if (key['塔希提']) anchors[key['塔希提']] = [w * .76, 300];
+      if (key['塔希提']) anchors[key['塔希提']] = [w * .76, tt != null ? tt - 6 : 300];
       const r = sail(road(w, h, orient), w * .86, w + 200, 466, 60);
       anchorAll(r, places, anchors, orient);
       return { road: r, anchors, dark: [[0, w * .5]], water: [[w * .86, w]] };
@@ -74,19 +74,23 @@ export const depths = {
       a.ctx.strokeStyle = 'rgba(8,7,6,.95)'; a.ctx.lineWidth = 3; for (let i = 1; i < 5; i++) { a.ctx.beginPath(); a.ctx.moveTo(w / 2 - 24 + i * 9.6, 120); a.ctx.lineTo(w / 2 - 24 + i * 9.6, 184); a.ctx.stroke(); }
     });
     if (key['高窗']) anchors[key['高窗']] = hw.used ? [hw.left - 40, hw.top + 50] : [w / 2, 100];
-    tahiti(a, w / 2, h * .85, w, 120);
-    if (key['塔希提']) anchors[key['塔希提']] = [w / 2 - 125, h * .85 - 40];
+    const tp = tahiti(a, w / 2, h * .85, w, 120, 240);
+    if (key['塔希提']) anchors[key['塔希提']] = tp != null ? [w / 2, tp - 6] : [w / 2 - 125, h * .85 - 40];
     const r = road(w, h, orient, tt => 30 * Math.sin(tt * 5));
     anchorAll(r, places, anchors, orient);
     return { road: r, anchors, dark: [[0, h * .5]], water: [[h * .85 + 14, h * .85 + 66]] };
   },
 };
-function tahiti(a, x, y, w, moonUp = 230) {
-  a.moon(x + 110, y - moonUp, 16);
+/** 塔希提: the pale moon, the lagoon, the hut among the palms. Returns the top of the hut and palms. */
+function tahiti(a, x, y, w, moonUp = 230, size = 330) {
+  a.moon(x + 110, y - moonUp, 16, 'moon-pale');
   a.water(x - 160, y + 10, 320, y + 70, { density: .6, fadeIn: 80, fadeOut: 60 });
-  for (let i = 0; i < 5; i++) palm(a, x - 110 + i * 50 + a.rr(-8, 8), y + 12, a.rr(70, 110), a.rr(-18, 18));
-  thatchHut(a, x - 30, y + 10, 46, 14, 20, { stilts: 9 });
-  a.person(x + 44, y + 12, 1, 0); a.boat(x + 70, y + 46, 40);
+  const t = a.propAt('tahiti-hut', x, y + 26, size, () => {
+    for (let i = 0; i < 5; i++) palm(a, x - 110 + i * 50 + a.rr(-8, 8), y + 12, a.rr(70, 110), a.rr(-18, 18));
+    thatchHut(a, x - 30, y + 10, 46, 14, 20, { stilts: 9 });
+    a.person(x + 44, y + 12, 1, 0); a.boat(x + 70, y + 46, 40);
+  });
+  return t.used ? t.top : null;
 }
 /* 舞台: a stage, curtains, footlights — a quiet nod to Jerry the performer */
 export const stage = {

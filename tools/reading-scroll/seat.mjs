@@ -15,6 +15,6 @@ export function seatLabel([x, y], isInk, { reach = 180, half = 14, gap = 6 } = {
   // roofs or hills behind its building
   const start = Math.round(y);
   if (solid(start)) return [x, y];
-  for (let r = start + 1; r <= y + reach; r++) if (solid(r)) return [x, r - gap];
+  for (let r = start + 1; r <= y + reach; r++) if (solid(r)) return [x, Math.max(y, r - gap)];   // ink nearer than the gap: stay put
   return [x, y];
 }

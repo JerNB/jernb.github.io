@@ -34,15 +34,20 @@ const DRAW = {
     a.person(x - 30, y - 6, 1.1, 0); a.person(x - 16, y - 4, 1, 0);
     return [x - 20, y - 70];
   },
-  sunset(a, x, y) { a.glow(x, y, 60, .35, '236,214,170'); a.ctx.fillStyle = 'rgba(232,220,196,.95)'; a.ctx.beginPath(); a.ctx.arc(x, y + 20, 26, Math.PI, 0); a.ctx.fill(); return [x, y - 12]; },   // just above the sun (it is too pale to seat on)
+  sunset(a, x, y) {          // 太阳以西: the painted sun half sunk into the horizon at 330
+    const s = a.propAt('sea-sun', x, y + 62, 320, () => { a.glow(x, y, 60, .35, '236,214,170'); a.ctx.fillStyle = 'rgba(232,220,196,.95)'; a.ctx.beginPath(); a.ctx.arc(x, y + 20, 26, Math.PI, 0); a.ctx.fill(); });
+    return s.used ? [x, s.top - 6] : [x, y - 12];                   // just above the sun (the stand-in is too pale to seat on)
+  },
   library(a, x, y) {
-    minka(a, x - 66, y, 86, 22, 28);                       // 甲村图书馆: an old house turned library
-    stoneLantern(a, x - 82, y + 8, .9);
-    a.propAt('well', x + 60, y + 6, 72, () => {
-      const c = a.ctx; c.fillStyle = a.ink(.8); c.beginPath(); c.ellipse(x + 60, y, 18, 6, 0, 0, 7); c.fill();
-      c.fillStyle = '#b3a994'; c.fillRect(x + 42, y - 14, 36, 14); c.strokeStyle = a.ink(.85); c.lineWidth = .9; c.strokeRect(x + 42, y - 14, 36, 14);
-      c.fillStyle = 'rgba(5,4,4,.95)'; c.beginPath(); c.ellipse(x + 60, y - 14, 18, 5, 0, 0, 7); c.fill();
+    const lib = a.propAt('kafka-library', x - 20, y + 8, 270, () => {   // 甲村图书馆: an old house turned library
+      minka(a, x - 66, y, 86, 22, 28); stoneLantern(a, x - 82, y + 8, .9);
     });
-    return [x, y - 80];
+    const wx = lib.used ? lib.right + 30 : x + 60;
+    a.propAt('well', wx, y + 6, 72, () => {
+      const c = a.ctx; c.fillStyle = a.ink(.8); c.beginPath(); c.ellipse(wx, y, 18, 6, 0, 0, 7); c.fill();
+      c.fillStyle = '#b3a994'; c.fillRect(wx - 18, y - 14, 36, 14); c.strokeStyle = a.ink(.85); c.lineWidth = .9; c.strokeRect(wx - 18, y - 14, 36, 14);
+      c.fillStyle = 'rgba(5,4,4,.95)'; c.beginPath(); c.ellipse(wx, y - 14, 18, 5, 0, 0, 7); c.fill();
+    });
+    return lib.used ? [x - 20, lib.top - 6] : [x, y - 80];
   },
 };
