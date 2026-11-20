@@ -1,0 +1,1045 @@
+{
+  "agent": "codex",
+  "task": "T005",
+  "mode": "built-in imagegen plus authorized crop/resize/palette export",
+  "encoding": "lossless WebP",
+  "assets": [
+    {
+      "name": "far-ridge-soft",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        0,
+        310,
+        1867,
+        724
+      ],
+      "size": [
+        4500,
+        800
+      ],
+      "bytes": 110460,
+      "sha256": "a1aa2a702a00573c85aa47d0fcf8e48227a6a0190fb2ddec850dc0c8eef6d8c0",
+      "checks": {
+        "size": [
+          4500,
+          800
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        },
+        "maxInkOpacityMeasured": 0.3437,
+        "densityWithinRoundingTolerance": true
+      }
+    },
+    {
+      "name": "far-ridge-steep",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        0,
+        214,
+        1924,
+        724
+      ],
+      "size": [
+        4500,
+        1100
+      ],
+      "bytes": 295332,
+      "sha256": "3d8c02eafd50edacb3dff0b52053bc024cce199b9af2b4c0712b4161739a3d97",
+      "checks": {
+        "size": [
+          4500,
+          1100
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        },
+        "maxInkOpacityMeasured": 0.3509,
+        "densityWithinRoundingTolerance": true
+      }
+    },
+    {
+      "name": "far-ridge-loess",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        0,
+        260,
+        1962,
+        724
+      ],
+      "size": [
+        4500,
+        700
+      ],
+      "bytes": 113366,
+      "sha256": "282681cf7a36552a36da16c726a398bb59696aaba75090ee1a8d7047c907483d",
+      "checks": {
+        "size": [
+          4500,
+          700
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        },
+        "maxInkOpacityMeasured": 0.3028,
+        "densityWithinRoundingTolerance": true
+      }
+    },
+    {
+      "name": "cloud-sea",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        181,
+        267,
+        2039,
+        464
+      ],
+      "size": [
+        4500,
+        600
+      ],
+      "bytes": 137208,
+      "sha256": "a941913bff4d73361bf9232f69da7c4188f1846b3ddbe06ddcd5384a3496ce4b",
+      "checks": {
+        "size": [
+          4500,
+          600
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        },
+        "maxInkOpacityMeasured": 0.3509,
+        "densityWithinRoundingTolerance": true
+      }
+    },
+    {
+      "name": "mist-band",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        0,
+        282,
+        1914,
+        724
+      ],
+      "size": [
+        3000,
+        400
+      ],
+      "bytes": 35448,
+      "sha256": "d648c3eecd12a7050077a56bd128d814de10a39c0e97839fd7438ba3ba09fa88",
+      "checks": {
+        "size": [
+          3000,
+          400
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        },
+        "maxInkOpacityMeasured": 0.1995,
+        "densityWithinRoundingTolerance": true
+      }
+    },
+    {
+      "name": "geese-flock",
+      "sourceSize": [
+        2098,
+        749
+      ],
+      "sourceCrop": [
+        0,
+        177,
+        1812,
+        749
+      ],
+      "size": [
+        700,
+        250
+      ],
+      "bytes": 8072,
+      "sha256": "d5b0630d97a62a9fd926d63c67a263bfe2876759d7dab6b15c9ef1585e370a60",
+      "checks": {
+        "size": [
+          700,
+          250
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "foreground-rocks",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        77,
+        318,
+        2093,
+        724
+      ],
+      "size": [
+        3000,
+        450
+      ],
+      "bytes": 283300,
+      "sha256": "daa255bfd0d03009dec00b4fd78276fa177a5dff2e0842331142d13fe70fad25",
+      "checks": {
+        "size": [
+          3000,
+          450
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": "dedicated edge exception"
+        }
+      }
+    },
+    {
+      "name": "foreground-reeds",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        110,
+        267,
+        2074,
+        724
+      ],
+      "size": [
+        3000,
+        500
+      ],
+      "bytes": 300450,
+      "sha256": "1b1f3c9600f16b57e154d611c8bb767957e023fb502f82a6a1dbaaa62eb36c09",
+      "checks": {
+        "size": [
+          3000,
+          500
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": "dedicated edge exception"
+        }
+      }
+    },
+    {
+      "name": "foreground-branch",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "sourceCrop": [
+        0,
+        199,
+        1358,
+        1024
+      ],
+      "size": [
+        1500,
+        1000
+      ],
+      "bytes": 274130,
+      "sha256": "370aefa17dd8a61556489863aff80b2448589958ea433edec5c379751dc35d0f",
+      "checks": {
+        "size": [
+          1500,
+          1000
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": "dedicated edge exception"
+        }
+      }
+    },
+    {
+      "name": "pig-pen",
+      "sourceSize": [
+        1586,
+        992
+      ],
+      "sourceCrop": [
+        206,
+        69,
+        1408,
+        873
+      ],
+      "size": [
+        800,
+        500
+      ],
+      "bytes": 117264,
+      "sha256": "14eba88a5567b151825613bb1a514c6037e30e92e1ebcdf4dece951da5c0d01e",
+      "checks": {
+        "size": [
+          800,
+          500
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "village-shrine",
+      "sourceSize": [
+        1448,
+        1086
+      ],
+      "sourceCrop": [
+        117,
+        110,
+        1331,
+        966
+      ],
+      "size": [
+        1000,
+        750
+      ],
+      "bytes": 318336,
+      "sha256": "fddc8f6ac29532bfdd7dc9dc0f0f54dc5bf3113208d591ea427837de2f031e38",
+      "checks": {
+        "size": [
+          1000,
+          750
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "shuangshui-village",
+      "sourceSize": [
+        1774,
+        887
+      ],
+      "sourceCrop": [
+        170,
+        96,
+        1601,
+        795
+      ],
+      "size": [
+        1300,
+        650
+      ],
+      "bytes": 384866,
+      "sha256": "fdff9f7674e5b2965d5237eb9a6132713648b92628fdb1abb2678913c023e2cf",
+      "checks": {
+        "size": [
+          1300,
+          650
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "sea-sun",
+      "sourceSize": [
+        1844,
+        853
+      ],
+      "sourceCrop": [
+        0,
+        0,
+        1844,
+        853
+      ],
+      "size": [
+        1300,
+        600
+      ],
+      "bytes": 89330,
+      "sha256": "e43b39c8ac707807ea2dcfac9f09b604c1db0f2431aefa8202541b2b144766ea",
+      "checks": {
+        "size": [
+          1300,
+          600
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "tahiti-hut",
+      "sourceSize": [
+        1551,
+        1014
+      ],
+      "sourceCrop": [
+        0,
+        0,
+        1551,
+        1014
+      ],
+      "size": [
+        1300,
+        850
+      ],
+      "bytes": 361332,
+      "sha256": "e9ba4ee347eebfea7bac1662f173d1339502d479f96ec12d05d4529e28973a0b",
+      "checks": {
+        "size": [
+          1300,
+          850
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "algiers-beach",
+      "sourceSize": [
+        1852,
+        849
+      ],
+      "sourceCrop": [
+        223,
+        283,
+        1627,
+        641
+      ],
+      "size": [
+        1200,
+        550
+      ],
+      "bytes": 81902,
+      "sha256": "1e1019e14f63018dadc1055ade14867bb1df16b37a2ef3a8db145173cbba375b",
+      "checks": {
+        "size": [
+          1200,
+          550
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "sahara-camp",
+      "sourceSize": [
+        1840,
+        855
+      ],
+      "sourceCrop": [
+        0,
+        0,
+        1645,
+        751
+      ],
+      "size": [
+        1400,
+        650
+      ],
+      "bytes": 209440,
+      "sha256": "9aa6daace55240c192157c36d5a406154ee33ccb62a9eab0af3789317173ec5f",
+      "checks": {
+        "size": [
+          1400,
+          650
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "dawn-mountain",
+      "sourceSize": [
+        1161,
+        1354
+      ],
+      "sourceCrop": [
+        0,
+        89,
+        1138,
+        1248
+      ],
+      "size": [
+        1800,
+        2100
+      ],
+      "bytes": 1267886,
+      "sha256": "99024aaff05b1504db9a6f668902f70a79b7310cdf8c608e9db7d485d512a006",
+      "checks": {
+        "size": [
+          1800,
+          2100
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": "dedicated edge exception",
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "night-clouds",
+      "sourceSize": [
+        2146,
+        733
+      ],
+      "sourceCrop": [
+        223,
+        234,
+        1899,
+        451
+      ],
+      "size": [
+        3000,
+        700
+      ],
+      "bytes": 108184,
+      "sha256": "80483347686cad597b65e3ba7926960e5879daef5822a68ae26d9ba8fa673818",
+      "checks": {
+        "size": [
+          3000,
+          700
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "snow-veil",
+      "sourceSize": [
+        1060,
+        1484
+      ],
+      "sourceCrop": [
+        135,
+        242,
+        945,
+        1302
+      ],
+      "size": [
+        1500,
+        2100
+      ],
+      "bytes": 594904,
+      "sha256": "c45f4a38dd3e60ab007ba0ebf8fb5b5d282b2d606e88f2ef836a5d923d14c972",
+      "checks": {
+        "size": [
+          1500,
+          2100
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "moon-night",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceCrop": [
+        269,
+        275,
+        966,
+        952
+      ],
+      "size": [
+        600,
+        600
+      ],
+      "bytes": 62882,
+      "sha256": "5a49cdc582c7b689e8b8bbe8e02f87c789bc22d84793c8c973fed2dd771962b8",
+      "checks": {
+        "size": [
+          600,
+          600
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "sun-desert",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceCrop": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "size": [
+        600,
+        600
+      ],
+      "bytes": 99482,
+      "sha256": "d289a5f6371bc72b1ba5fb96ae6284dd03b082689db03c6364238b8624f2b502",
+      "checks": {
+        "size": [
+          600,
+          600
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "moon-pale",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceCrop": [
+        0,
+        0,
+        838,
+        1254
+      ],
+      "size": [
+        500,
+        500
+      ],
+      "bytes": 4770,
+      "sha256": "7eff114692c9cb791fb2db54365c8343c8574baecc3f1923e464fcca6268a03f",
+      "checks": {
+        "size": [
+          500,
+          500
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        },
+        "maxInkOpacityMeasured": 0.0937,
+        "densityWithinRoundingTolerance": true
+      }
+    },
+    {
+      "name": "river-boats",
+      "sourceSize": [
+        2174,
+        723
+      ],
+      "sourceCrop": [
+        179,
+        275,
+        1976,
+        448
+      ],
+      "size": [
+        1300,
+        350
+      ],
+      "bytes": 28080,
+      "sha256": "196b39666e04ed84af16f5042b5b64d8eb26858d74f2d94bb36a590a9bb720d4",
+      "checks": {
+        "size": [
+          1300,
+          350
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "road-travellers",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "sourceCrop": [
+        212,
+        255,
+        1942,
+        464
+      ],
+      "size": [
+        1300,
+        350
+      ],
+      "bytes": 30646,
+      "sha256": "4c68e08c084dc70f97ce9043fa3f4130095ecf433b1fd3d00ddc50442e1b769e",
+      "checks": {
+        "size": [
+          1300,
+          350
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "ox-cart",
+      "sourceSize": [
+        1642,
+        958
+      ],
+      "sourceCrop": [
+        201,
+        238,
+        1402,
+        724
+      ],
+      "size": [
+        600,
+        350
+      ],
+      "bytes": 54596,
+      "sha256": "c3b169405aa3171df50127e2ee548bc7a195ec4ca1449a171257d1e66c7df9ab",
+      "checks": {
+        "size": [
+          600,
+          350
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "brocade-tile",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceCrop": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "bytes": 386892,
+      "sha256": "e8b5d60ca13ef7d9e02e3082cf15aca0d3812ae0c818c46a68db9032fc63238b",
+      "checks": {
+        "size": [
+          512,
+          512
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true
+      }
+    },
+    {
+      "name": "scholar-window",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceCrop": [
+        153,
+        142,
+        1095,
+        1109
+      ],
+      "size": [
+        1000,
+        1000
+      ],
+      "bytes": 203436,
+      "sha256": "41bd962c2459d78d03b6a6ff6bedc0d343714a96917b16f6fd61053066389202",
+      "checks": {
+        "size": [
+          1000,
+          1000
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "study-objects",
+      "sourceSize": [
+        1708,
+        921
+      ],
+      "sourceCrop": [
+        223,
+        174,
+        1497,
+        772
+      ],
+      "size": [
+        1300,
+        700
+      ],
+      "bytes": 129070,
+      "sha256": "657063673a8ed49f9d776b00ae8ee579a7d58f8adf46d8481752bd647f265457",
+      "checks": {
+        "size": [
+          1300,
+          700
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "dusk-mountain",
+      "sourceSize": [
+        876,
+        1796
+      ],
+      "sourceCrop": [
+        0,
+        270,
+        876,
+        1550
+      ],
+      "size": [
+        1800,
+        2100
+      ],
+      "bytes": 1086182,
+      "sha256": "3abd77cafbffea743e393f8fba698e6c468ba5e2e99138af65d2509c01253db4",
+      "checks": {
+        "size": [
+          1800,
+          2100
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": "dedicated edge exception",
+          "top": true,
+          "bottom": true
+        }
+      }
+    },
+    {
+      "name": "kafka-library",
+      "sourceSize": [
+        1698,
+        926
+      ],
+      "sourceCrop": [
+        171,
+        55,
+        1468,
+        849
+      ],
+      "size": [
+        1100,
+        600
+      ],
+      "bytes": 292664,
+      "sha256": "930faa198d372edeea74b1bd49c42049ac8fcd7578b7d3d4c48dcd108e69406e",
+      "checks": {
+        "size": [
+          1100,
+          600
+        ],
+        "rgb": true,
+        "opaque": true,
+        "nonempty": true,
+        "borders": {
+          "left": true,
+          "right": true,
+          "top": true,
+          "bottom": true
+        }
+      }
+    }
+  ],
+  "brocadeWrapCheck": {
+    "xMeanDelta": 8.083,
+    "yMeanDelta": 12.292,
+    "visualReview": "3x3 repeat inspected; opposite edge pixels need not be identical for a woven texture"
+  },
+  "independentValidation": {
+    "assetCount": 30,
+    "failures": [],
+    "originalAssetsChanged": [],
+    "totalBytes": 7469910
+  }
+}

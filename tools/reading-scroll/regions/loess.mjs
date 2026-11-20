@@ -1,11 +1,11 @@
 // 黄土与田野: 王小波's Yunnan fields and Beijing, 史铁生 / 路遥's loess plateau, 余华's paddy.
-// 乡土中国 is written into the slope as a faint inscription rather than drawn as a place.
-import { thatchHut, siheyuan, factory, pigsty } from '../buildings.mjs';
+// 乡土中国 is the old tree and the earth-god shrine at the village mouth, at the end of the road.
+import { thatchHut, siheyuan, factory, pigsty, bareTree } from '../buildings.mjs';
 import { road, spread } from '../ink.mjs';
 
 const MARKS = { // place → [drawer, landscape x fraction, ground y]
   黄金时代: ['fields', .09, 430], 胡同: ['hutong', .21, 420], 广场: ['crowd', .31, 440], 猪栏: ['pigpen', .4, 430],
-  豆腐厂: ['factory', .5, 420], 清平湾: ['caves', .62, 400], 双水村: ['village', .74, 410], 福贵的田: ['paddy', .87, 440], 乡土: ['inscription', .965, 120],
+  豆腐厂: ['factory', .5, 420], 清平湾: ['caves', .62, 400], 双水村: ['village', .74, 410], 福贵的田: ['paddy', .87, 440], 乡土: ['shrine', .955, 430],
 };
 
 export const loess = {
@@ -15,7 +15,7 @@ export const loess = {
     if (!P) {
       a.mountain({ x0: -40, x1: w * .45, base: 290, amp: 80, freq: .006, seed: 71, tone: t * .45, depth: 100, cun: .5, edge: .6 }); // Yunnan hills
       a.mist(0, 250, w * .5, 60, .6);
-      terraces(a, w * .52, w * 1.02, 380, t);                                             // loess plateau
+      terraces(a, w * .52, w * .93, 380, t);   // stops short of 乡土, whose tree stands clear at the end of the road                                             // loess plateau
       a.mist(w * .5, 330, w * .5, 40, .4);
     }
     const names = Object.keys(MARKS);
@@ -69,7 +69,7 @@ const DRAW = {
       for (let px = x - 110; px < x + 110; px += 4) { const py = y - k * 14 + Math.sin(px * .03 + k) * 4; px === x - 110 ? c.moveTo(px, py) : c.lineTo(px, py); } c.stroke(); }
     for (let i = 0; i < 3; i++) banana(a, x - 90 + i * 26, y - 70);
     thatchHut(a, x + 36, y - 74, 34, 13, 16, { stilts: 7 });
-    return [x, y - 110];
+    return [x + 40, y - 150];                                      // over the hut; the label then comes down onto its roof
   },
   hutong(a, x, y) {               // 胡同: grey courtyard walls and a gate
     const s = a.propAt('siheyuan', x, y + 4, 230, () => siheyuan(a, x - 96, y, 190));
@@ -82,9 +82,8 @@ const DRAW = {
     return [x, y - 70];
   },
   pigpen(a, x, y) {               // 一只特立独行的猪: a pen, and one pig standing on the roof
-    pigsty(a, x - 40, y, 130);
-    pig(a, x - 24, y - 27);
-    return [x + 30, y - 60];
+    const r = a.propAt('pig-pen', x, y + 4, 200, () => { pigsty(a, x - 40, y, 130); pig(a, x - 24, y - 27); });
+    return r.used ? [x, r.top - 6] : [x + 30, y - 60];
   },
   factory(a, x, y) {              // 豆腐厂: a brick workshop under its stack
     const r = a.propAt('factory', x, y + 2, 210, () => factory(a, x - 66, y, 120, 28));
@@ -100,10 +99,12 @@ const DRAW = {
     return [x, cv.used ? cv.top - 6 : y - 70];
   },
   village(a, x, y) {              // 双水村: a village of caves and courtyards along a gully
-    const c = a.ctx;
-    for (let r = 0; r < 2; r++) for (let i = 0; i < 3; i++) { const cx = x - 60 + i * 50 + r * 20, cy = y - r * 34; c.fillStyle = a.ink(.8); c.beginPath(); c.moveTo(cx - 9, cy); c.lineTo(cx - 9, cy - 12); c.arc(cx, cy - 12, 9, Math.PI, 0); c.lineTo(cx + 9, cy); c.fill(); }
-    for (let i = 0; i < 5; i++) a.person(x + a.rr(-80, 80), y + a.rr(6, 14), .85, a.rng() < .5 ? 2 : 0);
-    return [x, y - 80];
+    const v = a.propAt('shuangshui-village', x, y + 10, 300, () => {
+      const c = a.ctx;
+      for (let r = 0; r < 2; r++) for (let i = 0; i < 3; i++) { const cx = x - 60 + i * 50 + r * 20, cy = y - r * 34; c.fillStyle = a.ink(.8); c.beginPath(); c.moveTo(cx - 9, cy); c.lineTo(cx - 9, cy - 12); c.arc(cx, cy - 12, 9, Math.PI, 0); c.lineTo(cx + 9, cy); c.fill(); }
+      for (let i = 0; i < 5; i++) a.person(x + a.rr(-80, 80), y + a.rr(6, 14), .85, a.rng() < .5 ? 2 : 0);
+    });
+    return v.used ? [x, v.top - 6] : [x, y - 62];                   // just above the caves, not up on the terraces
   },
   paddy(a, x, y) {                // 福贵的田: flooded paddy, an old ox, an old man
     a.water(x - 130, y - 20, 260, y + 30, { density: .6 });
@@ -112,7 +113,16 @@ const DRAW = {
     if (!ox.used) a.person(x + 40, y, 1.1, 1);                       // the painting has its own old man
     return [x, ox.used ? ox.top - 8 : y - 70];
   },
-  inscription(a, x, y) { a.inscription('乡土中国', x, y, 18, .42); return [x - 40, y + 76]; },
+  shrine(a, x, y) {               // 乡土: the old tree at the village mouth and its tiny earth-god shrine
+    const s = a.propAt('village-shrine', x, y, 200, () => {
+      bareTree(a, x - 14, y, 96, .85);
+      const c = a.ctx; c.fillStyle = '#cdc2a6'; c.fillRect(x + 14, y - 16, 18, 16);           // the shrine, no taller than a man
+      c.fillStyle = a.ink(.85); c.beginPath(); c.moveTo(x + 10, y - 15); c.lineTo(x + 23, y - 24); c.lineTo(x + 36, y - 15); c.fill();
+      c.fillRect(x + 20, y - 10, 6, 10); c.strokeStyle = a.ink(.7); c.lineWidth = .8; c.strokeRect(x + 14, y - 16, 18, 16);
+      a.person(x + 44, y + 2, .85, 1);
+    });
+    return s.used ? [x, s.top - 6] : [x - 14, y - 100];
+  },
 };
 function banana(a, x, y) { const c = a.ctx; c.strokeStyle = a.ink(.7); c.lineWidth = 1.6; c.beginPath(); c.moveTo(x, y + 60); c.lineTo(x + 2, y); c.stroke();
   for (let i = 0; i < 5; i++) { const an = -Math.PI / 2 + (i - 2) * .55; c.fillStyle = a.ink(.45); c.beginPath(); c.ellipse(x + Math.cos(an) * 18, y + Math.sin(an) * 12, 20, 5, an, 0, 7); c.fill(); } }

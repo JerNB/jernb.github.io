@@ -59,18 +59,24 @@ const DRAW = {
   },
   beach(a, x, y) {          // 阿尔及尔海滩: glare, one figure, the sun, the white city above the bay
     a.propAt('casbah', x - 150, y - 92, 220, () => casbah(a, x - 150, y - 100, 180, 96));
-    a.glow(x + 30, y - 210, 50, .5, '240,226,190');
-    a.ctx.fillStyle = 'rgba(240,230,205,.95)'; a.ctx.beginPath(); a.ctx.arc(x + 30, y - 210, 16, 0, 7); a.ctx.fill();
-    a.person(x, y, 1.2, 0);
-    a.ctx.strokeStyle = a.ink(.3); a.ctx.lineWidth = .8; a.ctx.beginPath(); a.ctx.moveTo(x + 3, y); a.ctx.lineTo(x + 30, y + 6); a.ctx.stroke(); // long shadow
-    return [x, y - 80];
+    a.prop('sun-desert', x + 30 - 75, y - 210 - 75, 150, 150, () => {          // the white-hot sun
+      a.glow(x + 30, y - 210, 50, .5, '240,226,190');
+      a.ctx.fillStyle = 'rgba(240,230,205,.95)'; a.ctx.beginPath(); a.ctx.arc(x + 30, y - 210, 16, 0, 7); a.ctx.fill();
+    });
+    const b = a.propAt('algiers-beach', x + 30, y + 8, 290, () => {
+      a.person(x, y, 1.2, 0);
+      a.ctx.strokeStyle = a.ink(.3); a.ctx.lineWidth = .8; a.ctx.beginPath(); a.ctx.moveTo(x + 3, y); a.ctx.lineTo(x + 30, y + 6); a.ctx.stroke(); // long shadow
+    });
+    return b.used ? [x + 30, b.top - 6] : [x, y - 80];
   },
   sahara(a, x, y) {         // 撒哈拉: a tent, a camel, a lantern
-    palm(a, x - 120, y + 2, 74, -10, .75); palm(a, x - 102, y + 6, 54, 8, .7);
-    adobeCube(a, x + 110, y - 14, 34, 20, 14); adobeCube(a, x + 148, y - 8, 26, 16, 12, { dome: true });   // the little house in El Aaiún
-    a.propAt('camel-dunes', x, y + 4, 220, () => { nomadTent(a, x - 30, y + 2, 78); camel(a, x + 44, y); });
-    a.glow(x - 30, y - 8, 20, .5);
-    return [x, y - 90];
+    adobeCube(a, x + 150, y - 14, 34, 20, 14); adobeCube(a, x + 188, y - 8, 26, 16, 12, { dome: true });   // the little house in El Aaiún
+    const camp = a.propAt('sahara-camp', x - 10, y + 8, 330, () => {
+      palm(a, x - 120, y + 2, 74, -10, .75); palm(a, x - 102, y + 6, 54, 8, .7);
+      a.propAt('camel-dunes', x, y + 4, 220, () => { nomadTent(a, x - 30, y + 2, 78); camel(a, x + 44, y); });
+      a.glow(x - 30, y - 8, 20, .5);
+    });
+    return camp.used ? [x + 20, camp.top - 6] : [x, y - 90];
   },
 };
 function camel(a, x, y) {

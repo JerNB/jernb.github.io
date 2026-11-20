@@ -2,13 +2,19 @@
 import { makeInk } from './ink.mjs';
 import { layoutScroll } from '../../js/reading/layout.mjs';
 import { painterFor } from './regions/index.mjs';
+import { seatLabel } from './seat.mjs';
 
 export const SEED = 20261108;
 export const PROP_NAMES = ['compass', 'lamp', 'scale', 'bundle', 'winehouse', 'siheyuan', 'factory', 'cave-dwellings', 'old-ox',
   'snow-house', 'golden-pavilion', 'well', 'petersburg-quay', 'casbah', 'camel-dunes', 'macondo-house', 'butterflies',
-  'inn-moon', 'plum-manor', 'pleasure-boat', 'high-window'];
+  'inn-moon', 'plum-manor', 'pleasure-boat', 'high-window',
+  // third batch: the missing landmarks, the sky and the ground, the joins, sun and moons, people on the road
+  'pig-pen', 'village-shrine', 'shuangshui-village', 'sea-sun', 'kafka-library', 'tahiti-hut', 'algiers-beach', 'sahara-camp',
+  'far-ridge-soft', 'far-ridge-steep', 'far-ridge-loess', 'cloud-sea', 'mist-band', 'geese-flock',
+  'foreground-rocks', 'foreground-reeds', 'foreground-branch', 'dusk-mountain', 'dawn-mountain', 'night-clouds', 'snow-veil',
+  'moon-night', 'sun-desert', 'moon-pale', 'river-boats', 'road-travellers', 'ox-cart'];
 /** Painted on black and laid over the night with `screen`; everything else is ink on kraft. */
-export const NIGHT_PROPS = new Set(['inn-moon', 'plum-manor', 'pleasure-boat', 'high-window']);
+export const NIGHT_PROPS = new Set(['inn-moon', 'plum-manor', 'pleasure-boat', 'high-window', 'moon-night', 'night-clouds']);
 const KRAFT = [179, 169, 148];
 
 /**
@@ -94,10 +100,13 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
     lc.save(); lc.translate(-rect.x, -rect.y); makeInk(lc, seed).paper(rect.x, rect.y, rect.w, rect.h); lc.restore();
     const fore = document.createElement('canvas'); fore.width = layer.width; fore.height = layer.height;
     const api = makeInk(lc, seed + region.order * 7919, props, fore.getContext('2d'));
+    if (orient === 'landscape') backdrop(api, region.id, rect.w, rect.h);
     const out = painterFor(region.painter).paint(api, { w: rect.w, h: rect.h }, region, places, orient,
       { objects: reading.objects.filter(o => o.region === region.id), links: reading.links });
+    if (orient === 'landscape') nearground(api, region.id, rect.w, rect.h);
     recede(lc, layer, scale, out.dark?.length ? HAZE_DARK : HAZE);
     lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'source-over'; lc.drawImage(fore, 0, 0);
+    seatAll(lc, layer, scale, out, orient === 'portrait' ? 1 : 0);
     feather(lc, rect, orient, scale, makeInk(lc, seed + region.order * 31).fbm, rect === lay.rects[0] || !!only, rect === lay.rects.at(-1) || !!only);
     ctx.drawImage(layer, rect.x, rect.y, rect.w, rect.h);
     scene.road.push(...out.road.map(([x, y]) => [round(x + rect.x), round(y + rect.y)]));
@@ -106,7 +115,7 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
     for (const [a, b] of out.dark ?? []) scene.dark.push([round(a + rect[axis]), round(b + rect[axis])]);
     for (const [a, b] of out.water ?? []) scene.water.push([round(a + rect[axis]), round(b + rect[axis])]);
   }
-  if (!only) dusk(makeInk(ctx, seed + 77), scene, orient);
+  if (!only) dusk(makeInk(ctx, seed + 77, props), scene, orient, props);
   // underneath everything: the land that runs on between the countries, then the paper
   ctx.save(); ctx.globalCompositeOperation = 'destination-over';
   const under = document.createElement('canvas'); under.width = canvas.width; under.height = canvas.height;
@@ -116,6 +125,62 @@ export async function paintScene(reading, orient, { seed = SEED, scale = 1, only
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(under, 0, 0);
   ctx.restore();
   return { canvas, scene };
+}
+
+/**
+ * The painted sky and distance behind each landscape region, laid before its painter draws: a far
+ * range on the horizon, a cloud sea in the mountains, geese, the clouds of the night. This is what
+ * fills the upper half of the paper, which used to be bare.
+ */
+// [name, from, to (fractions of the region's width), foot y, band height]; from === to: one painting that wide
+const BACKDROP = {
+  'xingnang': [['far-ridge-soft', 0, 1, 205, 280]],
+  'jianghu-shanhe': [['far-ridge-steep', 0, 1, 225, 320], ['cloud-sea', .1, .9, 312, 110], ['geese-flock', .58, .58, 120, 130]],
+  'jianghu-shijing': [['far-ridge-soft', 0, 1, 250, 260], ['geese-flock', .3, .3, 140, 112]],
+  'loess': [['far-ridge-loess', .35, 1, 292, 230], ['geese-flock', .22, .22, 150, 124]],
+  'snow': [['far-ridge-steep', 0, 1, 240, 300], ['snow-veil', .05, .05, 560, 400]],   // snow begins to fall at the edge of the loess
+  'sea': [['far-ridge-soft', .05, .45, 332, 170], ['geese-flock', .78, .78, 170, 112]],
+  'jianghu-night': [['night-clouds', .1, .9, 200, 120]],
+};
+function backdrop(a, id, w, h) {
+  for (const [name, f0, f1, gy, bh] of BACKDROP[id] ?? []) {
+    if (f0 === f1) { a.propAt(name, w * f0, gy, bh, () => {}); continue; }       // a single painting, `bh` wide
+    a.band(name, w * f0, w * f1, gy, bh);
+  }
+}
+/** Rocks, reeds or an old pine standing on the scroll's lower edge, nearer than anything else. */
+const NEAR = {
+  'jianghu-shanhe': [['foreground-rocks', .3, 96], ['foreground-rocks', .86, 80]],
+  'jianghu-shijing': [['foreground-reeds', .62, 100]],
+  'loess': [['foreground-rocks', .55, 90]],
+  'snow': [['foreground-branch', .08, 210]],
+  'sea': [['foreground-reeds', .2, 104]],
+};
+/** People and boats about their business: on the road (y ≈ 470) and on the water. [name, x fraction, foot y, width] */
+const STAFFAGE = {
+  'jianghu-shanhe': [['road-travellers', .72, 482, 270]],
+  'jianghu-shijing': [['river-boats', .3, 548, 280]],
+  'loess': [['ox-cart', .145, 488, 120]],
+  'sea': [['river-boats', .3, 404, 230]],
+};
+function nearground(a, id, w, h) {
+  for (const [name, f, gy, pw] of STAFFAGE[id] ?? []) a.propAt(name, w * f, gy, pw, () => {});
+  for (const [name, f, fh] of NEAR[id] ?? []) a.foreground(name, w * f, h, fh);
+}
+
+/** Inked enough to hold up a label: clearly darker than the paper (pale far hills do not count). */
+const INK_LUM = 105;
+/** Seat every label of a region on what it names (see seat.mjs); night labels keep their place. */
+function seatAll(lc, layer, scale, out, ax) {
+  const { data } = lc.getImageData(0, 0, layer.width, layer.height);
+  const isInk = (x, y) => {
+    const px = Math.round(x * scale), py = Math.round(y * scale);
+    if (px < 0 || py < 0 || px >= layer.width || py >= layer.height) return false;
+    const i = (py * layer.width + px) * 4;
+    return data[i + 3] > 200 && .3 * data[i] + .59 * data[i + 1] + .11 * data[i + 2] < INK_LUM;
+  };
+  const night = pt => (out.dark ?? []).some(([a, b]) => pt[ax] >= a && pt[ax] <= b);
+  for (const map of [out.anchors, out.objects]) for (const [k, pt] of Object.entries(map ?? {})) if (!night(pt)) map[k] = seatLabel(pt, isInk);
 }
 
 /**
@@ -151,7 +216,21 @@ function feather(lc, rect, orient, scale, fbm, keepStart, keepEnd) {
  * dawn over the loess). Columns carry a little noise so the dusk is a wash, not a gradient.
  */
 const DUSK = 520, INTO = 380;
-function dusk(a, scene, orient) {
+/**
+ * Draw a painted mountain whose one side is near-black ink, fading that side out over its last
+ * `fade` of the width, so the mountain's dark melts into the night rather than ending on a line.
+ */
+function hillInto(c, p, x, y, w, h, darkSide, fade = .4) {
+  const k = c.getTransform().a, off = document.createElement('canvas');
+  off.width = Math.ceil(w * k); off.height = Math.ceil(h * k);
+  const o = off.getContext('2d'); o.drawImage(p.img, 0, 0, off.width, off.height);
+  const g = o.createLinearGradient(0, 0, off.width, 0);
+  if (darkSide === 'right') { g.addColorStop(0, '#000'); g.addColorStop(1 - fade, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)'); }
+  else { g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(fade, '#000'); g.addColorStop(1, '#000'); }
+  o.globalCompositeOperation = 'destination-in'; o.fillStyle = g; o.fillRect(0, 0, off.width, off.height);
+  c.drawImage(off, x, y, w, h);
+}
+function dusk(a, scene, orient, props = new Map()) {
   const c = a.ctx, P = orient === 'portrait', len = P ? scene.height : scene.width, across = P ? scene.width : scene.height;
   const ramp = (from, to, dir) => {                                   // dir +1: darkening toward `to`; -1: lightening
     const g = P ? c.createLinearGradient(0, from, 0, to) : c.createLinearGradient(from, 0, to, 0);
@@ -165,10 +244,15 @@ function dusk(a, scene, orient) {
     c.fillStyle = g;
     if (P) c.fillRect(0, from, across, to - from); else c.fillRect(from, 0, to - from, across);
   };
-  for (const [s, e] of scene.dark) {
-    if (s > 0) ramp(Math.max(0, s - DUSK), s + INTO, 1);
-    if (e < len) ramp(e - INTO, Math.min(len, e + DUSK), -1);
-  }
+  // in landscape the day walks into a mountain whose far side is the night, and out of another;
+  // the gradient stays only where there is no painting (portrait, or the paintings missing)
+  const MH = across + 40, mw = name => a.has(name) ? MH * 1800 / 2100 : 0;
+  scene.dark.forEach(([s, e], i) => {
+    const hill = !P && i === 0;                                        // the 古龙 night; the prison in 深处 keeps its own dark
+    // the dark side reaches well into the night (where the night is already full) and fades there
+    if (s > 0) { if (hill && a.has('dusk-mountain')) hillInto(c, props.get('dusk-mountain'), s - mw('dusk-mountain') * .62, -20, mw('dusk-mountain'), MH, 'right'); else ramp(Math.max(0, s - DUSK), s + INTO, 1); }
+    if (e < len) { if (hill && a.has('dawn-mountain')) hillInto(c, props.get('dawn-mountain'), e - mw('dawn-mountain') * .38, -20, mw('dawn-mountain'), MH, 'left'); else ramp(e - INTO, Math.min(len, e + DUSK), -1); }
+  });
 }
 
 /**

@@ -251,7 +251,9 @@ export function makeInk(ctx, seed = 20261108, props = new Map(), fg = null) {
       return [INK[0], INK[1], INK[2], 255 * Math.min(.95, strength * k * n * (.8 + .2 * (1 - (py - y) / h)))];
     });
   }
-  function moon(x, y, r = 34) {
+  function moon(x, y, r = 34, name = 'moon-night') {             // a painted moon when there is one: its disc is ~30% of the canvas
+    const p = props.get(name);
+    if (p) { const s = r * 2 / .3; paint(p, x - s / 2, y - s / 2, s, s); return; }
     glow(x, y, r * 4, .22, '236,228,208');
     ctx.fillStyle = '#e6dcc4'; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
   }
@@ -266,8 +268,8 @@ export function makeInk(ctx, seed = 20261108, props = new Map(), fg = null) {
     if (!p) return fallback();
     paint(p, x, y, w, h);
   }
-  function paint(p, x, y, w, h) {                                     // night paintings need the dark under them; day ones go on top
-    const c = !p.night && fg ? fg : ctx;
+  function paint(p, x, y, w, h, back = false) {                       // night paintings need the dark under them; day ones go on top
+    const c = !p.night && fg && !back ? fg : ctx;
     c.save(); if (c !== ctx) c.setTransform(ctx.getTransform());
     c.globalCompositeOperation = p.night ? 'screen' : 'source-over';
     c.drawImage(p.img, x, y, w, h); c.restore();
@@ -286,8 +288,30 @@ export function makeInk(ctx, seed = 20261108, props = new Map(), fg = null) {
     return { used: true, x, y, k: w / p.img.width, left: x + w * b.x0, right: x + w * b.x1, top: y + h * b.y0, bottom: gy };
   }
 
+  /**
+   * Lay a painted band (far hills, cloud sea) behind the region from x0 to x1: copies of its subject
+   * side by side, each `h` tall with the subject's foot on `gy`, behind everything the painter draws
+   * next. Copies step by most of the subject's width, so their faded ends overlap into one range.
+   */
+  function band(name, x0, x1, gy, h, { step = .82, jitter = 10 } = {}) {
+    const p = props.get(name); if (!p) return false;
+    const w = h * p.img.width / p.img.height, b = p.box, sw = w * (b.x1 - b.x0);
+    for (let cx = x0; cx < x1 + sw * .5; cx += sw * step) {               // noise, not rng: the rest of the painting stays as it was
+      const y = gy + jitter * (2 * fbm(cx * .013 + gy) - 1) - h * b.y1;
+      paint(p, cx - w * (b.x0 + b.x1) / 2, y, w, h, true);
+    }
+    return true;
+  }
+  /** A foreground painting standing on the scroll's lower edge (only its bottom edge may be inked). */
+  function foreground(name, cx, bottom, h) {
+    const p = props.get(name); if (!p) return false;
+    const w = h * p.img.width / p.img.height;
+    paint(p, cx - w / 2, bottom - h, w, h);
+    return true;
+  }
+
   return { ctx, rng, rr, n1, fbm, fbm2, sm, ink, field, paper, mountain, mist, hmist, house, glow, person, cart, ox, willow, pine,
-    boat, bridge, cityWall, water, night, moon, inscription, prop, propAt };
+    boat, bridge, cityWall, water, night, moon, inscription, prop, propAt, paint, band, foreground, has: name => props.has(name) };
 }
 
 /** Default road: enters at the leading edge and leaves at the trailing edge at the shared height,
